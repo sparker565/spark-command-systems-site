@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion as Motion } from 'framer-motion'
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import {
   ArrowRight,
   Boxes,
@@ -77,12 +78,12 @@ const deploymentItems = [
 const applications = [
   {
     name: 'AMS Command Center',
-    status: 'Active',
+    status: 'Private Rollout',
     type: 'Flagship Platform',
     description:
-      'Operational command center platform for dispatch workflow, site visibility, and execution tracking.',
-    action: 'View App',
-    href: '/app',
+      'Private rollout platform for live operational command, workflow visibility, and field execution systems.',
+    action: 'View Rollout',
+    href: '/ams-command-center',
   },
   {
     name: 'Spark Vendor Hub',
@@ -481,7 +482,7 @@ function LandingPage({ page = 'home' }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
           <div className={`relative flex items-center justify-between gap-4 px-4 transition-all duration-300 sm:px-5 lg:px-6 ${isScrolled ? 'py-2.5' : 'py-3.5'}`}>
-            <a href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
+            <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
@@ -492,13 +493,13 @@ function LandingPage({ page = 'home' }) {
               <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
               <div className="hidden text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
-          </a>
+          </Link>
 
           <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 xl:flex">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.href}
                 className={`px-4 py-2 text-sm font-semibold transition ${
                   page === item.href.slice(1)
                     ? 'bg-cyan-200/[0.12] text-cyan-100 shadow-[inset_0_0_0_1px_rgba(165,243,252,0.12)]'
@@ -506,31 +507,31 @@ function LandingPage({ page = 'home' }) {
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="hidden border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] hover:shadow-[0_0_26px_rgba(34,211,238,0.1)] md:inline-flex"
             >
               Contact Development Team
-            </a>
-            <a
-              href="/contact"
+            </Link>
+            <Link
+              to="/contact"
               className="hidden border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] lg:inline-flex"
             >
               Book a Demo
-            </a>
-            <a
-              href="/applications"
+            </Link>
+            <Link
+              to="/applications"
               className="group inline-flex items-center gap-2 bg-amber-300 px-4 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
             >
               <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
           </div>
         </div>
@@ -561,19 +562,19 @@ function LandingPage({ page = 'home' }) {
                 Spark Command Systems builds software, integrates operational systems, and develops command center platforms for teams that need clarity under pressure.
               </p>
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <a
-                  href="/applications"
+                <Link
+                  to="/applications"
                   className="group inline-flex items-center justify-center gap-2 bg-cyan-200 px-7 py-4 text-base font-bold text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.22)] transition hover:bg-white"
                 >
                   Open Applications
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </a>
-                <a
-                  href="/platform"
+                </Link>
+                <Link
+                  to="/platform"
                   className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
                   Explore the company
-                </a>
+                </Link>
               </div>
 
               <div className="mt-12 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
@@ -611,7 +612,7 @@ function LandingPage({ page = 'home' }) {
                 ['Pipeline', '/pipeline', 'Future products, AI tools, portals, and data infrastructure.'],
                 ['Deployment', '/deployment', 'Rollout-ready systems for distributed teams and multi-site operations.'],
               ].map(([title, href, text], index) => (
-                <a key={title} href={href} className="group relative bg-gradient-to-br from-[#08111d] to-[#04080e] p-6 transition hover:bg-white/[0.07]">
+                <Link key={title} to={href} className="group relative bg-gradient-to-br from-[#08111d] to-[#04080e] p-6 transition hover:bg-white/[0.07]">
                   <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">0{index + 1} / company</div>
                   <h2 className="mt-5 text-2xl font-semibold text-white">{title}</h2>
@@ -620,7 +621,7 @@ function LandingPage({ page = 'home' }) {
                     Open page
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -840,13 +841,13 @@ function LandingPage({ page = 'home' }) {
                   Spark Command Systems builds the software foundation, integration layer, and operational platform experience for teams preparing for connected, AI-ready execution.
                 </p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                  <a
-                    href="/applications"
+                  <Link
+                    to="/applications"
                     className="group inline-flex items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black transition hover:bg-amber-200"
                   >
                     View Applications
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </a>
+                  </Link>
                   <a
                     href="mailto:demo@sparkcommands.com?subject=Spark%20Command%20Systems%20Development%20Inquiry"
                     className="inline-flex items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
@@ -893,6 +894,10 @@ function statusTone(status) {
     return 'border-emerald-200/25 bg-emerald-200/[0.08] text-emerald-100'
   }
 
+  if (status === 'Private Rollout') {
+    return 'border-amber-200/30 bg-amber-200/[0.1] text-amber-100'
+  }
+
   if (status === 'In Development') {
     return 'border-cyan-200/25 bg-cyan-200/[0.08] text-cyan-100'
   }
@@ -913,7 +918,7 @@ function ApplicationsHeader() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
         <div className="relative flex items-center justify-between gap-4 px-4 py-2.5 sm:px-5 lg:px-6">
-          <a href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
@@ -924,41 +929,41 @@ function ApplicationsHeader() {
               <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
               <div className="hidden text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
-          </a>
+          </Link>
 
           <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 xl:flex">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.href}
                 className="px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="hidden border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] md:inline-flex"
             >
               Contact Development Team
-            </a>
-            <a
-              href="/contact"
+            </Link>
+            <Link
+              to="/contact"
               className="hidden border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] lg:inline-flex"
             >
               Book a Demo
-            </a>
-            <a
-              href="/applications"
+            </Link>
+            <Link
+              to="/applications"
               className="group inline-flex items-center gap-2 bg-amber-300 px-4 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
             >
               <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -1046,7 +1051,7 @@ function ApplicationsPage() {
                   <div
                     key={app.name}
                     className={`group relative overflow-hidden border p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-cyan-200/25 hover:bg-white/[0.07] sm:p-6 ${
-                      app.status === 'Active'
+                      app.status === 'Private Rollout'
                         ? 'border-amber-200/25 bg-gradient-to-br from-amber-200/[0.08] via-white/[0.045] to-cyan-200/[0.035] shadow-[0_0_46px_rgba(245,158,11,0.08),inset_0_1px_0_rgba(255,255,255,0.06)]'
                         : 'border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.025]'
                     }`}
@@ -1066,13 +1071,13 @@ function ApplicationsPage() {
                       </div>
 
                       {app.href ? (
-                        <a
-                          href={app.href}
+                        <Link
+                          to={app.href}
                           className="inline-flex shrink-0 items-center justify-center gap-2 bg-amber-300 px-5 py-3 text-sm font-bold text-black transition hover:bg-amber-200"
                         >
                           {app.action}
                           <ArrowRight className="h-4 w-4" />
-                        </a>
+                        </Link>
                       ) : (
                         <button
                           type="button"
@@ -1095,44 +1100,111 @@ function ApplicationsPage() {
   )
 }
 
-export default function SparkCommandSystemsSite() {
-  const [path, setPath] = useState(() => window.location.pathname)
+function AmsComingSoonPage() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+      <ApplicationsHeader />
 
-  useEffect(() => {
-    const handlePopState = () => setPath(window.location.pathname)
+      <main className="relative px-5 pb-20 pt-16 sm:px-6 lg:px-8">
+        <div className="absolute left-1/2 top-16 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
+        <div className="absolute inset-x-0 top-24 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.16),transparent_44%)]" />
 
-    window.addEventListener('popstate', handlePopState)
+        <section className="relative mx-auto max-w-6xl overflow-hidden border border-amber-200/20 bg-[#060d16]/92 shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.1)] backdrop-blur-xl">
+          <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/70 to-transparent" />
+          <BrandFrame
+            src={productLogo}
+            alt="AMS Command Center platform mark"
+            className="absolute -right-12 -top-10 hidden h-60 w-96 border-0 opacity-35 lg:block"
+            imageClassName="scale-125"
+          />
 
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [])
+          <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="relative min-h-96 bg-[#03070d] p-8 sm:p-10">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_36%_42%,rgba(245,158,11,0.2),transparent_30%),radial-gradient(circle_at_68%_62%,rgba(34,211,238,0.1),transparent_32%)]" />
+              <USOperationsMap />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#03070d]/80 via-[#03070d]/42 to-[#03070d]/70" />
+              <div className="relative">
+                <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">
+                  Private Rollout
+                </div>
+                <h1 className="mt-6 max-w-xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl">
+                  AMS Command Center
+                </h1>
+              </div>
+            </div>
+
+            <div className="relative bg-[#060d16] p-8 sm:p-10">
+              <div className="absolute right-8 top-8 hidden h-20 w-20 border border-white/10 bg-white/[0.025] lg:block" />
+              <p className="max-w-2xl text-xl leading-9 text-slate-200">
+                Private rollout platform for live operational command, workflow visibility, and field execution systems.
+              </p>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
+                AMS Command Center is currently in staged development. Spark is shaping the platform around dispatch workflows, site-level visibility, field execution records, and the operational controls needed for a controlled release.
+              </p>
+
+              <div className="mt-9 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
+                {[
+                  ['Status', 'Staged development'],
+                  ['Access', 'Private rollout'],
+                  ['Focus', 'Live operations'],
+                ].map(([label, value]) => (
+                  <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
+                    <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                    <div className="mt-2 text-sm font-semibold text-white">{value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+                <Link
+                  to="/applications"
+                  className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                >
+                  Back to Applications
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
+                >
+                  Contact Development Team
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <ScrollToTopButton />
+    </div>
+  )
+}
+
+function RouteScrollReset() {
+  const location = useLocation()
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [path])
+  }, [location.pathname])
 
-  if (path === '/applications') {
-    return <ApplicationsPage />
-  }
+  return null
+}
 
-  if (path === '/platform') {
-    return <LandingPage page="platform" />
-  }
-
-  if (path === '/integration') {
-    return <LandingPage page="integration" />
-  }
-
-  if (path === '/pipeline') {
-    return <LandingPage page="pipeline" />
-  }
-
-  if (path === '/deployment') {
-    return <LandingPage page="deployment" />
-  }
-
-  if (path === '/contact') {
-    return <LandingPage page="contact" />
-  }
-
-  return <LandingPage page="home" />
+export default function SparkCommandSystemsSite() {
+  return (
+    <BrowserRouter>
+      <RouteScrollReset />
+      <Routes>
+        <Route path="/" element={<LandingPage page="home" />} />
+        <Route path="/platform" element={<LandingPage page="platform" />} />
+        <Route path="/integration" element={<LandingPage page="integration" />} />
+        <Route path="/pipeline" element={<LandingPage page="pipeline" />} />
+        <Route path="/deployment" element={<LandingPage page="deployment" />} />
+        <Route path="/applications" element={<ApplicationsPage />} />
+        <Route path="/contact" element={<LandingPage page="contact" />} />
+        <Route path="/ams-command-center" element={<AmsComingSoonPage />} />
+        <Route path="/app" element={<Navigate to="/ams-command-center" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }

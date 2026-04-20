@@ -21,10 +21,10 @@ const techLogo = '/tech-logo.png'
 const productLogo = '/product-logo.png'
 
 const navItems = [
-  { label: 'Platform', href: '#platform' },
-  { label: 'Integration', href: '#integration' },
-  { label: 'Pipeline', href: '#pipeline' },
-  { label: 'Deployment', href: '#deployment' },
+  { label: 'Platform', href: '/platform' },
+  { label: 'Integration', href: '/integration' },
+  { label: 'Pipeline', href: '/pipeline' },
+  { label: 'Deployment', href: '/deployment' },
 ]
 
 const operatingSignals = [
@@ -192,8 +192,9 @@ function USOperationsMap() {
     { id: 'chicago', x: 502, y: 164, tone: 'gold', size: 5 },
     { id: 'atl', x: 572, y: 288, tone: 'cyan', size: 4 },
     { id: 'fl', x: 650, y: 384, tone: 'gold', size: 5 },
-    { id: 'nyc', x: 690, y: 132, tone: 'gold', size: 6 },
+    { id: 'nyc', x: 690, y: 132, tone: 'gold', size: 7 },
     { id: 'dc', x: 654, y: 188, tone: 'cyan', size: 4 },
+    { id: 'bos', x: 712, y: 104, tone: 'cyan', size: 4 },
   ]
 
   const nodeById = Object.fromEntries(nodes.map((node) => [node.id, node]))
@@ -203,6 +204,7 @@ function USOperationsMap() {
     ['denver', 'chicago'],
     ['dfw', 'atl'],
     ['chicago', 'nyc'],
+    ['nyc', 'bos'],
     ['atl', 'dc'],
     ['dc', 'nyc'],
     ['atl', 'fl'],
@@ -269,7 +271,8 @@ function USOperationsMap() {
       </g>
 
       <g opacity="0.55">
-        <circle cx="692" cy="132" r="64" fill="rgba(245,158,11,0.16)" />
+        <circle cx="696" cy="124" r="82" fill="rgba(245,158,11,0.18)" />
+        <circle cx="676" cy="168" r="52" fill="rgba(34,211,238,0.1)" />
         <circle cx="382" cy="310" r="70" fill="rgba(245,158,11,0.11)" />
         <circle cx="130" cy="204" r="58" fill="rgba(34,211,238,0.1)" />
       </g>
@@ -421,29 +424,38 @@ function CommandConsole() {
   )
 }
 
-function LandingPage() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState('platform')
+function ScrollToTopButton() {
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const sectionIds = navItems.map((item) => item.href.slice(1))
+    const handleScroll = () => setIsVisible(window.scrollY > 420)
 
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className={`fixed bottom-5 right-5 z-50 border border-amber-200/25 bg-[#050b13]/85 p-3 text-amber-100 shadow-[0_0_34px_rgba(245,158,11,0.16)] backdrop-blur-xl transition duration-300 hover:border-amber-100/45 hover:bg-amber-200/10 ${
+        isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
+      }`}
+      aria-label="Scroll back to top"
+    >
+      <ArrowRight className="h-5 w-5 -rotate-90" />
+    </button>
+  )
+}
+
+function LandingPage({ page = 'home' }) {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 28)
-
-      let currentSection = null
-
-      sectionIds.forEach((id) => {
-        const section = document.getElementById(id)
-
-        if (section && section.getBoundingClientRect().top < 180) {
-          currentSection = section
-        }
-      })
-
-      if (currentSection) {
-        setActiveSection(currentSection.id)
-      }
     }
 
     handleScroll()
@@ -469,7 +481,7 @@ function LandingPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
           <div className={`relative flex items-center justify-between gap-4 px-4 transition-all duration-300 sm:px-5 lg:px-6 ${isScrolled ? 'py-2.5' : 'py-3.5'}`}>
-            <a href="#top" className="flex min-w-0 items-center gap-3 sm:gap-4">
+            <a href="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
@@ -488,7 +500,7 @@ function LandingPage() {
                 key={item.label}
                 href={item.href}
                 className={`px-4 py-2 text-sm font-semibold transition ${
-                  activeSection === item.href.slice(1)
+                  page === item.href.slice(1)
                     ? 'bg-cyan-200/[0.12] text-cyan-100 shadow-[inset_0_0_0_1px_rgba(165,243,252,0.12)]'
                     : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
                 }`}
@@ -500,13 +512,13 @@ function LandingPage() {
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <a
-              href="#contact"
+              href="/contact"
               className="hidden border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] hover:shadow-[0_0_26px_rgba(34,211,238,0.1)] md:inline-flex"
             >
               Contact Development Team
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="hidden border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] lg:inline-flex"
             >
               Book a Demo
@@ -525,6 +537,8 @@ function LandingPage() {
       </header>
 
       <main id="top">
+        {page === 'home' && (
+        <>
         <section className="relative min-h-screen overflow-hidden pt-16 sm:pt-20">
           <div className="absolute left-1/2 top-20 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
           <div className="absolute right-0 top-1/3 h-px w-1/3 bg-gradient-to-l from-amber-200/25 to-transparent" />
@@ -555,7 +569,7 @@ function LandingPage() {
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </a>
                 <a
-                  href="#platform"
+                  href="/platform"
                   className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
                   Explore the company
@@ -588,7 +602,33 @@ function LandingPage() {
             </Motion.div>
           </div>
         </section>
+        <section className="relative px-5 pb-24 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 shadow-[0_26px_110px_rgba(0,0,0,0.4)] md:grid-cols-4">
+              {[
+                ['Platform', '/platform', 'Command center software for live operational control.'],
+                ['Integration', '/integration', 'Systems, data, users, and services unified into one operating layer.'],
+                ['Pipeline', '/pipeline', 'Future products, AI tools, portals, and data infrastructure.'],
+                ['Deployment', '/deployment', 'Rollout-ready systems for distributed teams and multi-site operations.'],
+              ].map(([title, href, text], index) => (
+                <a key={title} href={href} className="group relative bg-gradient-to-br from-[#08111d] to-[#04080e] p-6 transition hover:bg-white/[0.07]">
+                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
+                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">0{index + 1} / company</div>
+                  <h2 className="mt-5 text-2xl font-semibold text-white">{title}</h2>
+                  <p className="mt-4 text-sm leading-7 text-slate-400">{text}</p>
+                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-100">
+                    Open page
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+        </>
+        )}
 
+        {page === 'platform' && (
         <section id="platform" className="relative py-24 sm:py-28">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
           <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cyan-200/[0.035] to-transparent" />
@@ -652,7 +692,9 @@ function LandingPage() {
             </FadeIn>
           </div>
         </section>
+        )}
 
+        {page === 'integration' && (
         <section id="integration" className="relative overflow-hidden py-24 sm:py-28">
           <div className="absolute left-0 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
           <div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
@@ -706,7 +748,9 @@ function LandingPage() {
             </FadeIn>
           </div>
         </section>
+        )}
 
+        {page === 'pipeline' && (
         <section id="pipeline" className="relative overflow-hidden py-24 sm:py-28">
           <BrandFrame
             src={techLogo}
@@ -739,7 +783,9 @@ function LandingPage() {
             </div>
           </div>
         </section>
+        )}
 
+        {page === 'deployment' && (
         <section id="deployment" className="relative overflow-hidden py-24 sm:py-28">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
           <div className="absolute right-0 top-1/2 h-96 w-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-amber-200/10 blur-3xl" />
@@ -764,7 +810,9 @@ function LandingPage() {
             </FadeIn>
           </div>
         </section>
+        )}
 
+        {page === 'contact' && (
         <section id="contact" className="relative px-5 pb-24 pt-10 sm:pb-28 lg:px-8">
           <div className="absolute inset-x-0 bottom-0 h-80 bg-[radial-gradient(circle_at_50%_100%,rgba(34,211,238,0.12),transparent_48%)]" />
           <FadeIn className="mx-auto max-w-6xl overflow-hidden border border-amber-200/20 bg-[#060d16] shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.08)]">
@@ -820,6 +868,7 @@ function LandingPage() {
             </div>
           </FadeIn>
         </section>
+        )}
       </main>
 
       <footer className="border-t border-white/10 bg-[#020407]/90">
@@ -834,6 +883,7 @@ function LandingPage() {
           <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems. Software, integration, and command platforms.</div>
         </div>
       </footer>
+      <ScrollToTopButton />
     </div>
   )
 }
@@ -880,7 +930,7 @@ function ApplicationsHeader() {
             {navItems.map((item) => (
               <a
                 key={item.label}
-                href={`/${item.href}`}
+                href={item.href}
                 className="px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
               >
                 {item.label}
@@ -890,13 +940,13 @@ function ApplicationsHeader() {
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <a
-              href="/#contact"
+              href="/contact"
               className="hidden border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] md:inline-flex"
             >
               Contact Development Team
             </a>
             <a
-              href="/#contact"
+              href="/contact"
               className="hidden border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] lg:inline-flex"
             >
               Book a Demo
@@ -905,7 +955,7 @@ function ApplicationsHeader() {
               href="/applications"
               className="group inline-flex items-center gap-2 bg-amber-300 px-4 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
             >
-              <span className="hidden sm:inline">Applications</span>
+              <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -995,7 +1045,11 @@ function ApplicationsPage() {
                 {applications.map((app, index) => (
                   <div
                     key={app.name}
-                    className="group relative overflow-hidden border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.025] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-cyan-200/25 hover:bg-white/[0.07] sm:p-6"
+                    className={`group relative overflow-hidden border p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-cyan-200/25 hover:bg-white/[0.07] sm:p-6 ${
+                      app.status === 'Active'
+                        ? 'border-amber-200/25 bg-gradient-to-br from-amber-200/[0.08] via-white/[0.045] to-cyan-200/[0.035] shadow-[0_0_46px_rgba(245,158,11,0.08),inset_0_1px_0_rgba(255,255,255,0.06)]'
+                        : 'border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.025]'
+                    }`}
                   >
                     <div className="absolute inset-y-5 left-0 w-px bg-gradient-to-b from-transparent via-amber-200/40 to-transparent" />
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -1036,6 +1090,7 @@ function ApplicationsPage() {
           </section>
         </div>
       </main>
+      <ScrollToTopButton />
     </div>
   )
 }
@@ -1059,5 +1114,25 @@ export default function SparkCommandSystemsSite() {
     return <ApplicationsPage />
   }
 
-  return <LandingPage />
+  if (path === '/platform') {
+    return <LandingPage page="platform" />
+  }
+
+  if (path === '/integration') {
+    return <LandingPage page="integration" />
+  }
+
+  if (path === '/pipeline') {
+    return <LandingPage page="pipeline" />
+  }
+
+  if (path === '/deployment') {
+    return <LandingPage page="deployment" />
+  }
+
+  if (path === '/contact') {
+    return <LandingPage page="contact" />
+  }
+
+  return <LandingPage page="home" />
 }

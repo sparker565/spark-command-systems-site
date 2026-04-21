@@ -10,7 +10,6 @@ import {
   CircuitBoard,
   DatabaseZap,
   Layers3,
-  LockKeyhole,
   Network,
   RadioTower,
   ShieldCheck,
@@ -136,6 +135,30 @@ const applications = [
   },
 ]
 
+const intakeInitialState = {
+  name: '',
+  company: '',
+  email: '',
+  projectType: 'Command Center Platform',
+  problem: '',
+  scale: 'Single location',
+  timeline: 'Exploring',
+  budget: 'Not sure',
+}
+
+const projectTypeOptions = [
+  'Command Center Platform',
+  'Vendor / Operations System',
+  'Customer Portal',
+  'AI / Automation Tool',
+  'Data / Reporting System',
+  'Not Sure Yet',
+]
+
+const scaleOptions = ['Single location', 'Multi-site (2-50)', 'Regional (50-250)', 'National (250+)']
+const timelineOptions = ['ASAP', '1-3 months', '3-6 months', 'Exploring']
+const budgetOptions = ['Under 10k', '10k-25k', '25k-75k', '75k+', 'Not sure']
+
 function FadeIn({ children, className = '', delay = 0 }) {
   return (
     <Motion.div
@@ -168,6 +191,233 @@ function SectionIntro({ eyebrow, title, children, align = 'left' }) {
       <h2 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">{title}</h2>
       {children ? <p className="mt-5 text-lg leading-8 text-slate-300">{children}</p> : null}
     </div>
+  )
+}
+
+function FieldShell({ label, required = false, children }) {
+  return (
+    <label className="group block">
+      <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+        {label}
+        {required ? <span className="text-amber-200"> *</span> : null}
+      </span>
+      {children}
+    </label>
+  )
+}
+
+function inputClassName() {
+  return 'w-full border border-white/10 bg-black/35 px-4 py-3.5 text-base text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-100/45 focus:bg-cyan-100/[0.035] focus:shadow-[0_0_28px_rgba(34,211,238,0.1)]'
+}
+
+function ContactIntakePage() {
+  const [formData, setFormData] = useState(intakeInitialState)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+
+  const updateField = (field, value) => {
+    setFormData((current) => ({ ...current, [field]: value }))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const response = await fetch('https://formspree.io/f/mzdyaowb', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: 'New Spark Development Inquiry',
+          name: formData.name,
+          company: formData.company || 'Not provided',
+          email: formData.email,
+          projectType: formData.projectType,
+          problemDescription: formData.problem,
+          scale: formData.scale,
+          timeline: formData.timeline,
+          budget: formData.budget || 'Not sure',
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Formspree submission failed')
+      }
+
+      setIsSubmitted(true)
+    } catch {
+      setSubmitError('Something went wrong while submitting your request. Please try again or contact sparker565@gmail.com directly.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <section id="contact" className="relative px-5 pb-24 pt-10 sm:pb-28 lg:px-8">
+      <div className="absolute inset-x-0 bottom-0 h-80 bg-[radial-gradient(circle_at_50%_100%,rgba(34,211,238,0.12),transparent_48%)]" />
+      <div className="absolute left-1/2 top-6 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
+
+      <FadeIn className="mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16] shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.08)]">
+        <div className="grid gap-px bg-white/10 xl:grid-cols-[0.78fr_1.22fr]">
+          <div className="relative min-h-[38rem] bg-[#03070d] p-8 sm:p-10">
+            <BrandFrame
+              src={techLogo}
+              alt="Spark technology intake core"
+              className="absolute inset-0 h-full w-full border-0 opacity-58"
+              imageClassName="scale-125"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#03070d] via-[#03070d]/78 to-[#03070d]/50" />
+            <div className="absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-amber-200/45 via-cyan-200/25 to-transparent" />
+            <div className="relative">
+              <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
+                Used for multi-site operational systems
+              </div>
+              <h1 className="mt-6 max-w-xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl">
+                Start a Development Conversation
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+                Work directly with Spark Command Systems to design and deploy operational software and command platforms.
+              </p>
+              <p className="mt-5 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
+                Structured intake ensures faster alignment and better system design.
+              </p>
+
+              <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3 xl:grid-cols-1">
+                {[
+                  ['Signal', 'Operational problem'],
+                  ['Scope', 'Scale and timeline'],
+                  ['Path', 'Development review'],
+                ].map(([label, value]) => (
+                  <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
+                    <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                    <div className="mt-2 text-sm font-semibold text-white">{value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="relative bg-[#060d16] p-6 sm:p-8 lg:p-10">
+            <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
+            {isSubmitted ? (
+              <div className="flex min-h-[34rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-8 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)]">
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-amber-200/30 bg-amber-200/[0.08] text-amber-100">
+                  <CheckCircle2 className="h-8 w-8" />
+                </div>
+                <h2 className="text-4xl font-semibold tracking-[-0.02em] text-white">Request received.</h2>
+                <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-300">
+                  Our development team will review your inquiry and follow up shortly.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData(intakeInitialState)
+                    setIsSubmitted(false)
+                    setSubmitError('')
+                  }}
+                  className="mx-auto mt-8 inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                >
+                  Submit another request
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div>
+                  <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Identity</div>
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <FieldShell label="Name" required>
+                      <input required value={formData.name} onChange={(event) => updateField('name', event.target.value)} className={inputClassName()} placeholder="Your name" />
+                    </FieldShell>
+                    <FieldShell label="Company">
+                      <input value={formData.company} onChange={(event) => updateField('company', event.target.value)} className={inputClassName()} placeholder="Company or organization" />
+                    </FieldShell>
+                    <FieldShell label="Email" required>
+                      <input required type="email" value={formData.email} onChange={(event) => updateField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
+                    </FieldShell>
+                    <FieldShell label="Project Type">
+                      <select value={formData.projectType} onChange={(event) => updateField('projectType', event.target.value)} className={inputClassName()}>
+                        {projectTypeOptions.map((option) => (
+                          <option key={option}>{option}</option>
+                        ))}
+                      </select>
+                    </FieldShell>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Operational Problem</div>
+                  <FieldShell label="Describe the operational problem or system you want to improve" required>
+                    <textarea
+                      required
+                      value={formData.problem}
+                      onChange={(event) => updateField('problem', event.target.value)}
+                      className={`${inputClassName()} min-h-40 resize-y leading-7`}
+                      placeholder="What is slow, disconnected, manual, hard to see, or difficult to coordinate?"
+                    />
+                  </FieldShell>
+                </div>
+
+                <div>
+                  <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Scope</div>
+                  <div className="grid gap-5 md:grid-cols-3">
+                    <FieldShell label="Scale">
+                      <select value={formData.scale} onChange={(event) => updateField('scale', event.target.value)} className={inputClassName()}>
+                        {scaleOptions.map((option) => (
+                          <option key={option}>{option}</option>
+                        ))}
+                      </select>
+                    </FieldShell>
+                    <FieldShell label="Timeline">
+                      <select value={formData.timeline} onChange={(event) => updateField('timeline', event.target.value)} className={inputClassName()}>
+                        {timelineOptions.map((option) => (
+                          <option key={option}>{option}</option>
+                        ))}
+                      </select>
+                    </FieldShell>
+                    <FieldShell label="Budget">
+                      <select value={formData.budget} onChange={(event) => updateField('budget', event.target.value)} className={inputClassName()}>
+                        {budgetOptions.map((option) => (
+                          <option key={option}>{option}</option>
+                        ))}
+                      </select>
+                    </FieldShell>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="group inline-flex w-full items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)] disabled:cursor-not-allowed disabled:bg-amber-200/60 disabled:text-black/60 sm:w-auto"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/25 border-t-black" />
+                      Submitting Inquiry
+                    </>
+                  ) : (
+                    <>
+                      Send Development Inquiry
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    </>
+                  )}
+                </button>
+                {submitError ? (
+                  <div className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
+                    {submitError}
+                  </div>
+                ) : null}
+              </form>
+            )}
+          </div>
+        </div>
+      </FadeIn>
+    </section>
   )
 }
 
@@ -814,61 +1064,7 @@ function LandingPage({ page = 'home' }) {
         )}
 
         {page === 'contact' && (
-        <section id="contact" className="relative px-5 pb-24 pt-10 sm:pb-28 lg:px-8">
-          <div className="absolute inset-x-0 bottom-0 h-80 bg-[radial-gradient(circle_at_50%_100%,rgba(34,211,238,0.12),transparent_48%)]" />
-          <FadeIn className="mx-auto max-w-6xl overflow-hidden border border-amber-200/20 bg-[#060d16] shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.08)]">
-            <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
-              <div className="relative min-h-80 bg-[#03070d] p-8 sm:p-10">
-                <BrandFrame
-                  src={techLogo}
-                  alt="Spark technology core"
-                  className="absolute inset-0 h-full w-full border-0 opacity-65"
-                  imageClassName="scale-125"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#03070d] via-[#03070d]/70 to-transparent" />
-                <div className="absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-amber-200/45 via-cyan-200/25 to-transparent" />
-                <div className="relative">
-                  <div className="text-xs font-semibold uppercase tracking-[0.34em] text-cyan-100">Build the command layer</div>
-                  <h2 className="mt-5 max-w-xl text-4xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-5xl">
-                    Build the operating layer your next platform can stand on.
-                  </h2>
-                </div>
-              </div>
-
-              <div className="relative bg-[#060d16] p-8 sm:p-10">
-                <div className="absolute right-8 top-8 hidden h-20 w-20 border border-white/10 bg-white/[0.025] lg:block" />
-                <p className="max-w-2xl text-lg leading-8 text-slate-300">
-                  Spark Command Systems builds the software foundation, integration layer, and operational platform experience for teams preparing for connected, AI-ready execution.
-                </p>
-                <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                  <Link
-                    to="/applications"
-                    className="group inline-flex items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black transition hover:bg-amber-200"
-                  >
-                    View Applications
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </Link>
-                  <a
-                    href="mailto:demo@sparkcommands.com?subject=Spark%20Command%20Systems%20Development%20Inquiry"
-                    className="inline-flex items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
-                  >
-                    Contact Development Team
-                  </a>
-                  <a
-                    href="mailto:demo@sparkcommands.com?subject=Spark%20Command%20Systems%20Demo%20Request"
-                    className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
-                  >
-                    Book a Demo
-                  </a>
-                </div>
-                <div className="mt-9 flex items-center gap-3 text-sm text-slate-400">
-                  <LockKeyhole className="h-4 w-4 text-cyan-100" />
-                  Built for controlled access, operational visibility, and future platform expansion.
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </section>
+        <ContactIntakePage />
         )}
       </main>
 

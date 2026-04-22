@@ -7,13 +7,16 @@ import {
   BrainCircuit,
   Building2,
   CheckCircle2,
+  ChevronDown,
   CircuitBoard,
   DatabaseZap,
   Layers3,
+  Menu,
   Network,
   RadioTower,
   ShieldCheck,
   Waypoints,
+  X,
 } from 'lucide-react'
 
 const corporateLogo = '/corporate-logo.png'
@@ -21,6 +24,7 @@ const techLogo = '/tech-logo.png'
 const productLogo = '/product-logo.png'
 
 const navItems = [
+  { label: 'About', href: '/about' },
   { label: 'Platform', href: '/platform' },
   { label: 'Integration', href: '/integration' },
   { label: 'Pipeline', href: '/pipeline' },
@@ -133,6 +137,62 @@ const applications = [
     description:
       'Enterprise multi-product command environment for live operations visibility and intervention.',
   },
+  {
+    name: 'Spark Site Lens',
+    status: 'Pipeline',
+    type: 'Site Visibility',
+    description:
+      'Site visibility layer for conditions, compliance, field imagery, and issue tracking.',
+  },
+  {
+    name: 'Spark Dispatch Grid',
+    status: 'In Development',
+    type: 'Dispatch Operations',
+    description:
+      'Real-time dispatch coordination environment for multi-site scheduling, routing, and execution control.',
+  },
+  {
+    name: 'Spark Ops Intelligence',
+    status: 'Pipeline',
+    type: 'Operational Analytics',
+    description:
+      'Operational insights layer for performance analysis, service trends, and decision support.',
+  },
+  {
+    name: 'Spark Access Portal',
+    status: 'Coming Soon',
+    type: 'Secure Access',
+    description:
+      'Secure access environment for client, team, and vendor-side platform entry.',
+  },
+  {
+    name: 'Spark Asset Watch',
+    status: 'Concept',
+    type: 'Risk Monitoring',
+    description:
+      'Monitoring layer for asset conditions, site risk signals, and maintenance visibility.',
+  },
+  {
+    name: 'Spark Workflow Engine',
+    status: 'In Development',
+    type: 'Automation Framework',
+    description:
+      'Automation and rules framework for routing, escalations, approvals, and system actions.',
+  },
+  {
+    name: 'Spark Command AI',
+    status: 'Future Platform',
+    type: 'AI Command',
+    description:
+      'AI-assisted command environment for workflow support, triage recommendations, and operational reasoning.',
+  },
+  {
+    name: 'Spark Service Network',
+    status: 'Concept',
+    type: 'Service Coordination',
+    description:
+      'Distributed service coordination layer connecting operators, vendors, and platform workflows.',
+  },
 ]
 
 const intakeInitialState = {
@@ -158,6 +218,8 @@ const projectTypeOptions = [
 const scaleOptions = ['Single location', 'Multi-site (2-50)', 'Regional (50-250)', 'National (250+)']
 const timelineOptions = ['ASAP', '1-3 months', '3-6 months', 'Exploring']
 const budgetOptions = ['Under 10k', '10k-25k', '25k-75k', '75k+', 'Not sure']
+
+const buildTrackProducts = new Set(['Spark Vendor Hub', 'Spark Dispatch Grid', 'Spark Workflow Engine'])
 
 function FadeIn({ children, className = '', delay = 0 }) {
   return (
@@ -188,7 +250,7 @@ function SectionIntro({ eyebrow, title, children, align = 'left' }) {
   return (
     <div className={align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'}>
       <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">{eyebrow}</div>
-      <h2 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">{title}</h2>
+      <h2 className="mt-5 text-3xl font-semibold leading-tight text-white sm:text-5xl">{title}</h2>
       {children ? <p className="mt-5 text-lg leading-8 text-slate-300">{children}</p> : null}
     </div>
   )
@@ -208,6 +270,122 @@ function FieldShell({ label, required = false, children }) {
 
 function inputClassName() {
   return 'w-full border border-white/10 bg-black/35 px-4 py-3.5 text-base text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-100/45 focus:bg-cyan-100/[0.035] focus:shadow-[0_0_28px_rgba(34,211,238,0.1)]'
+}
+
+function productTier(app) {
+  if (app.name === 'AMS Command Center') {
+    return {
+      label: 'Flagship',
+      card:
+        'border-amber-200/35 bg-gradient-to-br from-amber-200/[0.105] via-white/[0.05] to-cyan-200/[0.04] p-5 shadow-[0_0_70px_rgba(245,158,11,0.13),inset_0_1px_0_rgba(255,255,255,0.075)] sm:p-7',
+      rail: 'via-amber-200/75',
+      title: 'text-2xl sm:text-3xl',
+      badge: 'border-amber-200/35 bg-amber-200/[0.12] text-amber-100',
+      glow: 'opacity-100',
+    }
+  }
+
+  if (buildTrackProducts.has(app.name)) {
+    return {
+      label: 'Build Track',
+      card:
+        'border-cyan-200/22 bg-gradient-to-br from-cyan-200/[0.07] via-white/[0.04] to-white/[0.025] p-4 shadow-[0_0_42px_rgba(34,211,238,0.08),inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-6',
+      rail: 'via-cyan-200/55',
+      title: 'text-xl sm:text-2xl',
+      badge: 'border-cyan-200/28 bg-cyan-200/[0.09] text-cyan-100',
+      glow: 'opacity-70',
+    }
+  }
+
+  return {
+    label: 'Pipeline',
+    card:
+      'border-white/10 bg-gradient-to-br from-white/[0.055] to-white/[0.022] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-6',
+    rail: 'via-amber-200/32',
+    title: 'text-xl sm:text-2xl',
+    badge: 'border-white/15 bg-white/[0.045] text-slate-300',
+    glow: 'opacity-0',
+  }
+}
+
+function CommandSelect({ value, onChange, options }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div className="relative" onBlur={() => window.setTimeout(() => setIsOpen(false), 120)}>
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((current) => !current)}
+        className={`${inputClassName()} flex min-h-[3.45rem] items-center justify-between gap-4 text-left hover:border-white/20 hover:bg-white/[0.045]`}
+      >
+        <span className="truncate">{value}</span>
+        <ChevronDown className={`h-4 w-4 shrink-0 text-cyan-100/80 transition ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen ? (
+        <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-40 overflow-hidden border border-cyan-200/20 bg-[#03070d]/98 shadow-[0_22px_70px_rgba(0,0,0,0.62),0_0_36px_rgba(34,211,238,0.1)] backdrop-blur-xl">
+          <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/55 to-transparent" />
+          {options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => {
+                onChange(option)
+                setIsOpen(false)
+              }}
+              className={`flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold transition ${
+                option === value
+                  ? 'bg-cyan-200/[0.09] text-cyan-50'
+                  : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
+              }`}
+            >
+              {option}
+              {option === value ? <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" /> : null}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function MobileMenuPanel({ page = '' }) {
+  return (
+    <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 xl:hidden">
+      <div className="grid gap-2">
+        {navItems.map((item) => (
+          <Link
+            key={item.label}
+            to={item.href}
+            className={`flex min-h-12 items-center justify-between border px-4 text-sm font-semibold ${
+              page === item.href.slice(1)
+                ? 'border-cyan-200/20 bg-cyan-200/[0.09] text-cyan-100'
+                : 'border-white/10 bg-white/[0.035] text-slate-200'
+            }`}
+          >
+            {item.label}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        ))}
+      </div>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+        <Link
+          to="/contact"
+          className="flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-4 text-sm font-semibold text-cyan-50"
+        >
+          Contact Development Team
+        </Link>
+        <Link
+          to="/contact"
+          className="flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
+        >
+          Book a Demo
+        </Link>
+      </div>
+    </div>
+  )
 }
 
 function ContactIntakePage() {
@@ -259,13 +437,13 @@ function ContactIntakePage() {
   }
 
   return (
-    <section id="contact" className="relative px-5 pb-24 pt-10 sm:pb-28 lg:px-8">
+    <section id="contact" className="relative px-3 pb-16 pt-8 sm:px-5 sm:pb-28 sm:pt-10 lg:px-8">
       <div className="absolute inset-x-0 bottom-0 h-80 bg-[radial-gradient(circle_at_50%_100%,rgba(34,211,238,0.12),transparent_48%)]" />
       <div className="absolute left-1/2 top-6 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
 
       <FadeIn className="mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16] shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.08)]">
         <div className="grid gap-px bg-white/10 xl:grid-cols-[0.78fr_1.22fr]">
-          <div className="relative min-h-[38rem] bg-[#03070d] p-8 sm:p-10">
+          <div className="relative min-h-[28rem] bg-[#03070d] p-5 sm:min-h-[38rem] sm:p-10">
             <BrandFrame
               src={techLogo}
               alt="Spark technology intake core"
@@ -278,10 +456,10 @@ function ContactIntakePage() {
               <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
                 Used for multi-site operational systems
               </div>
-              <h1 className="mt-6 max-w-xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl">
+              <h1 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl">
                 Start a Development Conversation
               </h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+              <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                 Work directly with Spark Command Systems to design and deploy operational software and command platforms.
               </p>
               <p className="mt-5 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
@@ -303,14 +481,14 @@ function ContactIntakePage() {
             </div>
           </div>
 
-          <div className="relative bg-[#060d16] p-6 sm:p-8 lg:p-10">
+          <div className="relative bg-[#060d16] p-4 sm:p-8 lg:p-10">
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
             {isSubmitted ? (
-              <div className="flex min-h-[34rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-8 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)]">
+              <div className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-5 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:min-h-[34rem] sm:p-8">
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-amber-200/30 bg-amber-200/[0.08] text-amber-100">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <h2 className="text-4xl font-semibold tracking-[-0.02em] text-white">Request received.</h2>
+                <h2 className="text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">Request received.</h2>
                 <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-300">
                   Our development team will review your inquiry and follow up shortly.
                 </p>
@@ -341,11 +519,7 @@ function ContactIntakePage() {
                       <input required type="email" value={formData.email} onChange={(event) => updateField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
                     </FieldShell>
                     <FieldShell label="Project Type">
-                      <select value={formData.projectType} onChange={(event) => updateField('projectType', event.target.value)} className={inputClassName()}>
-                        {projectTypeOptions.map((option) => (
-                          <option key={option}>{option}</option>
-                        ))}
-                      </select>
+                      <CommandSelect value={formData.projectType} onChange={(value) => updateField('projectType', value)} options={projectTypeOptions} />
                     </FieldShell>
                   </div>
                 </div>
@@ -367,25 +541,13 @@ function ContactIntakePage() {
                   <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Scope</div>
                   <div className="grid gap-5 md:grid-cols-3">
                     <FieldShell label="Scale">
-                      <select value={formData.scale} onChange={(event) => updateField('scale', event.target.value)} className={inputClassName()}>
-                        {scaleOptions.map((option) => (
-                          <option key={option}>{option}</option>
-                        ))}
-                      </select>
+                      <CommandSelect value={formData.scale} onChange={(value) => updateField('scale', value)} options={scaleOptions} />
                     </FieldShell>
                     <FieldShell label="Timeline">
-                      <select value={formData.timeline} onChange={(event) => updateField('timeline', event.target.value)} className={inputClassName()}>
-                        {timelineOptions.map((option) => (
-                          <option key={option}>{option}</option>
-                        ))}
-                      </select>
+                      <CommandSelect value={formData.timeline} onChange={(value) => updateField('timeline', value)} options={timelineOptions} />
                     </FieldShell>
                     <FieldShell label="Budget">
-                      <select value={formData.budget} onChange={(event) => updateField('budget', event.target.value)} className={inputClassName()}>
-                        {budgetOptions.map((option) => (
-                          <option key={option}>{option}</option>
-                        ))}
-                      </select>
+                      <CommandSelect value={formData.budget} onChange={(value) => updateField('budget', value)} options={budgetOptions} />
                     </FieldShell>
                   </div>
                 </div>
@@ -427,6 +589,21 @@ function SceneBackdrop() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(245,158,11,0.2),transparent_28%),radial-gradient(circle_at_78%_6%,rgba(34,211,238,0.13),transparent_30%),radial-gradient(circle_at_62%_78%,rgba(148,163,184,0.08),transparent_34%),linear-gradient(180deg,#020407_0%,#07111d_42%,#020407_100%)]" />
       <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:86px_86px]" />
       <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(115deg,transparent_0%,transparent_47%,rgba(255,255,255,0.4)_48%,transparent_49%,transparent_100%)] [background-size:180px_180px]" />
+      <Motion.div
+        animate={{ x: ['-18%', '18%', '-18%'], opacity: [0.1, 0.34, 0.1] }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute left-0 top-[18%] h-px w-[62rem] bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent"
+      />
+      <Motion.div
+        animate={{ x: ['18%', '-16%', '18%'], opacity: [0.08, 0.28, 0.08] }}
+        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute right-0 top-[58%] h-px w-[48rem] bg-gradient-to-r from-transparent via-amber-200/40 to-transparent"
+      />
+      <Motion.div
+        animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.18, 0.08] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/10"
+      />
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-white/[0.055] to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_52%,rgba(0,0,0,0.72)_100%)]" />
     </div>
@@ -623,20 +800,20 @@ function CommandConsole() {
 
         <div className="grid gap-px bg-white/10 lg:grid-cols-[1.25fr_0.75fr]">
           <div className="bg-[#07101b] p-4 sm:p-5">
-            <div className="relative min-h-[330px] overflow-hidden border border-white/10 bg-[#03070d]">
+            <div className="relative min-h-[270px] overflow-hidden border border-white/10 bg-[#03070d] sm:min-h-[330px]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(34,211,238,0.23),transparent_23%),linear-gradient(140deg,rgba(245,158,11,0.12),transparent_35%),linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:auto,auto,42px_42px,42px_42px]" />
               <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
               <div className="absolute inset-y-0 left-1/2 w-px bg-gradient-to-b from-transparent via-amber-200/25 to-transparent" />
               <USOperationsMap />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_31%,rgba(245,158,11,0.12),transparent_18%),radial-gradient(circle_at_49%_72%,rgba(245,158,11,0.09),transparent_20%)]" />
-              <div className="absolute left-5 top-5 border border-white/10 bg-black/45 px-3 py-2 text-[0.64rem] font-semibold uppercase tracking-[0.24em] text-slate-300 backdrop-blur">
+              <div className="absolute left-3 top-3 border border-white/10 bg-black/45 px-3 py-2 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-slate-300 backdrop-blur sm:left-5 sm:top-5 sm:text-[0.64rem] sm:tracking-[0.24em]">
                 United States Ops Map
               </div>
-              <div className="absolute inset-x-4 bottom-4 border border-white/10 bg-black/55 p-4 backdrop-blur">
+              <div className="absolute inset-x-3 bottom-3 border border-white/10 bg-black/55 p-3 backdrop-blur sm:inset-x-4 sm:bottom-4 sm:p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <div className="text-sm font-medium text-white">Live operational surface</div>
-                    <div className="mt-1 text-xs leading-5 text-slate-400">Workflows, sites, partners, and event signals in one command view.</div>
+                    <div className="mt-1 text-xs leading-5 text-slate-400">Sites, partners, and event signals in one command view.</div>
                   </div>
                   <RadioTower className="hidden h-7 w-7 text-cyan-200 sm:block" />
                 </div>
@@ -691,7 +868,7 @@ function ScrollToTopButton() {
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className={`fixed bottom-5 right-5 z-50 border border-amber-200/25 bg-[#050b13]/85 p-3 text-amber-100 shadow-[0_0_34px_rgba(245,158,11,0.16)] backdrop-blur-xl transition duration-300 hover:border-amber-100/45 hover:bg-amber-200/10 ${
+      className={`fixed bottom-4 right-4 z-50 border border-amber-200/25 bg-[#050b13]/85 p-3 text-amber-100 shadow-[0_0_34px_rgba(245,158,11,0.16)] backdrop-blur-xl transition duration-300 hover:border-amber-100/45 hover:bg-amber-200/10 sm:bottom-5 sm:right-5 ${
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
       }`}
       aria-label="Scroll back to top"
@@ -703,6 +880,7 @@ function ScrollToTopButton() {
 
 function LandingPage({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -719,7 +897,7 @@ function LandingPage({ page = 'home' }) {
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
 
-      <header className="sticky top-3 z-50 px-3 sm:px-5 lg:px-8">
+      <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
         <div
           className={`relative mx-auto max-w-7xl overflow-hidden border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl transition-all duration-300 ${
             isScrolled
@@ -731,12 +909,12 @@ function LandingPage({ page = 'home' }) {
           <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-          <div className={`relative flex items-center justify-between gap-4 px-4 transition-all duration-300 sm:px-5 lg:px-6 ${isScrolled ? 'py-2.5' : 'py-3.5'}`}>
+          <div className={`relative flex items-center justify-between gap-2 px-3 transition-all duration-300 sm:gap-4 sm:px-5 lg:px-6 ${isScrolled ? 'py-2.5' : 'py-3.5'}`}>
             <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
-              className={`shrink-0 transition-all duration-300 ${isScrolled ? 'h-10 w-10' : 'h-12 w-12'}`}
+              className={`shrink-0 transition-all duration-300 ${isScrolled ? 'h-9 w-9 sm:h-10 sm:w-10' : 'h-10 w-10 sm:h-12 sm:w-12'}`}
               imageClassName="scale-[2.15]"
             />
             <div className="min-w-0">
@@ -776,58 +954,67 @@ function LandingPage({ page = 'home' }) {
             </Link>
             <Link
               to="/applications"
-              className="group inline-flex items-center gap-2 bg-amber-300 px-4 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
+              className="group inline-flex min-h-11 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
             >
               <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((current) => !current)}
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white xl:hidden"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
           </div>
+          {isMobileMenuOpen ? <MobileMenuPanel page={page} /> : null}
         </div>
       </header>
 
       <main id="top">
         {page === 'home' && (
         <>
-        <section className="relative min-h-screen overflow-hidden pt-16 sm:pt-20">
+        <section className="relative overflow-hidden pt-10 sm:min-h-screen sm:pt-20">
           <div className="absolute left-1/2 top-20 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
           <div className="absolute right-0 top-1/3 h-px w-1/3 bg-gradient-to-l from-amber-200/25 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#020407] to-transparent" />
-          <div className="mx-auto grid max-w-7xl gap-14 px-5 pb-24 pt-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:pb-28 lg:pt-20">
+          <div className="mx-auto grid max-w-7xl gap-10 px-3 pb-16 pt-8 sm:px-5 sm:pb-24 sm:pt-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:pb-28 lg:pt-20">
             <Motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10"
             >
-              <div className="mb-7 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)]">
+              <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
                 Software. Systems. Command.
               </div>
-              <h1 className="max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl xl:text-8xl">
+              <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96] lg:text-7xl xl:text-8xl">
                 Technology infrastructure for live operations.
               </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+              <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-7 sm:text-xl sm:leading-8">
                 Spark Command Systems builds software, integrates operational systems, and develops command center platforms for teams that need clarity under pressure.
               </p>
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
                 <Link
                   to="/applications"
-                  className="group inline-flex items-center justify-center gap-2 bg-cyan-200 px-7 py-4 text-base font-bold text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.22)] transition hover:bg-white"
+                  className="group inline-flex min-h-12 items-center justify-center gap-2 bg-cyan-200 px-7 py-4 text-base font-bold text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.22)] transition hover:bg-white"
                 >
                   Open Applications
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </Link>
                 <Link
                   to="/platform"
-                  className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                  className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
                   Explore the company
                 </Link>
               </div>
 
-              <div className="mt-12 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
+              <div className="mt-10 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:mt-12 sm:grid-cols-3">
                 {operatingSignals.map(([label, value]) => (
                   <div key={label} className="bg-gradient-to-br from-[#09121f]/95 to-[#04080f]/95 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                     <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -853,17 +1040,20 @@ function LandingPage({ page = 'home' }) {
             </Motion.div>
           </div>
         </section>
-        <section className="relative px-5 pb-24 lg:px-8">
+        <section className="relative px-3 pb-16 sm:px-5 sm:pb-24 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 shadow-[0_26px_110px_rgba(0,0,0,0.4)] md:grid-cols-4">
+            <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 shadow-[0_32px_130px_rgba(0,0,0,0.5),0_0_70px_rgba(34,211,238,0.045)] md:grid-cols-2 xl:grid-cols-5">
               {[
+                ['About Spark', '/about', 'The company story behind the command systems vision.'],
                 ['Platform', '/platform', 'Command center software for live operational control.'],
                 ['Integration', '/integration', 'Systems, data, users, and services unified into one operating layer.'],
                 ['Pipeline', '/pipeline', 'Future products, AI tools, portals, and data infrastructure.'],
                 ['Deployment', '/deployment', 'Rollout-ready systems for distributed teams and multi-site operations.'],
               ].map(([title, href, text], index) => (
-                <Link key={title} to={href} className="group relative bg-gradient-to-br from-[#08111d] to-[#04080e] p-6 transition hover:bg-white/[0.07]">
-                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
+                <Link key={title} to={href} className="group relative min-h-64 overflow-hidden bg-gradient-to-br from-[#08111d] via-[#060d16] to-[#03070d] p-5 transition duration-300 hover:bg-white/[0.07] sm:p-6">
+                  <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-200/0 blur-3xl transition duration-300 group-hover:bg-cyan-200/10" />
+                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent transition group-hover:via-amber-200/75" />
+                  <div className="absolute inset-y-6 left-0 w-px bg-gradient-to-b from-transparent via-cyan-200/0 to-transparent transition group-hover:via-cyan-200/35" />
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">0{index + 1} / company</div>
                   <h2 className="mt-5 text-2xl font-semibold text-white">{title}</h2>
                   <p className="mt-4 text-sm leading-7 text-slate-400">{text}</p>
@@ -880,10 +1070,10 @@ function LandingPage({ page = 'home' }) {
         )}
 
         {page === 'platform' && (
-        <section id="platform" className="relative py-24 sm:py-28">
+        <section id="platform" className="relative py-16 sm:py-28">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
           <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cyan-200/[0.035] to-transparent" />
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
               <SectionIntro eyebrow="Flagship Platform" title="Command center software for live operational control.">
                 Spark builds platforms that turn scattered operational work into a controlled environment: intake, dispatch, vendor coordination, site visibility, approvals, and executive reporting.
@@ -946,9 +1136,9 @@ function LandingPage({ page = 'home' }) {
         )}
 
         {page === 'integration' && (
-        <section id="integration" className="relative overflow-hidden py-24 sm:py-28">
+        <section id="integration" className="relative overflow-hidden py-16 sm:py-28">
           <div className="absolute left-0 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
-          <div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-10 px-3 sm:px-5 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14 lg:px-8">
             <FadeIn>
               <SectionIntro eyebrow="Software + Integration" title="One command layer across the systems you already run.">
                 Spark develops purpose-built software and connects the operational tools, records, people, and services that need to move together.
@@ -1002,15 +1192,15 @@ function LandingPage({ page = 'home' }) {
         )}
 
         {page === 'pipeline' && (
-        <section id="pipeline" className="relative overflow-hidden py-24 sm:py-28">
+        <section id="pipeline" className="relative overflow-hidden py-16 sm:py-28">
           <BrandFrame
             src={techLogo}
             alt="Spark future technology system"
-            className="absolute left-1/2 top-12 h-56 w-[34rem] -translate-x-1/2 border-0 opacity-25"
+            className="absolute left-1/2 top-12 h-48 w-[24rem] -translate-x-1/2 border-0 opacity-20 sm:h-56 sm:w-[34rem] sm:opacity-25"
             imageClassName="scale-110"
           />
           <div className="absolute inset-x-0 top-28 h-72 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_45%)]" />
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-8">
             <SectionIntro eyebrow="Future Products" title="A product pipeline built from the same operational backbone." align="center">
               Spark is a parent technology company, not a single app. The roadmap expands from command center platforms into AI-enabled tools, data systems, portals, and additional operational products.
             </SectionIntro>
@@ -1037,10 +1227,10 @@ function LandingPage({ page = 'home' }) {
         )}
 
         {page === 'deployment' && (
-        <section id="deployment" className="relative overflow-hidden py-24 sm:py-28">
+        <section id="deployment" className="relative overflow-hidden py-16 sm:py-28">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
           <div className="absolute right-0 top-1/2 h-96 w-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-amber-200/10 blur-3xl" />
-          <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-10 px-3 sm:px-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12 lg:px-8">
             <FadeIn>
               <SectionIntro eyebrow="Enterprise Scale" title="Designed for rollout across real-world operating environments.">
                 Spark systems are shaped for organizations with multiple sites, distributed teams, mixed technology stacks, and operational work that has to move reliably.
@@ -1102,18 +1292,24 @@ function statusTone(status) {
     return 'border-amber-200/25 bg-amber-200/[0.08] text-amber-100'
   }
 
+  if (status === 'Coming Soon') {
+    return 'border-white/20 bg-white/[0.06] text-white'
+  }
+
   return 'border-white/15 bg-white/[0.045] text-slate-300'
 }
 
 function ApplicationsHeader() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
-    <header className="sticky top-3 z-50 px-3 sm:px-5 lg:px-8">
+    <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
       <div className="relative mx-auto max-w-7xl overflow-hidden border border-cyan-200/20 bg-[#020407]/72 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)] backdrop-blur-2xl">
         <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/55 to-transparent" />
         <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-        <div className="relative flex items-center justify-between gap-4 px-4 py-2.5 sm:px-5 lg:px-6">
+        <div className="relative flex items-center justify-between gap-2 px-3 py-2.5 sm:gap-4 sm:px-5 lg:px-6">
           <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             <BrandFrame
               src={corporateLogo}
@@ -1154,14 +1350,23 @@ function ApplicationsHeader() {
             </Link>
             <Link
               to="/applications"
-              className="group inline-flex items-center gap-2 bg-amber-300 px-4 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
+              className="group inline-flex min-h-11 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
             >
               <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((current) => !current)}
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white xl:hidden"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
         </div>
+        {isMobileMenuOpen ? <MobileMenuPanel /> : null}
       </div>
     </header>
   )
@@ -1173,25 +1378,25 @@ function ApplicationsPage() {
       <SceneBackdrop />
       <ApplicationsHeader />
 
-      <main className="relative px-5 pb-16 pt-16 sm:px-6 lg:px-8">
+      <main className="relative px-3 pb-14 pt-10 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
         <div className="absolute left-1/2 top-24 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
         <div className="absolute inset-x-0 top-16 h-72 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_46%)]" />
 
         <div className="relative mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+          <div className="grid gap-8 sm:gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
             <Motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
+              <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
                 Spark Software Portfolio
               </div>
-              <h1 className="max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl">
+              <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96] lg:text-7xl">
                 Applications built for operational command.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+              <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                 Enter the Spark software ecosystem: active command platforms, development-stage portals, AI tools, data systems, and future operational products.
               </p>
             </Motion.div>
@@ -1212,9 +1417,9 @@ function ApplicationsPage() {
                 <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
                 <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
                   {[
-                    ['Portfolio', '08 products'],
-                    ['Live systems', '01 active'],
-                    ['Pipeline', '07 staged'],
+                    ['Portfolio', '16 products'],
+                    ['Flagship', '01 private rollout'],
+                    ['Build Track', '03 in development'],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
                       <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -1226,10 +1431,10 @@ function ApplicationsPage() {
             </Motion.div>
           </div>
 
-          <section className="relative mt-12 overflow-hidden border border-white/10 bg-[#050b13]/92 shadow-[0_34px_140px_rgba(0,0,0,0.54)] backdrop-blur-xl">
+          <section className="relative mt-10 overflow-hidden border border-white/10 bg-[#050b13]/92 shadow-[0_34px_140px_rgba(0,0,0,0.54)] backdrop-blur-xl sm:mt-12">
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/45 to-transparent" />
             <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 rounded-full bg-cyan-200/10 blur-3xl" />
-            <div className="flex flex-col gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-end sm:justify-between sm:p-6">
+            <div className="flex flex-col gap-4 border-b border-white/10 p-4 sm:flex-row sm:items-end sm:justify-between sm:p-6">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Applications Directory</div>
                 <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
@@ -1237,39 +1442,43 @@ function ApplicationsPage() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-6 text-slate-400">
-                Scroll the panel to inspect active products and future platform concepts.
+                Flagship platform first, build-track systems next, future products staged behind the command backbone.
               </p>
             </div>
 
-            <div className="relative max-h-[32rem] overflow-y-auto overscroll-contain p-4 [scrollbar-color:rgba(245,158,11,0.55)_rgba(255,255,255,0.08)] [scrollbar-width:thin] sm:p-5">
+            <div className="relative max-h-[70vh] overflow-y-auto overscroll-contain p-3 [scrollbar-color:rgba(245,158,11,0.55)_rgba(255,255,255,0.08)] [scrollbar-width:thin] sm:max-h-[32rem] sm:p-5">
               <div className="grid gap-4">
-                {applications.map((app, index) => (
+                {applications.map((app, index) => {
+                  const tier = productTier(app)
+
+                  return (
                   <div
                     key={app.name}
-                    className={`group relative overflow-hidden border p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition hover:border-cyan-200/25 hover:bg-white/[0.07] sm:p-6 ${
-                      app.status === 'Private Rollout'
-                        ? 'border-amber-200/25 bg-gradient-to-br from-amber-200/[0.08] via-white/[0.045] to-cyan-200/[0.035] shadow-[0_0_46px_rgba(245,158,11,0.08),inset_0_1px_0_rgba(255,255,255,0.06)]'
-                        : 'border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.025]'
-                    }`}
+                    className={`group relative overflow-hidden border transition duration-300 hover:-translate-y-0.5 hover:border-cyan-200/28 hover:bg-white/[0.07] hover:shadow-[0_24px_80px_rgba(0,0,0,0.38)] ${tier.card}`}
                   >
-                    <div className="absolute inset-y-5 left-0 w-px bg-gradient-to-b from-transparent via-amber-200/40 to-transparent" />
+                    <div className={`absolute -right-20 -top-20 h-52 w-52 rounded-full bg-amber-200/10 blur-3xl transition duration-300 group-hover:bg-cyan-200/10 ${tier.glow}`} />
+                    <div className={`absolute inset-y-5 left-0 w-px bg-gradient-to-b from-transparent ${tier.rail} to-transparent`} />
+                    <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-70 transition group-hover:via-cyan-200/45" />
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-3">
                           <span className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">0{index + 1}</span>
+                          <span className={`border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${tier.badge}`}>
+                            {tier.label}
+                          </span>
                           <span className={`border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${statusTone(app.status)}`}>
                             {app.status}
                           </span>
                           <span className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100/70">{app.type}</span>
                         </div>
-                        <h3 className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-white">{app.name}</h3>
+                        <h3 className={`mt-4 font-semibold tracking-[-0.02em] text-white ${tier.title}`}>{app.name}</h3>
                         <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-400">{app.description}</p>
                       </div>
 
                       {app.href ? (
                         <Link
                           to={app.href}
-                          className="inline-flex shrink-0 items-center justify-center gap-2 bg-amber-300 px-5 py-3 text-sm font-bold text-black transition hover:bg-amber-200"
+                          className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 bg-amber-300 px-5 py-3 text-sm font-bold text-black transition hover:bg-amber-200"
                         >
                           {app.action}
                           <ArrowRight className="h-4 w-4" />
@@ -1278,18 +1487,100 @@ function ApplicationsPage() {
                         <button
                           type="button"
                           disabled
-                          className="inline-flex shrink-0 cursor-not-allowed items-center justify-center border border-white/10 bg-white/[0.035] px-5 py-3 text-sm font-semibold text-slate-500"
+                          className="inline-flex min-h-12 shrink-0 cursor-not-allowed items-center justify-center border border-white/10 bg-white/[0.035] px-5 py-3 text-sm font-semibold text-slate-500"
                         >
                           Coming Soon
                         </button>
                       )}
                     </div>
                   </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </section>
         </div>
+      </main>
+      <ScrollToTopButton />
+    </div>
+  )
+}
+
+function AboutSparkPage() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+      <ApplicationsHeader />
+
+      <main className="relative px-3 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
+        <div className="absolute left-1/2 top-16 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
+        <div className="absolute inset-x-0 top-24 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_46%)]" />
+
+        <section className="relative mx-auto max-w-7xl overflow-hidden border border-white/10 bg-[#060d16]/92 shadow-[0_38px_150px_rgba(0,0,0,0.62),0_0_90px_rgba(34,211,238,0.06)] backdrop-blur-xl">
+          <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/70 to-transparent" />
+          <BrandFrame
+            src={corporateLogo}
+            alt="Spark Command Systems company mark"
+            className="absolute -right-12 -top-10 hidden h-64 w-[28rem] border-0 opacity-25 lg:block"
+            imageClassName="scale-125"
+          />
+
+          <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="relative min-h-[30rem] bg-[#03070d] p-5 sm:p-10 lg:min-h-[40rem]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_28%,rgba(245,158,11,0.18),transparent_28%),radial-gradient(circle_at_70%_68%,rgba(34,211,238,0.11),transparent_34%)]" />
+              <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:54px_54px]" />
+              <div className="relative">
+                <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
+                  About Spark
+                </div>
+                <h1 className="mt-6 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96]">
+                  Built from one operational problem into a command systems company.
+                </h1>
+                <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+                  Spark began as a focused tool for making live operations easier to see, route, and control.
+                </p>
+              </div>
+            </div>
+
+            <div className="relative bg-[#060d16] p-5 sm:p-10">
+              <p className="max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl sm:leading-9">
+                That work exposed the larger problem: operations were not missing another isolated app. They were missing a connected layer between workflows, field activity, data, approvals, vendors, and leadership visibility.
+              </p>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
+                Spark Command Systems is being built around that larger need. The company now develops command platforms, integration layers, AI-ready tools, portals, and data systems that bring fragmented operations into one execution environment.
+              </p>
+
+              <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
+                {[
+                  ['Starting point', 'Focused operations tool'],
+                  ['Problem found', 'Fragmented systems'],
+                  ['Company direction', 'Command systems'],
+                ].map(([label, value]) => (
+                  <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
+                    <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                    <div className="mt-2 text-sm font-semibold text-white">{value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:gap-4">
+                <Link
+                  to="/applications"
+                  className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200"
+                >
+                  View Product Ecosystem
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
+                >
+                  Contact Development Team
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
       <ScrollToTopButton />
     </div>
@@ -1302,7 +1593,7 @@ function AmsComingSoonPage() {
       <SceneBackdrop />
       <ApplicationsHeader />
 
-      <main className="relative px-5 pb-20 pt-16 sm:px-6 lg:px-8">
+      <main className="relative px-3 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
         <div className="absolute left-1/2 top-16 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
         <div className="absolute inset-x-0 top-24 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.16),transparent_44%)]" />
 
@@ -1316,7 +1607,7 @@ function AmsComingSoonPage() {
           />
 
           <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="relative min-h-96 bg-[#03070d] p-8 sm:p-10">
+            <div className="relative min-h-[26rem] bg-[#03070d] p-5 sm:min-h-96 sm:p-10">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_36%_42%,rgba(245,158,11,0.2),transparent_30%),radial-gradient(circle_at_68%_62%,rgba(34,211,238,0.1),transparent_32%)]" />
               <USOperationsMap />
               <div className="absolute inset-0 bg-gradient-to-r from-[#03070d]/80 via-[#03070d]/42 to-[#03070d]/70" />
@@ -1324,18 +1615,18 @@ function AmsComingSoonPage() {
                 <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">
                   Private Access
                 </div>
-                <h1 className="mt-6 max-w-xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl">
+                <h1 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96]">
                   AMS Command Center
                 </h1>
-                <p className="mt-6 max-w-lg text-lg leading-8 text-slate-300">
+                <p className="mt-6 max-w-lg text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                   A dedicated operational command platform built by Spark Command Systems.
                 </p>
               </div>
             </div>
 
-            <div className="relative bg-[#060d16] p-8 sm:p-10">
+            <div className="relative bg-[#060d16] p-5 sm:p-10">
               <div className="absolute right-8 top-8 hidden h-20 w-20 border border-white/10 bg-white/[0.025] lg:block" />
-              <p className="max-w-2xl text-xl leading-9 text-slate-200">
+              <p className="max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl sm:leading-9">
                 AMS Command Center brings workflow visibility, field execution signals, dispatch awareness, and operational status into one focused command environment.
               </p>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
@@ -1355,23 +1646,23 @@ function AmsComingSoonPage() {
                 ))}
               </div>
 
-              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:gap-4">
                 <a
                   href="https://ams-command-center.vercel.app"
-                  className="group inline-flex items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
+                  className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
                 >
                   Enter Command Center
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </a>
                 <Link
                   to="/"
-                  className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                  className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
                   Back to Spark Homepage
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
+                  className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
                 >
                   Contact Development Team
                 </Link>
@@ -1401,6 +1692,7 @@ export default function SparkCommandSystemsSite() {
       <RouteScrollReset />
       <Routes>
         <Route path="/" element={<LandingPage page="home" />} />
+        <Route path="/about" element={<AboutSparkPage />} />
         <Route path="/platform" element={<LandingPage page="platform" />} />
         <Route path="/integration" element={<LandingPage page="integration" />} />
         <Route path="/pipeline" element={<LandingPage page="pipeline" />} />

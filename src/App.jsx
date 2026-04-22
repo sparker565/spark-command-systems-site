@@ -1322,27 +1322,30 @@ function AmsComingSoonPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#03070d]/80 via-[#03070d]/42 to-[#03070d]/70" />
               <div className="relative">
                 <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">
-                  Private Rollout
+                  Private Access
                 </div>
                 <h1 className="mt-6 max-w-xl text-5xl font-semibold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl">
                   AMS Command Center
                 </h1>
+                <p className="mt-6 max-w-lg text-lg leading-8 text-slate-300">
+                  A dedicated operational command platform built by Spark Command Systems.
+                </p>
               </div>
             </div>
 
             <div className="relative bg-[#060d16] p-8 sm:p-10">
               <div className="absolute right-8 top-8 hidden h-20 w-20 border border-white/10 bg-white/[0.025] lg:block" />
               <p className="max-w-2xl text-xl leading-9 text-slate-200">
-                Private rollout platform for live operational command, workflow visibility, and field execution systems.
+                AMS Command Center brings workflow visibility, field execution signals, dispatch awareness, and operational status into one focused command environment.
               </p>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
-                AMS Command Center is currently in staged development. Spark is shaping the platform around dispatch workflows, site-level visibility, field execution records, and the operational controls needed for a controlled release.
+                This gateway keeps the AMS product experience distinct while routing authorized users into the live platform deployment.
               </p>
 
               <div className="mt-9 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
                 {[
-                  ['Status', 'Staged development'],
-                  ['Access', 'Private rollout'],
+                  ['Status', 'Active build'],
+                  ['Access', 'Private access'],
                   ['Focus', 'Live operations'],
                 ].map(([label, value]) => (
                   <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
@@ -1353,11 +1356,18 @@ function AmsComingSoonPage() {
               </div>
 
               <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+                <a
+                  href="https://ams-command-center.vercel.app"
+                  className="group inline-flex items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
+                >
+                  Enter Command Center
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </a>
                 <Link
-                  to="/applications"
+                  to="/"
                   className="inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
-                  Back to Applications
+                  Back to Spark Homepage
                 </Link>
                 <Link
                   to="/contact"
@@ -1398,6 +1408,7 @@ export default function SparkCommandSystemsSite() {
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path="/contact" element={<LandingPage page="contact" />} />
         <Route path="/ams-command-center" element={<AmsComingSoonPage />} />
+        <Route path="/ams-login" element={<AmsComingSoonPage />} />
         <Route path="/app" element={<Navigate to="/ams-command-center" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

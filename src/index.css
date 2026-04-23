@@ -1,12 +1,33 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: dark;
+  background-color: #020407;
+}
+
 html,
 body,
 #root {
   min-height: 100%;
+  background-color: #020407;
+}
+
+html {
+  height: 100%;
+  background-color: #020407;
+  overscroll-behavior-y: none;
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
+  background-color: #020407;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: #020407;
 }

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { motion as Motion } from 'framer-motion'
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import {
   ArrowRight,
@@ -87,16 +86,19 @@ const serviceCards = [
     title: 'Website Builds & Upgrades',
     text: 'New sites or full redesigns. Fast, modern and built to convert.',
     icon: Building2,
+    href: '/contact',
   },
   {
     title: 'Operations Dashboards',
-    text: "Custom CRM and workflow platforms like AMS Command Center built around your team's real process.",
+    text: "Custom CRM and workflow platforms like the Command Center platform built around your team's real process.",
     icon: CircuitBoard,
+    href: '/platform',
   },
   {
     title: 'AI Powered Custom Tools',
     text: 'Intelligent automation and integrations shaped around how your business actually runs.',
     icon: BrainCircuit,
+    href: '/pipeline',
   },
 ]
 
@@ -122,7 +124,7 @@ const footerColumns = [
     links: [
       ['Platform', '/platform'],
       ['Deployment', '/deployment'],
-      ['AMS Command Center', '/ams-command-center'],
+      ['Command Center Platform', '/ams-command-center'],
     ],
   },
   {
@@ -174,7 +176,7 @@ const builtOnItems = [
 
 const applications = [
   {
-    name: 'AMS Command Center',
+    name: 'Command Center Platform',
     status: 'Private Rollout',
     type: 'Flagship Platform',
     description:
@@ -315,27 +317,21 @@ const budgetOptions = ['Under 10k', '10k-25k', '25k-75k', '75k+', 'Not sure']
 
 const buildTrackProducts = new Set(['Spark Vendor Hub', 'Spark Dispatch Grid', 'Spark Workflow Engine'])
 
-function FadeIn({ children, className = '', delay = 0 }) {
+function FadeIn({ children, className = '', delay = 0, ...props }) {
   return (
-    <Motion.div
-      initial={{ opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.24 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
+    <div className={className} data-delay={delay} {...props}>
       {children}
-    </Motion.div>
+    </div>
   )
 }
 
 function BrandFrame({ src, alt, className = '', imageClassName = '' }) {
   return (
     <div className={`relative overflow-hidden rounded-lg border border-white/10 bg-black/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_44px_rgba(245,158,11,0.08)] ${className}`}>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(245,158,11,0.2),transparent_34%),linear-gradient(135deg,rgba(148,163,184,0.08),transparent_32%,rgba(34,211,238,0.08))]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-black/45" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(245,158,11,0.2),transparent_34%),linear-gradient(135deg,rgba(148,163,184,0.08),transparent_32%,rgba(34,211,238,0.08))]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-black/45" />
       <img src={src} alt={alt} loading="lazy" className={`relative h-full w-full object-cover opacity-95 mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_44%,rgba(0,0,0,0.62)_68%,transparent_100%)] ${imageClassName}`} />
-      <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/10" />
+      <div className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-white/10" />
     </div>
   )
 }
@@ -384,7 +380,7 @@ function inputClassName() {
 }
 
 function productTier(app) {
-  if (app.name === 'AMS Command Center') {
+  if (app.href === '/ams-command-center') {
     return {
       label: 'Flagship',
       card:
@@ -697,13 +693,27 @@ function ContactIntakePage() {
 function SceneBackdrop() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#020407]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(245,158,11,0.2),transparent_28%),radial-gradient(circle_at_78%_6%,rgba(34,211,238,0.13),transparent_30%),radial-gradient(circle_at_62%_78%,rgba(148,163,184,0.08),transparent_34%),linear-gradient(180deg,#020407_0%,#07111d_42%,#020407_100%)]" />
-      <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:86px_86px]" />
-      <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(115deg,transparent_0%,transparent_47%,rgba(255,255,255,0.4)_48%,transparent_49%,transparent_100%)] [background-size:180px_180px]" />
-      <div className="absolute left-0 top-[18%] h-px w-[62rem] bg-gradient-to-r from-transparent via-cyan-200/25 to-transparent" />
-      <div className="absolute right-0 top-[58%] h-px w-[48rem] bg-gradient-to-r from-transparent via-amber-200/25 to-transparent" />
-      <div className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/10 opacity-70" />
-      <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-white/[0.055] to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(245,158,11,0.12),transparent_24%),radial-gradient(circle_at_82%_8%,rgba(34,211,238,0.08),transparent_26%),radial-gradient(circle_at_50%_76%,rgba(148,163,184,0.05),transparent_30%),linear-gradient(180deg,#020407_0%,#06101a_42%,#020407_100%)]" />
+      <div
+        className="absolute inset-0 opacity-[0.028]"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.88) 0%, rgba(2,4,7,0.9) 100%), url(${globeBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-[0.032]"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.92) 0%, rgba(2,4,7,0.9) 100%), url(${circuitBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:94px_94px]" />
+      <div className="absolute left-0 top-[18%] h-px w-[48rem] bg-gradient-to-r from-transparent via-cyan-200/14 to-transparent" />
+      <div className="absolute right-0 top-[58%] h-px w-[38rem] bg-gradient-to-r from-transparent via-amber-200/16 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-white/[0.03] to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_52%,rgba(0,0,0,0.72)_100%)]" />
     </div>
   )
@@ -1091,7 +1101,9 @@ function LandingPage({ page = 'home' }) {
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute inset-0 opacity-[0.1] [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:96px_96px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_38%,rgba(245,158,11,0.16),transparent_24%),radial-gradient(circle_at_68%_50%,rgba(34,211,238,0.08),transparent_28%)]" />
+          <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:96px_96px]" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#020407] via-[#020407]/88 to-transparent" />
           <div className="mx-auto grid max-w-7xl gap-8 px-3 pb-12 pt-6 sm:px-5 sm:pb-16 sm:pt-8 lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:px-8 lg:pb-16 lg:pt-12">
             <div className="relative z-10">
@@ -1111,7 +1123,7 @@ function LandingPage({ page = 'home' }) {
                   className="group inline-flex min-h-12 items-center justify-center gap-2 bg-cyan-200 px-7 py-4 text-base font-bold text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.22)] transition hover:bg-white"
                 >
                   Open Applications
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   to="/platform"
@@ -1123,7 +1135,7 @@ function LandingPage({ page = 'home' }) {
 
               <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:mt-10 sm:grid-cols-3">
                 {operatingSignals.map(([label, value]) => (
-                  <div key={label} className="bg-gradient-to-br from-[#09121f]/95 to-[#04080f]/95 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                  <div key={label} className="bg-[linear-gradient(180deg,rgba(8,17,28,0.96),rgba(4,8,15,0.94))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
                     <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
                     <div className="mt-2 text-sm font-semibold text-white">{value}</div>
                   </div>
@@ -1141,8 +1153,17 @@ function LandingPage({ page = 'home' }) {
 
         <section className="relative px-3 pb-12 sm:px-5 sm:pb-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <FadeIn className="relative overflow-hidden border border-white/10 bg-[#050b13]/88 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.44),0_0_70px_rgba(245,158,11,0.055)] backdrop-blur-xl sm:p-6">
+            <FadeIn
+              className="relative overflow-hidden border border-white/10 bg-[#050b13]/88 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.44),0_0_70px_rgba(245,158,11,0.055)] backdrop-blur-xl sm:p-6"
+              style={{
+                backgroundImage: `linear-gradient(180deg, rgba(5,11,19,0.96) 0%, rgba(5,11,19,0.9) 100%), url(${circuitBackground})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(245,158,11,0.1),transparent_18%),radial-gradient(circle_at_80%_30%,rgba(34,211,238,0.06),transparent_22%)]" />
               <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
+              <div className="absolute inset-x-8 bottom-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
               <div className="grid gap-6 lg:grid-cols-[0.28fr_0.72fr] lg:items-start">
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Built On</div>
@@ -1157,7 +1178,7 @@ function LandingPage({ page = 'home' }) {
                     return (
                       <div
                         key={item.title}
-                        className="relative overflow-hidden border border-white/10 bg-gradient-to-br from-[#08111d] to-[#04080e] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                        className="relative overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(8,17,29,0.96),rgba(4,8,14,0.92))] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.26),inset_0_1px_0_rgba(255,255,255,0.05)]"
                       >
                         <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
                         <div className="flex h-10 w-10 items-center justify-center border border-amber-200/20 bg-amber-200/[0.08] text-amber-100 shadow-[0_0_20px_rgba(245,158,11,0.08)]">
@@ -1178,6 +1199,15 @@ function LandingPage({ page = 'home' }) {
         </section>
 
         <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.045]"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.88) 0%, rgba(2,4,7,0.92) 100%), url(${circuitBackground})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <SectionIntro eyebrow="01 / Services" title="We build what your business needs to operate at a higher level." />
@@ -1193,25 +1223,25 @@ function LandingPage({ page = 'home' }) {
                   <FadeIn
                     key={service.title}
                     delay={index * 0.08}
-                    className="group relative min-h-[18rem] overflow-hidden border border-white/10 bg-[#07101b]/88 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-amber-200/35 hover:shadow-[0_34px_120px_rgba(0,0,0,0.48),0_0_58px_rgba(245,158,11,0.13)] sm:p-6"
+                    className="group relative min-h-[18rem] overflow-hidden border border-white/10 bg-[#07101b]/88 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition duration-300 hover:border-amber-200/35 hover:shadow-[0_34px_120px_rgba(0,0,0,0.48),0_0_58px_rgba(245,158,11,0.1)] sm:p-6"
                     style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(7,16,27,0.92) 0%, rgba(7,16,27,0.88) 100%), url(${circuitBackground})`,
+                      backgroundImage: `linear-gradient(180deg, rgba(7,16,27,0.95) 0%, rgba(7,16,27,0.9) 100%), url(${circuitBackground})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
                   >
-                    <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-amber-200/0 blur-3xl transition duration-300 group-hover:bg-amber-200/12" />
-                    <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/45 to-transparent transition group-hover:via-amber-200/85" />
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_22%,rgba(245,158,11,0.08),transparent_20%),radial-gradient(circle_at_18%_100%,rgba(34,211,238,0.05),transparent_28%)]" />
+                    <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/45 to-transparent transition group-hover:via-amber-200/72" />
                     <div className="mb-6 flex h-11 w-11 items-center justify-center border border-amber-200/20 bg-amber-200/[0.07] text-amber-100 shadow-[0_0_28px_rgba(245,158,11,0.1)]">
                       <Icon className="h-6 w-6" />
                     </div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100/70">0{index + 1} / Service</div>
                     <h3 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">{service.title}</h3>
                     <p className="mt-3 text-sm leading-6 text-slate-400">{service.text}</p>
-                    <a href="#" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-amber-100 transition group-hover:text-amber-50">
+                    <Link to={service.href} className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-semibold text-amber-100 transition group-hover:text-amber-50">
                       Open page
-                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                    </a>
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </FadeIn>
                 )
               })}
@@ -1220,6 +1250,7 @@ function LandingPage({ page = 'home' }) {
         </section>
 
         <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/18 to-transparent" />
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
               <FadeIn>
@@ -1233,7 +1264,7 @@ function LandingPage({ page = 'home' }) {
                     ['Leadership reporting', 'Turn day-to-day execution into records leaders can review and trust.'],
                     ['Scalable structure', 'Support growth across locations, roles, and workflows without rebuilding the foundation.'],
                   ].map(([title, text]) => (
-                    <div key={title} className="border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.025] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                    <div key={title} className="border border-white/10 bg-gradient-to-br from-white/[0.055] via-white/[0.03] to-white/[0.02] p-5 shadow-[0_16px_55px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.05)]">
                       <div className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-200/80">{title}</div>
                       <p className="mt-3 text-sm leading-7 text-slate-400">{text}</p>
                     </div>
@@ -1241,7 +1272,16 @@ function LandingPage({ page = 'home' }) {
                 </div>
               </FadeIn>
 
-              <FadeIn delay={0.08} className="relative overflow-hidden border border-white/10 bg-[#060d16]/88 p-5 shadow-[0_30px_110px_rgba(0,0,0,0.46)] backdrop-blur-xl sm:p-6">
+              <FadeIn
+                delay={0.08}
+                className="relative overflow-hidden border border-white/10 bg-[#060d16]/88 p-5 shadow-[0_30px_110px_rgba(0,0,0,0.46)] backdrop-blur-xl sm:p-6"
+                style={{
+                  backgroundImage: `linear-gradient(180deg, rgba(6,13,22,0.94) 0%, rgba(6,13,22,0.9) 100%), url(${globeBackground})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_18%,rgba(34,211,238,0.07),transparent_20%),radial-gradient(circle_at_20%_100%,rgba(245,158,11,0.07),transparent_26%)]" />
                 <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/45 to-transparent" />
                 <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
                   {platformMetrics.map(([label, value]) => (
@@ -1263,9 +1303,11 @@ function LandingPage({ page = 'home' }) {
         </section>
 
         <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-              <FadeIn>
+              <FadeIn className="relative">
+                <div className="pointer-events-none absolute -left-10 top-8 h-44 w-44 rounded-full bg-amber-200/8 blur-3xl" />
                 <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">03 / Scale</div>
                 <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-tight text-white sm:text-5xl">
                   Built for connected operations across real world teams and locations.
@@ -1275,7 +1317,7 @@ function LandingPage({ page = 'home' }) {
                 </p>
               </FadeIn>
 
-              <FadeIn delay={0.08} className="relative overflow-hidden rounded-lg border border-white/10 bg-[#060d16]/88 shadow-[0_30px_110px_rgba(0,0,0,0.44)]">
+              <FadeIn delay={0.08} className="relative overflow-hidden rounded-lg border border-white/10 bg-[#060d16]/88 shadow-[0_30px_110px_rgba(0,0,0,0.44),0_0_52px_rgba(34,211,238,0.05)]">
                 <PremiumImage
                   src={usaNetworkImage}
                   fallback={corporateLogo}
@@ -1283,7 +1325,8 @@ function LandingPage({ page = 'home' }) {
                   className="h-64 w-full sm:h-72"
                   imageClassName="object-cover"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,7,0.58)_0%,rgba(2,4,7,0.18)_100%),linear-gradient(180deg,rgba(2,4,7,0.08)_0%,rgba(2,4,7,0.52)_100%)]" />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,7,0.58)_0%,rgba(2,4,7,0.18)_100%),linear-gradient(180deg,rgba(2,4,7,0.08)_0%,rgba(2,4,7,0.52)_100%)]" />
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/16 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                   <div className="max-w-sm border border-white/10 bg-[#020407]/72 p-4 backdrop-blur">
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/80">Nationwide Readiness</div>
@@ -1300,24 +1343,27 @@ function LandingPage({ page = 'home' }) {
         <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
             <FadeIn className="relative">
+              <div className="pointer-events-none absolute -left-8 top-10 h-48 w-48 rounded-full bg-cyan-200/8 blur-3xl" />
               <PremiumImage
                 src={heroCommandImage}
                 fallback={corporateLogo}
                 alt="Command center operator at a multi-monitor setup"
                 className="relative h-72 rounded-lg border border-white/10 bg-black/45 shadow-[0_32px_130px_rgba(0,0,0,0.52),0_0_62px_rgba(34,211,238,0.07)] sm:h-80 lg:h-[24rem]"
               />
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-black/45 via-transparent to-amber-200/[0.08]" />
+              <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-tr from-black/45 via-transparent to-amber-200/[0.08]" />
+              <div className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-white/8" />
             </FadeIn>
             <FadeIn delay={0.08} className="relative border border-white/10 bg-[#060d16]/78 p-5 shadow-[0_26px_110px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:p-7 lg:p-8">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_12%,rgba(245,158,11,0.08),transparent_18%),radial-gradient(circle_at_10%_88%,rgba(34,211,238,0.05),transparent_24%)]" />
               <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
-              <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">04 / About</div>
-              <h2 className="mt-5 text-3xl font-semibold leading-tight text-white sm:text-5xl">
+              <div className="relative z-10 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">04 / About</div>
+              <h2 className="relative z-10 mt-5 text-3xl font-semibold leading-tight text-white sm:text-5xl">
                 One builder. Real systems. Built from the inside out.
               </h2>
-              <p className="mt-6 text-base leading-8 text-slate-300 sm:text-lg">
-                SparkCommand Systems was built by someone who needed better tools and decided to build them. From the AMS Command Center to custom client platforms, every system is designed around operational reality, not just aesthetics.
+              <p className="relative z-10 mt-6 text-base leading-8 text-slate-300 sm:text-lg">
+                SparkCommand Systems was built by someone who needed better tools and decided to build them. From the Command Center platform to custom client systems, every system is designed around operational reality, not just aesthetics.
               </p>
-              <Link to="/contact" className="mt-8 inline-flex items-center gap-2 text-base font-semibold text-cyan-100 transition hover:text-white">
+              <Link to="/contact" className="relative z-10 mt-8 inline-flex items-center gap-2 text-base font-semibold text-cyan-100 transition hover:text-white">
                 Contact the development team
                 <ArrowRight className="h-4 w-4" />
               </Link>
@@ -1326,6 +1372,7 @@ function LandingPage({ page = 'home' }) {
         </section>
 
         <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/16 to-transparent" />
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <SectionIntro eyebrow="05 / Proof" title="Built with operational credibility, not marketing filler." />
@@ -1337,7 +1384,7 @@ function LandingPage({ page = 'home' }) {
             <div className="mt-8 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="grid gap-4">
                 {proofMetrics.map(([title, text], index) => (
-                  <FadeIn key={title} delay={index * 0.06} className="border border-white/10 bg-gradient-to-br from-[#08111d] to-[#04080e] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                  <FadeIn key={title} delay={index * 0.06} className="border border-white/10 bg-gradient-to-br from-[#08111d] via-[#06101a] to-[#04080e] p-5 shadow-[0_16px_60px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.05)]">
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/80">0{index + 1} / Proof</div>
                     <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">{title}</h3>
                     <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
@@ -1370,16 +1417,16 @@ function LandingPage({ page = 'home' }) {
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 shadow-[0_32px_130px_rgba(0,0,0,0.5),0_0_70px_rgba(34,211,238,0.045)] md:grid-cols-2 xl:grid-cols-5">
               {companyCards.map(([label, title, href, text]) => (
-                <Link key={title} to={href} className="group relative min-h-[16rem] overflow-hidden bg-gradient-to-br from-[#08111d] via-[#060d16] to-[#03070d] p-5 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.07] hover:shadow-[0_26px_90px_rgba(0,0,0,0.36)] sm:p-6">
-                  <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-200/0 blur-3xl transition duration-300 group-hover:bg-cyan-200/10" />
-                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent transition group-hover:via-amber-200/75" />
-                  <div className="absolute inset-y-6 left-0 w-px bg-gradient-to-b from-transparent via-cyan-200/0 to-transparent transition group-hover:via-cyan-200/35" />
+                <Link key={title} to={href} className="group relative min-h-[16rem] overflow-hidden bg-gradient-to-br from-[#08111d] via-[#060d16] to-[#03070d] p-5 transition duration-300 hover:bg-white/[0.07] hover:shadow-[0_26px_90px_rgba(0,0,0,0.36)] sm:p-6">
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_86%_16%,rgba(34,211,238,0.04),transparent_18%),radial-gradient(circle_at_12%_100%,rgba(245,158,11,0.04),transparent_22%)]" />
+                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent transition group-hover:via-amber-200/60" />
+                  <div className="absolute inset-y-6 left-0 w-px bg-gradient-to-b from-transparent via-cyan-200/0 to-transparent transition group-hover:via-cyan-200/20" />
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">{label}</div>
                   <h2 className="mt-4 text-xl font-semibold text-white sm:text-2xl">{title}</h2>
                   <p className="mt-3 pr-2 text-sm leading-6 text-slate-400">{text}</p>
                   <div className="absolute bottom-6 left-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-100 sm:left-6">
                     Open page
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4" />
                   </div>
                 </Link>
               ))}
@@ -1391,33 +1438,35 @@ function LandingPage({ page = 'home' }) {
           <FadeIn
             className="relative mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16]/88 p-6 text-center shadow-[0_38px_150px_rgba(0,0,0,0.58),0_0_82px_rgba(245,158,11,0.1)] backdrop-blur-xl sm:p-8 lg:p-10"
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(6,13,22,0.94) 0%, rgba(6,13,22,0.88) 100%), radial-gradient(circle_at_50%_48%, rgba(245,158,11,0.16), transparent 35%), url(${circuitBackground})`,
+              backgroundImage: `linear-gradient(180deg, rgba(6,13,22,0.95) 0%, rgba(6,13,22,0.9) 100%), radial-gradient(circle_at_50%_48%, rgba(245,158,11,0.14), transparent 34%), url(${circuitBackground})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_52%,rgba(245,158,11,0.12),transparent_26%),radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.06),transparent_18%)]" />
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/75 to-transparent" />
+            <div className="absolute inset-x-12 bottom-0 h-px bg-gradient-to-r from-transparent via-white/14 to-transparent" />
             <PremiumImage
               src={logoFull}
               fallback={corporateLogo}
               alt="SparkCommand Systems"
-              className="mx-auto h-14 w-64 max-w-full sm:h-16 sm:w-72"
+              className="relative z-10 mx-auto h-14 w-64 max-w-full sm:h-16 sm:w-72"
               imageClassName="object-contain"
             />
-            <div className="mt-6 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Build the operating layer</div>
-            <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
+            <div className="relative z-10 mt-6 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Build the operating layer</div>
+            <h2 className="relative z-10 mx-auto mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
               Bring your website, workflow, data, and operational tools into one stronger system.
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            <p className="relative z-10 mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">
               Start with a focused development conversation and turn the real shape of your operation into software your team can use.
             </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="relative z-10 mt-7 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 to="/contact"
                 className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
               >
                 Contact Development Team
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/applications"
@@ -1751,11 +1800,7 @@ function ApplicationsPage() {
 
         <div className="relative mx-auto max-w-7xl">
           <div className="grid gap-8 sm:gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-            <Motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <FadeIn>
               <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
                 Spark Software Portfolio
@@ -1766,14 +1811,9 @@ function ApplicationsPage() {
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                 Enter the Spark software ecosystem: active command platforms, development-stage portals, AI tools, data systems, and future operational products.
               </p>
-            </Motion.div>
+            </FadeIn>
 
-            <Motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="relative"
-            >
+            <FadeIn delay={0.1} className="relative">
               <BrandFrame
                 src={techLogo}
                 alt="Spark technology catalog signal"
@@ -1795,7 +1835,7 @@ function ApplicationsPage() {
                   ))}
                 </div>
               </div>
-            </Motion.div>
+            </FadeIn>
           </div>
 
           <section className="relative mt-10 overflow-hidden border border-white/10 bg-[#050b13]/92 shadow-[0_34px_140px_rgba(0,0,0,0.54)] backdrop-blur-xl sm:mt-12">
@@ -1895,8 +1935,8 @@ function AboutSparkPage() {
 
           <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative min-h-[30rem] bg-[#03070d] p-5 sm:p-10 lg:min-h-[40rem]">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_28%,rgba(245,158,11,0.18),transparent_28%),radial-gradient(circle_at_70%_68%,rgba(34,211,238,0.11),transparent_34%)]" />
-              <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:54px_54px]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_34%_28%,rgba(245,158,11,0.18),transparent_28%),radial-gradient(circle_at_70%_68%,rgba(34,211,238,0.11),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:54px_54px]" />
               <div className="relative">
                 <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
                   About Spark
@@ -1977,18 +2017,18 @@ function AmsComingSoonPage() {
 
           <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative min-h-[26rem] bg-[#03070d] p-5 sm:min-h-96 sm:p-10">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_36%_42%,rgba(245,158,11,0.2),transparent_30%),radial-gradient(circle_at_68%_62%,rgba(34,211,238,0.1),transparent_32%)]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_36%_42%,rgba(245,158,11,0.2),transparent_30%),radial-gradient(circle_at_68%_62%,rgba(34,211,238,0.1),transparent_32%)]" />
               <USOperationsMap />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#03070d]/80 via-[#03070d]/42 to-[#03070d]/70" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#03070d]/80 via-[#03070d]/42 to-[#03070d]/70" />
               <div className="relative">
                 <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">
                   Private Access
                 </div>
                 <h1 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96]">
-                  AMS Command Center
+                  Command Center Platform
                 </h1>
                 <p className="mt-6 max-w-lg text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                  A dedicated operational command platform built by Spark Command Systems.
+                  Secure platform access for live operational visibility, controlled deployment, and role-based entry.
                 </p>
               </div>
             </div>
@@ -1996,10 +2036,10 @@ function AmsComingSoonPage() {
             <div className="relative bg-[#060d16] p-5 sm:p-10">
               <div className="absolute right-8 top-8 hidden h-20 w-20 border border-white/10 bg-white/[0.025] lg:block" />
               <p className="max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl sm:leading-9">
-                AMS Command Center brings workflow visibility, field execution signals, dispatch awareness, and operational status into one focused command environment.
+                The Command Center Platform brings workflow visibility, field execution signals, dispatch awareness, and operational status into one focused command environment.
               </p>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
-                This gateway keeps the AMS product experience distinct while routing authorized users into the live platform deployment.
+                This gateway supports secure platform access and routes authorized AMS users into the live deployment environment.
               </p>
 
               <div className="mt-9 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">

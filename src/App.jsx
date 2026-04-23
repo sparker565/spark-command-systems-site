@@ -19,9 +19,13 @@ import {
   X,
 } from 'lucide-react'
 
-const corporateLogo = '/corporate-logo.png'
-const techLogo = '/tech-logo.png'
-const productLogo = '/product-logo.png'
+const corporateLogo = '/assets/corporate-logo.png'
+const techLogo = '/assets/tech-logo.png'
+const logoFull = '/assets/logo-full.png'
+const heroCommandImage = '/assets/hero-command.jpeg'
+const circuitBackground = '/assets/bg-circuit.jpeg'
+const globeBackground = '/assets/bg-globe.jpeg'
+const usaNetworkImage = '/assets/usa-network.png'
 
 const navItems = [
   { label: 'About', href: '/about' },
@@ -76,6 +80,96 @@ const deploymentItems = [
   'Real-world rollout support',
   'Executive visibility',
   'Partner and vendor access',
+]
+
+const serviceCards = [
+  {
+    title: 'Website Builds & Upgrades',
+    text: 'New sites or full redesigns. Fast, modern and built to convert.',
+    icon: Building2,
+  },
+  {
+    title: 'Operations Dashboards',
+    text: "Custom CRM and workflow platforms like AMS Command Center built around your team's real process.",
+    icon: CircuitBoard,
+  },
+  {
+    title: 'AI Powered Custom Tools',
+    text: 'Intelligent automation and integrations shaped around how your business actually runs.',
+    icon: BrainCircuit,
+  },
+]
+
+const companyCards = [
+  ['01 / ABOUT', 'About Spark', '/about', 'The company story behind the command systems vision.'],
+  ['02 / PLATFORM', 'Platform', '/platform', 'Command center software for live operational control.'],
+  ['03 / INTEGRATION', 'Integration', '/integration', 'Systems, data, users, and services unified into one operating layer.'],
+  ['04 / PIPELINE', 'Pipeline', '/pipeline', 'Future products, AI tools, portals, and data infrastructure.'],
+  ['05 / DEPLOYMENT', 'Deployment', '/deployment', 'Rollout-ready systems for distributed teams and multi-site operations.'],
+]
+
+const footerColumns = [
+  {
+    title: 'Company',
+    links: [
+      ['About Spark', '/about'],
+      ['Contact', '/contact'],
+      ['Applications', '/applications'],
+    ],
+  },
+  {
+    title: 'Platform',
+    links: [
+      ['Platform', '/platform'],
+      ['Deployment', '/deployment'],
+      ['AMS Command Center', '/ams-command-center'],
+    ],
+  },
+  {
+    title: 'Solutions',
+    links: [
+      ['Integration', '/integration'],
+      ['Pipeline', '/pipeline'],
+      ['Development Team', '/contact'],
+    ],
+  },
+  {
+    title: 'Access',
+    links: [
+      ['Open App', '/applications'],
+      ['AMS Login', '/ams-login'],
+      ['Book a Demo', '/contact'],
+    ],
+  },
+]
+
+const proofMetrics = [
+  ['Operational focus', 'Built for teams that need live visibility, control, and follow-through.'],
+  ['System design', 'Connected workflows, access layers, integrations, and reporting in one structure.'],
+  ['Delivery model', 'Custom builds shaped around how a business actually runs, not generic templates.'],
+]
+
+const builtOnItems = [
+  {
+    title: 'Secure',
+    text: 'Access, visibility, and system structure designed for operational control.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Scalable',
+    text: 'Built to support growth across locations, users, workflows, and demand.',
+    icon: Boxes,
+  },
+  {
+    title: 'Integrated',
+    text: 'Connect the tools, data, teams, and vendors that already move the business.',
+    icon: Layers3,
+  },
+  {
+    title: 'Reliable',
+    text: 'Clear process, durable reporting, and consistent execution under real pressure.',
+    icon: CheckCircle2,
+  },
 ]
 
 const applications = [
@@ -240,8 +334,25 @@ function BrandFrame({ src, alt, className = '', imageClassName = '' }) {
     <div className={`relative overflow-hidden rounded-lg border border-white/10 bg-black/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_44px_rgba(245,158,11,0.08)] ${className}`}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(245,158,11,0.2),transparent_34%),linear-gradient(135deg,rgba(148,163,184,0.08),transparent_32%,rgba(34,211,238,0.08))]" />
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-black/45" />
-      <img src={src} alt={alt} className={`relative h-full w-full object-cover opacity-95 mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_44%,rgba(0,0,0,0.62)_68%,transparent_100%)] ${imageClassName}`} />
+      <img src={src} alt={alt} loading="lazy" className={`relative h-full w-full object-cover opacity-95 mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_44%,rgba(0,0,0,0.62)_68%,transparent_100%)] ${imageClassName}`} />
       <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/10" />
+    </div>
+  )
+}
+
+function PremiumImage({ src, fallback = corporateLogo, alt = '', className = '', imageClassName = '' }) {
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onError={(event) => {
+          event.currentTarget.onerror = null
+          event.currentTarget.src = fallback
+        }}
+        className={`h-full w-full object-cover ${imageClassName}`}
+      />
     </div>
   )
 }
@@ -589,21 +700,9 @@ function SceneBackdrop() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(245,158,11,0.2),transparent_28%),radial-gradient(circle_at_78%_6%,rgba(34,211,238,0.13),transparent_30%),radial-gradient(circle_at_62%_78%,rgba(148,163,184,0.08),transparent_34%),linear-gradient(180deg,#020407_0%,#07111d_42%,#020407_100%)]" />
       <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:86px_86px]" />
       <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(115deg,transparent_0%,transparent_47%,rgba(255,255,255,0.4)_48%,transparent_49%,transparent_100%)] [background-size:180px_180px]" />
-      <Motion.div
-        animate={{ x: ['-18%', '18%', '-18%'], opacity: [0.1, 0.34, 0.1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute left-0 top-[18%] h-px w-[62rem] bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent"
-      />
-      <Motion.div
-        animate={{ x: ['18%', '-16%', '18%'], opacity: [0.08, 0.28, 0.08] }}
-        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute right-0 top-[58%] h-px w-[48rem] bg-gradient-to-r from-transparent via-amber-200/40 to-transparent"
-      />
-      <Motion.div
-        animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.18, 0.08] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/10"
-      />
+      <div className="absolute left-0 top-[18%] h-px w-[62rem] bg-gradient-to-r from-transparent via-cyan-200/25 to-transparent" />
+      <div className="absolute right-0 top-[58%] h-px w-[48rem] bg-gradient-to-r from-transparent via-amber-200/25 to-transparent" />
+      <div className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/10 opacity-70" />
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-white/[0.055] to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_52%,rgba(0,0,0,0.72)_100%)]" />
     </div>
@@ -705,7 +804,7 @@ function USOperationsMap() {
         <circle cx="130" cy="204" r="58" fill="rgba(34,211,238,0.1)" />
       </g>
 
-      {connections.map(([from, to], index) => {
+      {connections.map(([from, to]) => {
         const start = nodeById[from]
         const end = nodeById[to]
 
@@ -731,43 +830,21 @@ function USOperationsMap() {
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeDasharray="18 210"
-              opacity="0.32"
-            >
-              <animate
-                attributeName="stroke-dashoffset"
-                from="0"
-                to="-228"
-                dur={`${6 + index * 0.35}s`}
-                repeatCount="indefinite"
-              />
-            </line>
+              opacity="0.18"
+            />
           </g>
         )
       })}
 
-      {nodes.map((node, index) => {
+      {nodes.map((node) => {
         const isGold = node.tone === 'gold'
         const fill = isGold ? '#fbbf24' : '#67e8f9'
         const glow = isGold ? 'rgba(251,191,36,0.34)' : 'rgba(103,232,249,0.24)'
 
         return (
           <g key={node.id} filter="url(#nodeGlow)">
-            <circle cx={node.x} cy={node.y} r={node.size * 5.6} fill={glow}>
-              <animate
-                attributeName="opacity"
-                values="0.16;0.42;0.16"
-                dur={`${4.8 + index * 0.22}s`}
-                repeatCount="indefinite"
-              />
-            </circle>
-            <circle cx={node.x} cy={node.y} r={node.size} fill={fill}>
-              <animate
-                attributeName="r"
-                values={`${node.size};${node.size + 1.8};${node.size}`}
-                dur={`${3.4 + index * 0.18}s`}
-                repeatCount="indefinite"
-              />
-            </circle>
+            <circle cx={node.x} cy={node.y} r={node.size * 5.6} fill={glow} opacity="0.3" />
+            <circle cx={node.x} cy={node.y} r={node.size} fill={fill} />
             <circle cx={node.x} cy={node.y} r={node.size + 4} fill="none" stroke={fill} strokeOpacity="0.4" strokeWidth="1" />
           </g>
         )
@@ -779,75 +856,50 @@ function USOperationsMap() {
 function CommandConsole() {
   return (
     <div className="relative mx-auto max-w-2xl lg:max-w-none">
-      <div className="absolute -inset-10 bg-[radial-gradient(circle_at_50%_28%,rgba(245,158,11,0.22),transparent_30%),radial-gradient(circle_at_42%_64%,rgba(34,211,238,0.16),transparent_36%),linear-gradient(135deg,rgba(148,163,184,0.12),transparent_52%)] blur-2xl" />
-      <div className="absolute -left-10 top-14 hidden h-[82%] w-16 border-l border-t border-b border-cyan-200/10 bg-gradient-to-r from-cyan-200/[0.08] to-transparent lg:block" />
-      <div className="absolute -right-10 bottom-14 hidden h-[72%] w-16 border-r border-t border-b border-amber-200/10 bg-gradient-to-l from-amber-200/[0.08] to-transparent lg:block" />
-      <Motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative border border-white/12 bg-[#07101b]/90 shadow-[0_36px_140px_rgba(0,0,0,0.68),0_0_80px_rgba(34,211,238,0.08)] backdrop-blur-xl"
-      >
-        <div className="absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-amber-200/80 to-transparent" />
-        <div className="absolute inset-y-8 -right-px w-px bg-gradient-to-b from-transparent via-cyan-200/70 to-transparent" />
-        <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-5">
-          <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-300/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-cyan-300/70" />
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-300/70" />
-          </div>
-          <span className="text-[0.68rem] uppercase tracking-[0.28em] text-slate-400">Spark command core</span>
-        </div>
-
-        <div className="grid gap-px bg-white/10 lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="bg-[#07101b] p-4 sm:p-5">
-            <div className="relative min-h-[270px] overflow-hidden border border-white/10 bg-[#03070d] sm:min-h-[330px]">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(34,211,238,0.23),transparent_23%),linear-gradient(140deg,rgba(245,158,11,0.12),transparent_35%),linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:auto,auto,42px_42px,42px_42px]" />
-              <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
-              <div className="absolute inset-y-0 left-1/2 w-px bg-gradient-to-b from-transparent via-amber-200/25 to-transparent" />
-              <USOperationsMap />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_31%,rgba(245,158,11,0.12),transparent_18%),radial-gradient(circle_at_49%_72%,rgba(245,158,11,0.09),transparent_20%)]" />
-              <div className="absolute left-3 top-3 border border-white/10 bg-black/45 px-3 py-2 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-slate-300 backdrop-blur sm:left-5 sm:top-5 sm:text-[0.64rem] sm:tracking-[0.24em]">
-                United States Ops Map
+      <div className="absolute -inset-8 bg-[radial-gradient(circle_at_50%_28%,rgba(245,158,11,0.16),transparent_34%),radial-gradient(circle_at_42%_64%,rgba(34,211,238,0.1),transparent_38%)] blur-2xl" />
+      <div className="relative overflow-hidden rounded-lg border border-white/12 bg-[#07101b]/90 shadow-[0_36px_140px_rgba(0,0,0,0.68),0_0_80px_rgba(34,211,238,0.05)] backdrop-blur-xl">
+        <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/80 to-transparent" />
+        <div
+          className="relative min-h-[20rem] bg-[#03070d] sm:min-h-[24rem]"
+          style={{
+            backgroundImage: `linear-gradient(90deg, rgba(2,4,7,0.72) 0%, rgba(2,4,7,0.18) 100%), linear-gradient(180deg, rgba(2,4,7,0.04) 0%, rgba(2,4,7,0.46) 100%), url(${usaNetworkImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="flex min-h-[20rem] flex-col justify-between p-5 sm:min-h-[24rem] sm:p-6">
+            <div className="max-w-max border border-white/10 bg-[#020407]/68 px-3 py-2 backdrop-blur">
+              <div className="text-[0.64rem] font-semibold uppercase tracking-[0.24em] text-amber-200/85">
+                Connected Operations
               </div>
-              <div className="absolute inset-x-3 bottom-3 border border-white/10 bg-black/55 p-3 backdrop-blur sm:inset-x-4 sm:bottom-4 sm:p-4">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="text-sm font-medium text-white">Live operational surface</div>
-                    <div className="mt-1 text-xs leading-5 text-slate-400">Sites, partners, and event signals in one command view.</div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+              <div className="max-w-lg border border-white/10 bg-[#020407]/72 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur sm:p-5">
+                <h3 className="text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+                  One network view for distributed operations.
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">
+                  Spark builds systems that support teams across regions, workflows, vendors, and sites without losing command visibility.
+                </p>
+              </div>
+
+              <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3 lg:w-[22rem]">
+                {[
+                  ['Coverage', 'Regional to national'],
+                  ['Model', 'Multi-site ready'],
+                  ['View', 'One command layer'],
+                ].map(([label, value]) => (
+                  <div key={label} className="bg-[#02070d]/76 p-4 backdrop-blur">
+                    <div className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                    <div className="mt-2 text-sm font-semibold text-white">{value}</div>
                   </div>
-                  <RadioTower className="hidden h-7 w-7 text-cyan-200 sm:block" />
-                </div>
+                ))}
               </div>
-              <BrandFrame
-                src={techLogo}
-                alt="Spark technology signal"
-                className="absolute right-5 top-5 h-24 w-40 opacity-70"
-                imageClassName="scale-150"
-              />
-            </div>
-          </div>
-
-          <div className="bg-[#07101b] p-4 sm:p-5">
-            <div className="space-y-3">
-              {platformMetrics.map(([label, value]) => (
-                <div key={label} className="border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.025] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                  <div className="text-2xl font-semibold text-white">{value}</div>
-                  <div className="mt-1 text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 border border-amber-200/20 bg-gradient-to-br from-amber-200/[0.09] to-cyan-200/[0.04] p-4">
-              <div className="flex items-center gap-3">
-                <BrainCircuit className="h-5 w-5 text-amber-200" />
-                <span className="text-sm font-medium text-white">AI-ready signal layer</span>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-slate-300">
-                Built to organize operational data so assistive tools can surface risk, context, and next actions.
-              </p>
             </div>
           </div>
         </div>
-      </Motion.div>
+      </div>
     </div>
   )
 }
@@ -878,6 +930,60 @@ function ScrollToTopButton() {
   )
 }
 
+function SiteFooter() {
+  return (
+    <footer className="relative border-t border-white/10 bg-[#020407]/95">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/50 to-transparent" />
+      <div className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+        <div className="grid gap-10 border-b border-white/10 pb-10 lg:grid-cols-[1.2fr_2fr] lg:items-start lg:gap-16">
+          <div className="max-w-md">
+            <PremiumImage
+              src={logoFull}
+              fallback={corporateLogo}
+              alt="SparkCommand Systems"
+              className="h-14 w-64 max-w-full"
+              imageClassName="object-contain object-left"
+            />
+            <p className="mt-5 text-sm leading-7 text-slate-400">
+              Spark Command Systems builds software, connected operational systems, and command platforms for teams that need clarity across real work.
+            </p>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {footerColumns.map((column) => (
+              <div key={column.title}>
+                <div className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-200/80">{column.title}</div>
+                <div className="mt-4 space-y-3">
+                  {column.links.map(([label, href]) => (
+                    <Link
+                      key={label}
+                      to={href}
+                      className="block text-sm text-slate-400 transition hover:text-white"
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <BrandFrame src={corporateLogo} alt="Spark Command Systems" className="h-12 w-12" imageClassName="scale-[2.15]" />
+            <div>
+              <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
+              <div className="text-[0.68rem] uppercase tracking-[0.3em] text-slate-500">Command Systems</div>
+            </div>
+          </div>
+          <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems. Software, integration, and command platforms.</div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
 function LandingPage({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -899,7 +1005,7 @@ function LandingPage({ page = 'home' }) {
 
       <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
         <div
-          className={`relative mx-auto max-w-7xl overflow-hidden border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl transition-all duration-300 ${
+          className={`relative mx-auto max-w-7xl overflow-hidden border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl ${
             isScrolled
               ? 'border-cyan-200/20 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)]'
               : 'border-white/12'
@@ -909,12 +1015,12 @@ function LandingPage({ page = 'home' }) {
           <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-          <div className={`relative flex items-center justify-between gap-2 px-3 transition-all duration-300 sm:gap-4 sm:px-5 lg:px-6 ${isScrolled ? 'py-2.5' : 'py-3.5'}`}>
+          <div className="relative flex items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-5 lg:px-6">
             <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
-              className={`shrink-0 transition-all duration-300 ${isScrolled ? 'h-9 w-9 sm:h-10 sm:w-10' : 'h-10 w-10 sm:h-12 sm:w-12'}`}
+              className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
               imageClassName="scale-[2.15]"
             />
             <div className="min-w-0">
@@ -977,22 +1083,23 @@ function LandingPage({ page = 'home' }) {
       <main id="top">
         {page === 'home' && (
         <>
-        <section className="relative overflow-hidden pt-10 sm:min-h-screen sm:pt-20">
-          <div className="absolute left-1/2 top-20 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
-          <div className="absolute right-0 top-1/3 h-px w-1/3 bg-gradient-to-l from-amber-200/25 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#020407] to-transparent" />
-          <div className="mx-auto grid max-w-7xl gap-10 px-3 pb-16 pt-8 sm:px-5 sm:pb-24 sm:pt-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:pb-28 lg:pt-20">
-            <Motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10"
-            >
+        <section
+          className="relative -mt-16 overflow-hidden pt-16 sm:pt-24 lg:min-h-[40rem]"
+          style={{
+            backgroundImage: `linear-gradient(90deg, rgba(2,4,7,0.94) 0%, rgba(2,4,7,0.8) 38%, rgba(2,4,7,0.64) 100%), url(${globeBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 opacity-[0.1] [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:96px_96px]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#020407] via-[#020407]/88 to-transparent" />
+          <div className="mx-auto grid max-w-7xl gap-8 px-3 pb-12 pt-6 sm:px-5 sm:pb-16 sm:pt-8 lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:px-8 lg:pb-16 lg:pt-12">
+            <div className="relative z-10">
               <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
                 Software. Systems. Command.
               </div>
-              <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96] lg:text-7xl xl:text-8xl">
+              <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl sm:leading-[0.98] lg:text-6xl xl:text-7xl">
                 Technology infrastructure for live operations.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-7 sm:text-xl sm:leading-8">
@@ -1014,7 +1121,7 @@ function LandingPage({ page = 'home' }) {
                 </Link>
               </div>
 
-              <div className="mt-10 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:mt-12 sm:grid-cols-3">
+              <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:mt-10 sm:grid-cols-3">
                 {operatingSignals.map(([label, value]) => (
                   <div key={label} className="bg-gradient-to-br from-[#09121f]/95 to-[#04080f]/95 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                     <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -1022,42 +1129,255 @@ function LandingPage({ page = 'home' }) {
                   </div>
                 ))}
               </div>
-            </Motion.div>
+            </div>
 
-            <Motion.div
-              initial={{ opacity: 0, scale: 0.98, y: 24 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10"
-            >
-              <BrandFrame
-                src={corporateLogo}
-                alt="Spark Command Systems corporate mark"
-                className="absolute -right-10 -top-16 hidden h-48 w-72 opacity-35 lg:block"
-                imageClassName="scale-125"
-              />
-              <CommandConsole />
-            </Motion.div>
+            <div className="relative z-10">
+              <div className="hidden lg:block lg:pl-4">
+                <CommandConsole />
+              </div>
+            </div>
           </div>
         </section>
-        <section className="relative px-3 pb-16 sm:px-5 sm:pb-24 lg:px-8">
+
+        <section className="relative px-3 pb-12 sm:px-5 sm:pb-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <FadeIn className="relative overflow-hidden border border-white/10 bg-[#050b13]/88 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.44),0_0_70px_rgba(245,158,11,0.055)] backdrop-blur-xl sm:p-6">
+              <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
+              <div className="grid gap-6 lg:grid-cols-[0.28fr_0.72fr] lg:items-start">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Built On</div>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-slate-400">
+                    Secure, scalable, integrated, and reliable operating foundations.
+                  </p>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  {builtOnItems.map((item, index) => {
+                    const Icon = item.icon
+
+                    return (
+                      <div
+                        key={item.title}
+                        className="relative overflow-hidden border border-white/10 bg-gradient-to-br from-[#08111d] to-[#04080e] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                      >
+                        <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent" />
+                        <div className="flex h-10 w-10 items-center justify-center border border-amber-200/20 bg-amber-200/[0.08] text-amber-100 shadow-[0_0_20px_rgba(245,158,11,0.08)]">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100/65">
+                          0{index + 1}
+                        </div>
+                        <h3 className="mt-2 text-lg font-semibold text-white">{item.title}</h3>
+                        <p className="mt-2 text-sm leading-6 text-slate-400">{item.text}</p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="relative mx-auto max-w-7xl">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <SectionIntro eyebrow="01 / Services" title="We build what your business needs to operate at a higher level." />
+              <p className="max-w-md text-sm leading-7 text-slate-400">
+                Practical systems work for companies that need more than a polished screen: conversion, workflow control, automation, and operational clarity.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {serviceCards.map((service, index) => {
+                const Icon = service.icon
+
+                return (
+                  <FadeIn
+                    key={service.title}
+                    delay={index * 0.08}
+                    className="group relative min-h-[18rem] overflow-hidden border border-white/10 bg-[#07101b]/88 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-amber-200/35 hover:shadow-[0_34px_120px_rgba(0,0,0,0.48),0_0_58px_rgba(245,158,11,0.13)] sm:p-6"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, rgba(7,16,27,0.92) 0%, rgba(7,16,27,0.88) 100%), url(${circuitBackground})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  >
+                    <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-amber-200/0 blur-3xl transition duration-300 group-hover:bg-amber-200/12" />
+                    <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/45 to-transparent transition group-hover:via-amber-200/85" />
+                    <div className="mb-6 flex h-11 w-11 items-center justify-center border border-amber-200/20 bg-amber-200/[0.07] text-amber-100 shadow-[0_0_28px_rgba(245,158,11,0.1)]">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100/70">0{index + 1} / Service</div>
+                    <h3 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">{service.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-400">{service.text}</p>
+                    <a href="#" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-amber-100 transition group-hover:text-amber-50">
+                      Open page
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    </a>
+                  </FadeIn>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+              <FadeIn>
+                <SectionIntro eyebrow="02 / Platform" title="A command layer built to support actual operational decisions.">
+                  Spark does not stop at visual polish. The platform work is designed around intake, routing, visibility, accountability, and the handoffs that determine whether operations stay under control.
+                </SectionIntro>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {[
+                    ['Live visibility', 'Bring requests, field context, status, and exceptions into one operational view.'],
+                    ['Controlled routing', 'Move work through teams, vendors, and approvals with clearer ownership.'],
+                    ['Leadership reporting', 'Turn day-to-day execution into records leaders can review and trust.'],
+                    ['Scalable structure', 'Support growth across locations, roles, and workflows without rebuilding the foundation.'],
+                  ].map(([title, text]) => (
+                    <div key={title} className="border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.025] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-200/80">{title}</div>
+                      <p className="mt-3 text-sm leading-7 text-slate-400">{text}</p>
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={0.08} className="relative overflow-hidden border border-white/10 bg-[#060d16]/88 p-5 shadow-[0_30px_110px_rgba(0,0,0,0.46)] backdrop-blur-xl sm:p-6">
+                <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/45 to-transparent" />
+                <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
+                  {platformMetrics.map(([label, value]) => (
+                    <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
+                      <div className="text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">{value}</div>
+                      <div className="mt-2 text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 border border-amber-200/20 bg-gradient-to-br from-amber-200/[0.08] to-cyan-200/[0.04] p-4">
+                  <div className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">Command Center Value</div>
+                  <p className="mt-3 text-sm leading-6 text-slate-300">
+                    A stronger operational surface for teams that need connected systems, clearer response paths, and a platform that can mature with the business.
+                  </p>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+              <FadeIn>
+                <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">03 / Scale</div>
+                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                  Built for connected operations across real world teams and locations.
+                </h2>
+                <p className="mt-5 max-w-xl text-base leading-8 text-slate-300 sm:text-lg">
+                  Spark systems support companies as they grow across regions, locations, workflows, vendors, and leadership layers without losing the operational thread.
+                </p>
+              </FadeIn>
+
+              <FadeIn delay={0.08} className="relative overflow-hidden rounded-lg border border-white/10 bg-[#060d16]/88 shadow-[0_30px_110px_rgba(0,0,0,0.44)]">
+                <PremiumImage
+                  src={usaNetworkImage}
+                  fallback={corporateLogo}
+                  alt="Connected operations network map"
+                  className="h-64 w-full sm:h-72"
+                  imageClassName="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,7,0.58)_0%,rgba(2,4,7,0.18)_100%),linear-gradient(180deg,rgba(2,4,7,0.08)_0%,rgba(2,4,7,0.52)_100%)]" />
+                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                  <div className="max-w-sm border border-white/10 bg-[#020407]/72 p-4 backdrop-blur">
+                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/80">Nationwide Readiness</div>
+                    <p className="mt-3 text-sm leading-6 text-slate-300">
+                      Structured systems for distributed teams, region-by-region rollout, and leadership visibility across the network.
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+            <FadeIn className="relative">
+              <PremiumImage
+                src={heroCommandImage}
+                fallback={corporateLogo}
+                alt="Command center operator at a multi-monitor setup"
+                className="relative h-72 rounded-lg border border-white/10 bg-black/45 shadow-[0_32px_130px_rgba(0,0,0,0.52),0_0_62px_rgba(34,211,238,0.07)] sm:h-80 lg:h-[24rem]"
+              />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-black/45 via-transparent to-amber-200/[0.08]" />
+            </FadeIn>
+            <FadeIn delay={0.08} className="relative border border-white/10 bg-[#060d16]/78 p-5 shadow-[0_26px_110px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:p-7 lg:p-8">
+              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
+              <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">04 / About</div>
+              <h2 className="mt-5 text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                One builder. Real systems. Built from the inside out.
+              </h2>
+              <p className="mt-6 text-base leading-8 text-slate-300 sm:text-lg">
+                SparkCommand Systems was built by someone who needed better tools and decided to build them. From the AMS Command Center to custom client platforms, every system is designed around operational reality, not just aesthetics.
+              </p>
+              <Link to="/contact" className="mt-8 inline-flex items-center gap-2 text-base font-semibold text-cyan-100 transition hover:text-white">
+                Contact the development team
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </FadeIn>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <SectionIntro eyebrow="05 / Proof" title="Built with operational credibility, not marketing filler." />
+              <p className="max-w-md text-sm leading-7 text-slate-400">
+                The site should read like a software company with a point of view, clear delivery model, and systems thinking behind the visuals.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="grid gap-4">
+                {proofMetrics.map(([title, text], index) => (
+                  <FadeIn key={title} delay={index * 0.06} className="border border-white/10 bg-gradient-to-br from-[#08111d] to-[#04080e] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/80">0{index + 1} / Proof</div>
+                    <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl">{title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                  </FadeIn>
+                ))}
+              </div>
+
+              <FadeIn delay={0.1} className="overflow-hidden border border-white/10 bg-[#060d16]/88 p-5 shadow-[0_30px_110px_rgba(0,0,0,0.44)] backdrop-blur-xl sm:p-6">
+                <div className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-200/80">What Spark Builds</div>
+                <div className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
+                  {[
+                    'Command platforms',
+                    'Operational dashboards',
+                    'Integrated internal systems',
+                    'AI-enabled workflow tools',
+                    'Client and partner portals',
+                    'Deployment-ready software foundations',
+                  ].map((item) => (
+                    <div key={item} className="bg-gradient-to-br from-[#09121f] to-[#04080f] px-5 py-3.5 text-sm font-medium text-slate-200">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 shadow-[0_32px_130px_rgba(0,0,0,0.5),0_0_70px_rgba(34,211,238,0.045)] md:grid-cols-2 xl:grid-cols-5">
-              {[
-                ['About Spark', '/about', 'The company story behind the command systems vision.'],
-                ['Platform', '/platform', 'Command center software for live operational control.'],
-                ['Integration', '/integration', 'Systems, data, users, and services unified into one operating layer.'],
-                ['Pipeline', '/pipeline', 'Future products, AI tools, portals, and data infrastructure.'],
-                ['Deployment', '/deployment', 'Rollout-ready systems for distributed teams and multi-site operations.'],
-              ].map(([title, href, text], index) => (
-                <Link key={title} to={href} className="group relative min-h-64 overflow-hidden bg-gradient-to-br from-[#08111d] via-[#060d16] to-[#03070d] p-5 transition duration-300 hover:bg-white/[0.07] sm:p-6">
+              {companyCards.map(([label, title, href, text]) => (
+                <Link key={title} to={href} className="group relative min-h-[16rem] overflow-hidden bg-gradient-to-br from-[#08111d] via-[#060d16] to-[#03070d] p-5 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.07] hover:shadow-[0_26px_90px_rgba(0,0,0,0.36)] sm:p-6">
                   <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-200/0 blur-3xl transition duration-300 group-hover:bg-cyan-200/10" />
                   <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/35 to-transparent transition group-hover:via-amber-200/75" />
                   <div className="absolute inset-y-6 left-0 w-px bg-gradient-to-b from-transparent via-cyan-200/0 to-transparent transition group-hover:via-cyan-200/35" />
-                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">0{index + 1} / company</div>
-                  <h2 className="mt-5 text-2xl font-semibold text-white">{title}</h2>
-                  <p className="mt-4 text-sm leading-7 text-slate-400">{text}</p>
-                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-100">
+                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">{label}</div>
+                  <h2 className="mt-4 text-xl font-semibold text-white sm:text-2xl">{title}</h2>
+                  <p className="mt-3 pr-2 text-sm leading-6 text-slate-400">{text}</p>
+                  <div className="absolute bottom-6 left-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-100 sm:left-6">
                     Open page
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </div>
@@ -1065,6 +1385,48 @@ function LandingPage({ page = 'home' }) {
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="relative px-3 pb-16 pt-4 sm:px-5 sm:pb-20 lg:px-8">
+          <FadeIn
+            className="relative mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16]/88 p-6 text-center shadow-[0_38px_150px_rgba(0,0,0,0.58),0_0_82px_rgba(245,158,11,0.1)] backdrop-blur-xl sm:p-8 lg:p-10"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(6,13,22,0.94) 0%, rgba(6,13,22,0.88) 100%), radial-gradient(circle_at_50%_48%, rgba(245,158,11,0.16), transparent 35%), url(${circuitBackground})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/75 to-transparent" />
+            <PremiumImage
+              src={logoFull}
+              fallback={corporateLogo}
+              alt="SparkCommand Systems"
+              className="mx-auto h-14 w-64 max-w-full sm:h-16 sm:w-72"
+              imageClassName="object-contain"
+            />
+            <div className="mt-6 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Build the operating layer</div>
+            <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
+              Bring your website, workflow, data, and operational tools into one stronger system.
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">
+              Start with a focused development conversation and turn the real shape of your operation into software your team can use.
+            </p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link
+                to="/contact"
+                className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
+              >
+                Contact Development Team
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+              </Link>
+              <Link
+                to="/applications"
+                className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+              >
+                Open Applications
+              </Link>
+            </div>
+          </FadeIn>
         </section>
         </>
         )}
@@ -1106,29 +1468,45 @@ function LandingPage({ page = 'home' }) {
               <div className="relative overflow-hidden bg-[#060d16] p-6 sm:p-8">
                 <div className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-amber-200/10 blur-3xl" />
                 <BrandFrame
-                  src={productLogo}
+                  src={logoFull}
                   alt="Spark command platform product mark"
                   className="mb-8 h-36 w-full max-w-md opacity-85"
-                  imageClassName="scale-125 object-center"
+                  imageClassName="scale-125 object-contain p-5 object-center"
                 />
                 <h3 className="text-3xl font-semibold tracking-[-0.02em] text-white">Built as a working operational layer, not a presentation dashboard.</h3>
                 <p className="mt-5 text-base leading-8 text-slate-300">
                   The platform is meant to support real deployment value: fewer blind spots, clearer routing, cleaner partner coordination, and faster leadership visibility.
                 </p>
               </div>
-              <div className="grid bg-[#060d16] p-6 sm:grid-cols-2 sm:p-8">
+              <div className="grid bg-[#060d16] sm:grid-cols-2">
                 {[
                   ['Intake', 'Capture operational requests and events in a structured command flow.'],
                   ['Dispatch', 'Route work to internal teams, vendors, or site-level stakeholders.'],
                   ['Visibility', 'Track status, exceptions, and operational context in real time.'],
                   ['Closeout', 'Turn completion data into usable records and reporting.'],
-                ].map(([title, text]) => (
-                  <div key={title} className="relative border-b border-white/10 py-5 sm:border-r sm:pr-5 even:sm:border-r-0 even:sm:pl-5">
-                    <div className="absolute left-0 top-6 h-2 w-2 rounded-full bg-amber-200 shadow-[0_0_16px_rgba(253,230,138,0.8)] sm:-left-1" />
-                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-200/80">{title}</div>
-                    <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
-                  </div>
-                ))}
+                ].map(([title, text], index) => {
+                  const isLeftColumn = index % 2 === 0
+                  const isTopRow = index < 2
+
+                  return (
+                    <div
+                      key={title}
+                      className={`relative min-w-0 border-white/8 p-6 sm:p-7 ${
+                        isTopRow ? 'border-b' : ''
+                      } ${
+                        !isLeftColumn ? 'sm:border-l' : ''
+                      }`}
+                    >
+                      <div className="flex min-w-0 items-start gap-3">
+                        <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-200 shadow-[0_0_16px_rgba(253,230,138,0.8)]" />
+                        <div className="min-w-0">
+                          <div className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-200/80">{title}</div>
+                          <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </FadeIn>
           </div>
@@ -1258,18 +1636,7 @@ function LandingPage({ page = 'home' }) {
         )}
       </main>
 
-      <footer className="border-t border-white/10 bg-[#020407]/90">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-          <div className="flex items-center gap-4">
-            <BrandFrame src={corporateLogo} alt="Spark Command Systems" className="h-12 w-12" imageClassName="scale-[2.15]" />
-            <div>
-              <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
-              <div className="text-[0.68rem] uppercase tracking-[0.3em] text-slate-500">Command Systems</div>
-            </div>
-          </div>
-          <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems. Software, integration, and command platforms.</div>
-        </div>
-      </footer>
+      <SiteFooter />
       <ScrollToTopButton />
     </div>
   )
@@ -1501,6 +1868,7 @@ function ApplicationsPage() {
           </section>
         </div>
       </main>
+      <SiteFooter />
       <ScrollToTopButton />
     </div>
   )
@@ -1582,6 +1950,7 @@ function AboutSparkPage() {
           </div>
         </section>
       </main>
+      <SiteFooter />
       <ScrollToTopButton />
     </div>
   )
@@ -1600,10 +1969,10 @@ function AmsComingSoonPage() {
         <section className="relative mx-auto max-w-6xl overflow-hidden border border-amber-200/20 bg-[#060d16]/92 shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.1)] backdrop-blur-xl">
           <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/70 to-transparent" />
           <BrandFrame
-            src={productLogo}
-            alt="AMS Command Center platform mark"
+            src={logoFull}
+            alt="Spark Command Systems"
             className="absolute -right-12 -top-10 hidden h-60 w-96 border-0 opacity-35 lg:block"
-            imageClassName="scale-125"
+            imageClassName="object-contain p-6"
           />
 
           <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -1671,6 +2040,7 @@ function AmsComingSoonPage() {
           </div>
         </section>
       </main>
+      <SiteFooter />
       <ScrollToTopButton />
     </div>
   )

@@ -124,7 +124,7 @@ const footerColumns = [
     links: [
       ['Platform', '/platform'],
       ['Deployment', '/deployment'],
-      ['Command Center Platform', '/ams-command-center'],
+      ['Command Center Platform', '/spark-command-center'],
     ],
   },
   {
@@ -139,7 +139,7 @@ const footerColumns = [
     title: 'Access',
     links: [
       ['Open App', '/applications'],
-      ['AMS Login', '/ams-login'],
+      ['Command Center', '/spark-command-center'],
       ['Book a Demo', '/contact'],
     ],
   },
@@ -177,12 +177,12 @@ const builtOnItems = [
 const applications = [
   {
     name: 'Command Center Platform',
-    status: 'Private Rollout',
+    status: 'Live Platform',
     type: 'Flagship Platform',
     description:
-      'Private rollout platform for live operational command, workflow visibility, and field execution systems.',
-    action: 'View Rollout',
-    href: '/ams-command-center',
+      'Central command system for operations, vendor coordination, and real-time execution.',
+    action: 'View Platform',
+    href: '/spark-command-center',
   },
   {
     name: 'Spark Vendor Hub',
@@ -380,7 +380,7 @@ function inputClassName() {
 }
 
 function productTier(app) {
-  if (app.href === '/ams-command-center') {
+  if (app.href === '/spark-command-center') {
     return {
       label: 'Flagship',
       card:
@@ -1696,7 +1696,7 @@ function statusTone(status) {
     return 'border-emerald-200/25 bg-emerald-200/[0.08] text-emerald-100'
   }
 
-  if (status === 'Private Rollout') {
+  if (status === 'Live Platform') {
     return 'border-amber-200/30 bg-amber-200/[0.1] text-amber-100'
   }
 
@@ -1809,7 +1809,7 @@ function ApplicationsPage() {
                 Applications built for operational command.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Enter the Spark software ecosystem: active command platforms, development-stage portals, AI tools, data systems, and future operational products.
+                Access the Spark platform ecosystem: live command systems, development-stage portals, AI tools, data systems, and future operational products.
               </p>
             </FadeIn>
 
@@ -1824,8 +1824,8 @@ function ApplicationsPage() {
                 <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
                 <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
                   {[
-                    ['Portfolio', '16 products'],
-                    ['Flagship', '01 private rollout'],
+                    ['Portfolio', '16 platform modules'],
+                    ['Flagship', '01 live system'],
                     ['Build Track', '03 in development'],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
@@ -1996,7 +1996,7 @@ function AboutSparkPage() {
   )
 }
 
-function AmsComingSoonPage() {
+function SCSComingSoonPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
@@ -2022,13 +2022,13 @@ function AmsComingSoonPage() {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#03070d]/80 via-[#03070d]/42 to-[#03070d]/70" />
               <div className="relative">
                 <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">
-                  Private Access
+                  Live Platform
                 </div>
                 <h1 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96]">
-                  Command Center Platform
+                  Spark Command Center
                 </h1>
                 <p className="mt-6 max-w-lg text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                  Secure platform access for live operational visibility, controlled deployment, and role-based entry.
+                  Unify operations, vendors, and real-time execution in one command system.
                 </p>
               </div>
             </div>
@@ -2036,16 +2036,16 @@ function AmsComingSoonPage() {
             <div className="relative bg-[#060d16] p-5 sm:p-10">
               <div className="absolute right-8 top-8 hidden h-20 w-20 border border-white/10 bg-white/[0.025] lg:block" />
               <p className="max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl sm:leading-9">
-                The Command Center Platform brings workflow visibility, field execution signals, dispatch awareness, and operational status into one focused command environment.
+                Replace spreadsheets, emails, and disconnected tools with a single operational command center.
               </p>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
-                This gateway supports secure platform access and routes authorized AMS users into the live deployment environment.
+                Secure access point into the live command environment.
               </p>
 
               <div className="mt-9 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
                 {[
-                  ['Status', 'Active build'],
-                  ['Access', 'Private access'],
+                  ['Status', 'Live system'],
+                  ['Access', 'Secure access'],
                   ['Focus', 'Live operations'],
                 ].map(([label, value]) => (
                   <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
@@ -2057,7 +2057,7 @@ function AmsComingSoonPage() {
 
               <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:gap-4">
                 <a
-                  href="https://ams-command-center.vercel.app"
+                  href="https://spark-command-center-umber.vercel.app"
                   className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
                 >
                   Enter Command Center
@@ -2096,6 +2096,14 @@ function RouteScrollReset() {
   return null
 }
 
+function ExternalRedirect({ to }) {
+  useEffect(() => {
+    window.location.replace(to)
+  }, [to])
+
+  return null
+}
+
 export default function SparkCommandSystemsSite() {
   return (
     <BrowserRouter>
@@ -2109,9 +2117,13 @@ export default function SparkCommandSystemsSite() {
         <Route path="/deployment" element={<LandingPage page="deployment" />} />
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path="/contact" element={<LandingPage page="contact" />} />
-        <Route path="/ams-command-center" element={<AmsComingSoonPage />} />
-        <Route path="/ams-login" element={<AmsComingSoonPage />} />
-        <Route path="/app" element={<Navigate to="/ams-command-center" replace />} />
+        <Route path="/spark-command-center" element={<SCSComingSoonPage />} />
+        <Route path="/ams-command-center" element={<Navigate to="/spark-command-center" replace />} />
+        <Route path="/ams-login" element={<Navigate to="/spark-command-center" replace />} />
+        <Route
+          path="/app"
+          element={<ExternalRedirect to="https://spark-command-center-umber.vercel.app" />}
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

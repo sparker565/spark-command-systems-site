@@ -19,7 +19,6 @@ import {
 } from 'lucide-react'
 
 const corporateLogo = '/assets/corporate-logo.png'
-const techLogo = '/assets/tech-logo.png'
 const logoFull = '/assets/logo-full.png'
 const heroCommandImage = '/assets/hero-command.jpeg'
 const circuitBackground = '/assets/bg-circuit.jpeg'
@@ -83,22 +82,22 @@ const deploymentItems = [
 
 const serviceCards = [
   {
-    title: 'Website Builds & Upgrades',
-    text: 'New sites or full redesigns. Fast, modern and built to convert.',
-    icon: Building2,
-    href: '/contact',
-  },
-  {
-    title: 'Operations Dashboards',
-    text: "Custom CRM and workflow platforms like the Command Center platform built around your team's real process.",
+    title: 'Command Center Platform',
+    text: 'A flagship platform for operational control, vendor coordination, live visibility, and execution.',
     icon: CircuitBoard,
     href: '/platform',
   },
   {
-    title: 'AI Powered Custom Tools',
-    text: 'Intelligent automation and integrations shaped around how your business actually runs.',
+    title: 'Custom Systems and Tools',
+    text: 'Dashboards, integrations, automations, and workflow tools shaped around how your team runs work.',
     icon: BrainCircuit,
-    href: '/pipeline',
+    href: '/integration',
+  },
+  {
+    title: 'Websites and Upgrades',
+    text: 'Modern websites, rebuilds, and upgrades built to clarify the offer and support real business growth.',
+    icon: Building2,
+    href: '/contact',
   },
 ]
 
@@ -366,7 +365,7 @@ function SectionIntro({ eyebrow, title, children, align = 'left' }) {
 function FieldShell({ label, required = false, children }) {
   return (
     <label className="group block">
-      <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+      <span className="mb-4 block text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-300/75">
         {label}
         {required ? <span className="text-amber-200"> *</span> : null}
       </span>
@@ -376,7 +375,7 @@ function FieldShell({ label, required = false, children }) {
 }
 
 function inputClassName() {
-  return 'w-full border border-white/10 bg-black/35 px-4 py-3.5 text-base text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-100/45 focus:bg-cyan-100/[0.035] focus:shadow-[0_0_28px_rgba(34,211,238,0.1)]'
+  return 'w-full border border-white/10 bg-black/35 px-5 py-4 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-100/45 focus:bg-cyan-100/[0.035] focus:shadow-[0_0_28px_rgba(34,211,238,0.1)]'
 }
 
 function productTier(app) {
@@ -424,7 +423,7 @@ function CommandSelect({ value, onChange, options }) {
         type="button"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((current) => !current)}
-        className={`${inputClassName()} flex min-h-[3.45rem] items-center justify-between gap-4 text-left hover:border-white/20 hover:bg-white/[0.045]`}
+        className={`${inputClassName()} flex min-h-[3.85rem] items-center justify-between gap-4 text-left hover:border-white/20 hover:bg-white/[0.045]`}
       >
         <span className="truncate">{value}</span>
         <ChevronDown className={`h-4 w-4 shrink-0 text-cyan-100/80 transition ${isOpen ? 'rotate-180' : ''}`} />
@@ -544,36 +543,43 @@ function ContactIntakePage() {
   }
 
   return (
-    <section id="contact" className="relative px-3 pb-16 pt-8 sm:px-5 sm:pb-28 sm:pt-10 lg:px-8">
-      <div className="absolute inset-x-0 bottom-0 h-80 bg-[radial-gradient(circle_at_50%_100%,rgba(34,211,238,0.12),transparent_48%)]" />
-      <div className="absolute left-1/2 top-6 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
+    <section id="contact" className="relative px-4 pb-20 pt-12 sm:px-6 sm:pb-32 sm:pt-16 lg:px-8">
+      <div className="absolute inset-x-0 bottom-0 h-80 bg-[radial-gradient(circle_at_50%_100%,rgba(34,211,238,0.08),transparent_50%)]" />
+      <div className="absolute left-1/2 top-8 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full border border-white/[0.03]" />
 
       <FadeIn className="mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16] shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.08)]">
-        <div className="grid gap-px bg-white/10 xl:grid-cols-[0.78fr_1.22fr]">
-          <div className="relative min-h-[28rem] bg-[#03070d] p-5 sm:min-h-[38rem] sm:p-10">
-            <BrandFrame
-              src={techLogo}
-              alt="Spark technology intake core"
-              className="absolute inset-0 h-full w-full border-0 opacity-58"
-              imageClassName="scale-125"
-            />
+        <div
+          className="grid gap-px bg-white/10 xl:grid-cols-[0.78fr_1.22fr]"
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.97) 0%, rgba(6,13,22,0.94) 100%), url(${circuitBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="relative min-h-[28rem] bg-[#03070d]/94 p-6 sm:min-h-[38rem] sm:p-11">
             <div className="absolute inset-0 bg-gradient-to-r from-[#03070d] via-[#03070d]/78 to-[#03070d]/50" />
             <div className="absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-amber-200/45 via-cyan-200/25 to-transparent" />
+            <BrandFrame
+              src={corporateLogo}
+              alt="Spark Command Systems"
+              className="absolute right-6 top-6 hidden h-16 w-16 opacity-35 sm:block"
+              imageClassName="scale-[2.15]"
+            />
             <div className="relative">
               <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
-                Used for multi-site operational systems
+                Used for operational systems and custom builds
               </div>
               <h1 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl">
                 Start a Development Conversation
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Work directly with Spark Command Systems to design and deploy operational software and command platforms.
+                Work directly with Spark Command Systems to plan platforms, operational systems, dashboards, integrations, custom tools, and website builds or upgrades.
               </p>
-              <p className="mt-5 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
-                Structured intake ensures faster alignment and better system design.
+              <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400/85">
+                Structured intake helps translate your platform, workflow, website, dashboard, integration, or custom tool idea into a clear build path.
               </p>
 
-              <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3 xl:grid-cols-1">
+              <div className="mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3 xl:grid-cols-1">
                 {[
                   ['Signal', 'Operational problem'],
                   ['Scope', 'Scale and timeline'],
@@ -588,10 +594,10 @@ function ContactIntakePage() {
             </div>
           </div>
 
-          <div className="relative bg-[#060d16] p-4 sm:p-8 lg:p-10">
+          <div className="relative bg-[#060d16] p-5 sm:p-9 lg:p-12">
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
             {isSubmitted ? (
-              <div className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-5 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:min-h-[34rem] sm:p-8">
+              <div className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-6 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:min-h-[34rem] sm:p-9">
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-amber-200/30 bg-amber-200/[0.08] text-amber-100">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
@@ -612,10 +618,13 @@ function ContactIntakePage() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-11 border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_28px_90px_rgba(0,0,0,0.18)] sm:p-7 lg:p-8"
+              >
                 <div>
-                  <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Identity</div>
-                  <div className="grid gap-5 md:grid-cols-2">
+                  <div className="mb-7 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Identity</div>
+                  <div className="grid gap-7 md:grid-cols-2">
                     <FieldShell label="Name" required>
                       <input required value={formData.name} onChange={(event) => updateField('name', event.target.value)} className={inputClassName()} placeholder="Your name" />
                     </FieldShell>
@@ -632,21 +641,21 @@ function ContactIntakePage() {
                 </div>
 
                 <div>
-                  <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Operational Problem</div>
-                  <FieldShell label="Describe the operational problem or system you want to improve" required>
+                  <div className="mb-7 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Operational Problem</div>
+                  <FieldShell label="Describe what you want to improve, automate, or build" required>
                     <textarea
                       required
                       value={formData.problem}
                       onChange={(event) => updateField('problem', event.target.value)}
                       className={`${inputClassName()} min-h-40 resize-y leading-7`}
-                      placeholder="What is slow, disconnected, manual, hard to see, or difficult to coordinate?"
+                      placeholder="Platforms, workflows, systems, dashboards, websites, integrations, or custom tools."
                     />
                   </FieldShell>
                 </div>
 
                 <div>
-                  <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-amber-200/80">Scope</div>
-                  <div className="grid gap-5 md:grid-cols-3">
+                  <div className="mb-7 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Scope</div>
+                  <div className="grid gap-7 md:grid-cols-3">
                     <FieldShell label="Scale">
                       <CommandSelect value={formData.scale} onChange={(value) => updateField('scale', value)} options={scaleOptions} />
                     </FieldShell>
@@ -955,7 +964,7 @@ function SiteFooter() {
               imageClassName="object-contain object-left"
             />
             <p className="mt-5 text-sm leading-7 text-slate-400">
-              Spark Command Systems builds software, connected operational systems, and command platforms for teams that need clarity across real work.
+              Spark Command Systems builds command platforms, custom systems, tools, and websites for teams that need clarity across real work.
             </p>
           </div>
 
@@ -987,7 +996,7 @@ function SiteFooter() {
               <div className="text-[0.68rem] uppercase tracking-[0.3em] text-slate-500">Command Systems</div>
             </div>
           </div>
-          <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems. Software, integration, and command platforms.</div>
+          <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems. Platforms, systems, tools, and websites.</div>
         </div>
       </div>
     </footer>
@@ -1109,13 +1118,13 @@ function LandingPage({ page = 'home' }) {
             <div className="relative z-10">
               <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
-                Software. Systems. Command.
+                Platforms. Systems. Websites.
               </div>
               <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl sm:leading-[0.98] lg:text-6xl xl:text-7xl">
-                Technology infrastructure for live operations.
+                Technology infrastructure for modern operations.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-7 sm:text-xl sm:leading-8">
-                Spark Command Systems builds software, integrates operational systems, and develops command center platforms for teams that need clarity under pressure.
+                Spark Command Systems builds the Command Center Platform, custom systems and tools, and websites that help teams operate with clarity.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
                 <Link
@@ -1154,9 +1163,9 @@ function LandingPage({ page = 'home' }) {
         <section className="relative px-3 pb-12 sm:px-5 sm:pb-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <FadeIn
-              className="relative overflow-hidden border border-white/10 bg-[#050b13]/88 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.44),0_0_70px_rgba(245,158,11,0.055)] backdrop-blur-xl sm:p-6"
-              style={{
-                backgroundImage: `linear-gradient(180deg, rgba(5,11,19,0.96) 0%, rgba(5,11,19,0.9) 100%), url(${circuitBackground})`,
+            className="relative overflow-hidden border border-white/10 bg-[#050b13]/88 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.44),0_0_70px_rgba(245,158,11,0.055)] backdrop-blur-xl sm:p-6"
+            style={{
+                backgroundImage: `linear-gradient(180deg, rgba(5,11,19,0.98) 0%, rgba(5,11,19,0.94) 100%), url(${circuitBackground})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
@@ -1201,18 +1210,18 @@ function LandingPage({ page = 'home' }) {
         <section className="relative px-3 py-12 sm:px-5 sm:py-16 lg:px-8">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.045]"
+            className="pointer-events-none absolute inset-0 opacity-[0.035]"
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.88) 0%, rgba(2,4,7,0.92) 100%), url(${circuitBackground})`,
+              backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.94) 0%, rgba(2,4,7,0.96) 100%), url(${circuitBackground})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           />
           <div className="relative mx-auto max-w-7xl">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-              <SectionIntro eyebrow="01 / Services" title="We build what your business needs to operate at a higher level." />
+              <SectionIntro eyebrow="01 / Services" title="Three focused ways to strengthen your business systems." />
               <p className="max-w-md text-sm leading-7 text-slate-400">
-                Practical systems work for companies that need more than a polished screen: conversion, workflow control, automation, and operational clarity.
+                Start with the flagship platform, a custom build, or a sharper website. Each path is designed to support clearer operations and growth.
               </p>
             </div>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -1225,7 +1234,7 @@ function LandingPage({ page = 'home' }) {
                     delay={index * 0.08}
                     className="group relative min-h-[18rem] overflow-hidden border border-white/10 bg-[#07101b]/88 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition duration-300 hover:border-amber-200/35 hover:shadow-[0_34px_120px_rgba(0,0,0,0.48),0_0_58px_rgba(245,158,11,0.1)] sm:p-6"
                     style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(7,16,27,0.95) 0%, rgba(7,16,27,0.9) 100%), url(${circuitBackground})`,
+                      backgroundImage: `linear-gradient(180deg, rgba(7,16,27,0.985) 0%, rgba(7,16,27,0.955) 100%), url(${circuitBackground})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
@@ -1436,43 +1445,42 @@ function LandingPage({ page = 'home' }) {
 
         <section className="relative px-3 pb-16 pt-4 sm:px-5 sm:pb-20 lg:px-8">
           <FadeIn
-            className="relative mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16]/88 p-6 text-center shadow-[0_38px_150px_rgba(0,0,0,0.58),0_0_82px_rgba(245,158,11,0.1)] backdrop-blur-xl sm:p-8 lg:p-10"
+            className="relative mx-auto max-w-7xl overflow-hidden border border-amber-200/24 bg-[#060d16]/90 p-6 text-center shadow-[0_42px_160px_rgba(0,0,0,0.62),0_0_92px_rgba(245,158,11,0.12)] backdrop-blur-xl sm:p-9 lg:p-12"
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(6,13,22,0.95) 0%, rgba(6,13,22,0.9) 100%), radial-gradient(circle_at_50%_48%, rgba(245,158,11,0.14), transparent 34%), url(${circuitBackground})`,
+              backgroundImage: `linear-gradient(180deg, rgba(6,13,22,0.975) 0%, rgba(3,7,13,0.955) 100%), radial-gradient(circle_at_50%_76%, rgba(245,158,11,0.15), transparent 30%), url(${circuitBackground})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_52%,rgba(245,158,11,0.12),transparent_26%),radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.06),transparent_18%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_76%,rgba(245,158,11,0.16),transparent_24%),radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.055),transparent_18%)]" />
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/75 to-transparent" />
             <div className="absolute inset-x-12 bottom-0 h-px bg-gradient-to-r from-transparent via-white/14 to-transparent" />
-            <PremiumImage
-              src={logoFull}
-              fallback={corporateLogo}
-              alt="SparkCommand Systems"
-              className="relative z-10 mx-auto h-14 w-64 max-w-full sm:h-16 sm:w-72"
-              imageClassName="object-contain"
+            <BrandFrame
+              src={corporateLogo}
+              alt="Spark Command Systems"
+              className="relative z-10 mx-auto h-16 w-16"
+              imageClassName="scale-[2.15]"
             />
-            <div className="relative z-10 mt-6 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Build the operating layer</div>
-            <h2 className="relative z-10 mx-auto mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
-              Bring your website, workflow, data, and operational tools into one stronger system.
+            <div className="relative z-10 mt-6 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/85">READY TO BUILD</div>
+            <h2 className="relative z-10 mx-auto mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
+              Let's build the system your business actually needs.
             </h2>
-            <p className="relative z-10 mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">
-              Start with a focused development conversation and turn the real shape of your operation into software your team can use.
+            <p className="relative z-10 mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+              From command center platforms to custom tools, dashboards, integrations and website upgrades, SparkCommand Systems builds the technology that brings clarity and control.
             </p>
-            <div className="relative z-10 mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="relative z-10 mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-28 w-72 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.24),transparent_66%)]" />
               <Link
                 to="/contact"
-                className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
+                className="relative inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_44px_rgba(245,158,11,0.32)] hover:bg-amber-200"
               >
                 Contact Development Team
-                <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                to="/applications"
-                className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                to="/contact"
+                className="relative inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white hover:border-white/30 hover:bg-white/10"
               >
-                Open Applications
+                Book a Demo
               </Link>
             </div>
           </FadeIn>
@@ -1517,10 +1525,10 @@ function LandingPage({ page = 'home' }) {
               <div className="relative overflow-hidden bg-[#060d16] p-6 sm:p-8">
                 <div className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-amber-200/10 blur-3xl" />
                 <BrandFrame
-                  src={logoFull}
+                  src={corporateLogo}
                   alt="Spark command platform product mark"
-                  className="mb-8 h-36 w-full max-w-md opacity-85"
-                  imageClassName="scale-125 object-contain p-5 object-center"
+                  className="mb-8 h-20 w-20 opacity-85"
+                  imageClassName="scale-[2.15]"
                 />
                 <h3 className="text-3xl font-semibold tracking-[-0.02em] text-white">Built as a working operational layer, not a presentation dashboard.</h3>
                 <p className="mt-5 text-base leading-8 text-slate-300">
@@ -1621,10 +1629,10 @@ function LandingPage({ page = 'home' }) {
         {page === 'pipeline' && (
         <section id="pipeline" className="relative overflow-hidden py-16 sm:py-28">
           <BrandFrame
-            src={techLogo}
+            src={corporateLogo}
             alt="Spark future technology system"
-            className="absolute left-1/2 top-12 h-48 w-[24rem] -translate-x-1/2 border-0 opacity-20 sm:h-56 sm:w-[34rem] sm:opacity-25"
-            imageClassName="scale-110"
+            className="absolute left-1/2 top-12 h-20 w-20 -translate-x-1/2 opacity-25 sm:h-24 sm:w-24"
+            imageClassName="scale-[2.15]"
           />
           <div className="absolute inset-x-0 top-28 h-72 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_45%)]" />
           <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-8">
@@ -1815,10 +1823,10 @@ function ApplicationsPage() {
 
             <FadeIn delay={0.1} className="relative">
               <BrandFrame
-                src={techLogo}
+                src={corporateLogo}
                 alt="Spark technology catalog signal"
-                className="absolute -right-8 -top-14 hidden h-44 w-80 border-0 opacity-30 lg:block"
-                imageClassName="scale-125"
+                className="absolute -right-4 -top-10 hidden h-20 w-20 opacity-30 lg:block"
+                imageClassName="scale-[2.15]"
               />
               <div className="relative border border-white/10 bg-[#060d16]/90 p-5 shadow-[0_34px_130px_rgba(0,0,0,0.48)] backdrop-blur-xl sm:p-6">
                 <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
@@ -2009,10 +2017,10 @@ function SCSComingSoonPage() {
         <section className="relative mx-auto max-w-6xl overflow-hidden border border-amber-200/20 bg-[#060d16]/92 shadow-[0_38px_150px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.1)] backdrop-blur-xl">
           <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/70 to-transparent" />
           <BrandFrame
-            src={logoFull}
+            src={corporateLogo}
             alt="Spark Command Systems"
-            className="absolute -right-12 -top-10 hidden h-60 w-96 border-0 opacity-35 lg:block"
-            imageClassName="object-contain p-6"
+            className="absolute right-8 top-8 hidden h-20 w-20 opacity-35 lg:block"
+            imageClassName="scale-[2.15]"
           />
 
           <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">

@@ -17,6 +17,13 @@ import {
   Waypoints,
   X,
 } from 'lucide-react'
+import CommandLabGate from './components/command-lab/CommandLabGate'
+import CommandLabLogin from './components/command-lab/CommandLabLogin'
+import {
+  clearCommandLabAccess,
+  hasCommandLabAccess,
+  storeCommandLabAccess,
+} from './components/command-lab/commandLabAccess'
 
 const corporateLogo = '/assets/corporate-logo.png'
 const logoFull = '/assets/logo-full.png'
@@ -31,6 +38,7 @@ const navItems = [
   { label: 'Integration', href: '/integration' },
   { label: 'Pipeline', href: '/pipeline' },
   { label: 'Deployment', href: '/deployment' },
+  { label: 'Command Lab', href: '/command-lab-login' },
 ]
 
 const operatingSignals = [
@@ -139,6 +147,7 @@ const footerColumns = [
     links: [
       ['Open App', '/applications'],
       ['Command Center', '/spark-command-center'],
+      ['Command Lab Ecosystem', '/command-lab-login'],
       ['Book a Demo', '/contact'],
     ],
   },
@@ -983,6 +992,11 @@ function SiteFooter() {
                     </Link>
                   ))}
                 </div>
+                {column.title === 'Access' ? (
+                  <p className="mt-5 max-w-[16rem] text-xs leading-6 text-slate-500">
+                    Explore Spark's private lab for experimental tools, product prototypes and next-generation website concepts.
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>
@@ -2113,6 +2127,18 @@ function ExternalRedirect({ to }) {
 }
 
 export default function SparkCommandSystemsSite() {
+  const [isCommandLabUnlocked, setIsCommandLabUnlocked] = useState(() => hasCommandLabAccess())
+
+  const unlockCommandLab = () => {
+    storeCommandLabAccess()
+    setIsCommandLabUnlocked(true)
+  }
+
+  const lockCommandLab = () => {
+    clearCommandLabAccess()
+    setIsCommandLabUnlocked(false)
+  }
+
   return (
     <BrowserRouter>
       <RouteScrollReset />
@@ -2125,6 +2151,14 @@ export default function SparkCommandSystemsSite() {
         <Route path="/deployment" element={<LandingPage page="deployment" />} />
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path="/contact" element={<LandingPage page="contact" />} />
+        <Route
+          path="/command-lab-login"
+          element={<CommandLabLogin isUnlocked={isCommandLabUnlocked} onUnlock={unlockCommandLab} />}
+        />
+        <Route
+          path="/command-lab"
+          element={<CommandLabGate isUnlocked={isCommandLabUnlocked} onLock={lockCommandLab} />}
+        />
         <Route path="/spark-command-center" element={<SCSComingSoonPage />} />
         <Route path="/ams-command-center" element={<Navigate to="/spark-command-center" replace />} />
         <Route path="/ams-login" element={<Navigate to="/spark-command-center" replace />} />

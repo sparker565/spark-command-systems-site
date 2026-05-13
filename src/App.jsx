@@ -2079,7 +2079,7 @@ function SCSComingSoonPage() {
 
               <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:gap-4">
                 <a
-                  href="https://spark-command-center-umber.vercel.app"
+                  href="https://app.sparkcommands.com/app"
                   className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)]"
                 >
                   Enter Command Center
@@ -2164,7 +2164,7 @@ export default function SparkCommandSystemsSite() {
         <Route path="/ams-login" element={<Navigate to="/spark-command-center" replace />} />
         <Route
           path="/app"
-          element={<ExternalRedirect to="https://spark-command-center-umber.vercel.app" />}
+          element={<ExternalRedirect to="https://app.sparkcommands.com/app" />}
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

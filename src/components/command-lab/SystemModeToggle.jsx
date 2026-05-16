@@ -2,16 +2,16 @@ import { AlertTriangle, CheckCircle2 } from 'lucide-react'
 import { useState } from 'react'
 
 const chaosItems = [
-  ['Email thread', 'Vendor ETA unclear', '11 unread updates'],
-  ['Spreadsheet', 'Site status mismatched', 'Manual review needed'],
-  ['Text message', 'Crew reassigned', 'No central record'],
+  ['Email thread', 'Approval owner unclear', '11 unread updates'],
+  ['Spreadsheet', 'Status mismatched', 'Manual review needed'],
+  ['Text message', 'Priority changed', 'No central record'],
   ['Alert', 'Invoice exception', 'Priority unknown'],
 ]
 
 const commandItems = [
-  ['Site status', '94% visible', 'Healthy'],
-  ['Vendor readiness', '42 crews indexed', 'Ready'],
-  ['Work order flow', '18 routed today', 'Controlled'],
+  ['Operating status', '94% visible', 'Healthy'],
+  ['Partner readiness', '42 partners indexed', 'Ready'],
+  ['Request flow', '18 routed today', 'Controlled'],
   ['Accounting visibility', '6 exceptions tagged', 'Clear'],
 ]
 

@@ -4,12 +4,12 @@ import { useState } from 'react'
 const sites = [
   {
     name: 'Boston MA',
-    status: 'Crew Online',
-    category: 'Vendor Coverage',
-    crews: '4 active',
-    workOrders: '7 open',
+    status: 'Team Online',
+    category: 'Partner Coverage',
+    teams: '4 active',
+    requests: '7 open',
     risk: 'Low',
-    action: 'Keep vendor coverage active across priority routes.',
+    action: 'Keep partner coverage active across priority workflows.',
     x: 24,
     y: 28,
     tone: 'online',
@@ -17,23 +17,23 @@ const sites = [
   {
     name: 'Providence RI',
     status: 'Risk Alert',
-    category: 'Work Order Aging',
-    crews: '2 active',
-    workOrders: '11 open',
+    category: 'Request Aging',
+    teams: '2 active',
+    requests: '11 open',
     risk: 'High',
-    action: 'Review aging work orders and elevate dispatch readiness.',
+    action: 'Review aging requests and elevate routing readiness.',
     x: 44,
     y: 46,
     tone: 'alert',
   },
   {
     name: 'Hartford CT',
-    status: 'Ready for Dispatch',
-    category: 'Snow Ops',
-    crews: '3 active',
-    workOrders: '5 open',
+    status: 'Ready for Routing',
+    category: 'Workflow Ops',
+    teams: '3 active',
+    requests: '5 open',
     risk: 'Medium',
-    action: 'Release dispatch preview to field operations.',
+    action: 'Release routing preview to operations leads.',
     x: 34,
     y: 66,
     tone: 'ready',
@@ -41,11 +41,11 @@ const sites = [
   {
     name: 'New York NY',
     status: 'Command Active',
-    category: 'Client Site',
-    crews: '3 active',
-    workOrders: '9 open',
+    category: 'Client Account',
+    teams: '3 active',
+    requests: '9 open',
     risk: 'Low',
-    action: 'Maintain command view and monitor vendor coverage.',
+    action: 'Maintain command view and monitor partner coverage.',
     x: 70,
     y: 72,
     tone: 'online',
@@ -85,7 +85,7 @@ export default function InteractiveMapExpansion() {
                 Expand a live operations layer.
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-                Expand a live operations layer and watch sites, crews and alerts come online.
+                Expand a live operations layer and watch locations, teams and alerts come online.
               </p>
             </div>
             <button
@@ -122,7 +122,7 @@ export default function InteractiveMapExpansion() {
               ))}
 
               <div className="absolute inset-x-4 bottom-4 grid gap-2 sm:grid-cols-4">
-                {['4 Sites Online', '12 Crews Visible', '3 Alerts Active', '1 Dispatch Ready'].map((stat) => (
+                {['4 Locations Online', '12 Teams Visible', '3 Alerts Active', '1 Workflow Ready'].map((stat) => (
                   <div key={stat} className="border border-white/10 bg-black/42 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300 backdrop-blur">
                     {stat}
                   </div>
@@ -137,8 +137,8 @@ export default function InteractiveMapExpansion() {
               <div className="mt-6 grid gap-3">
                 {[
                   ['Status', selectedSite.status],
-                  ['Active crews', selectedSite.crews],
-                  ['Open work orders', selectedSite.workOrders],
+                  ['Active teams', selectedSite.teams],
+                  ['Open requests', selectedSite.requests],
                   ['Risk level', selectedSite.risk],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-center justify-between gap-4 border border-white/10 bg-white/[0.035] px-4 py-3">

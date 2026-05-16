@@ -2,7 +2,7 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 const suggestions = [
-  { label: 'Track vendors across 200 sites', mode: 'vendor' },
+  { label: 'Track partners across 200 locations', mode: 'vendor' },
   { label: 'Show me operational risk', mode: 'risk' },
   { label: 'Turn chaos into command', mode: 'command' },
   { label: 'Build a client command center', mode: 'command' },

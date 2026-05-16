@@ -11,12 +11,12 @@ const responses = {
     video: '/videos/vendor-network.mp4',
     videoLabel: 'LIVE NETWORK SIGNAL',
     tone: 'gold',
-    status: 'Mapping vendor network...',
-    headline: 'Vendor Network Mapped',
-    copy: 'Spark is visualizing coverage, crew readiness and service gaps across your operating network.',
-    metrics: ['42 Crews Indexed', '18 Sites Need Coverage Review', '6 Priority Alerts'],
-    feed: ['Vendor territories scanned', 'Coverage gaps detected', 'Dispatch readiness preview generated'],
-    labels: ['Coverage Online', 'Crew Signal Active', 'Command View Ready'],
+    status: 'Mapping partner network...',
+    headline: 'Partner Network Mapped',
+    copy: 'Spark is visualizing coverage, readiness, and execution gaps across your operating network.',
+    metrics: ['42 Partners Indexed', '18 Units Need Review', '6 Priority Alerts'],
+    feed: ['Partner roles scanned', 'Coverage gaps detected', 'Execution view generated'],
+    labels: ['Coverage Online', 'Partner Signal Active', 'Command View Ready'],
   },
   risk: {
     mode: 'risk',
@@ -26,9 +26,9 @@ const responses = {
     status: 'Scanning operational risk...',
     headline: 'Risk Visibility Online',
     copy: 'Spark is organizing alerts, service exposure and unresolved operational threats into one command view.',
-    metrics: ['12 Open Risks', '4 Critical Sites', '9 Aging Work Orders'],
-    feed: ['Critical alerts grouped', 'Aging work orders surfaced', 'Risk command view generated'],
-    labels: ['Alert Signal Active', 'Critical Sites Flagged', 'Risk View Ready'],
+    metrics: ['12 Open Risks', '4 Critical Units', '9 Aging Requests'],
+    feed: ['Critical alerts grouped', 'Aging requests surfaced', 'Risk command view generated'],
+    labels: ['Alert Signal Active', 'Critical Units Flagged', 'Risk View Ready'],
   },
   command: {
     mode: 'command',
@@ -46,7 +46,7 @@ const responses = {
     mode: 'standard',
     status: 'Generating command preview...',
     headline: 'Spark Command Preview Generated',
-    copy: 'Your operational command layer is being assembled from sites, vendors, alerts and workflows.',
+    copy: 'Your operational command layer is being assembled from teams, partners, alerts and workflows.',
     metrics: ['Command Layer Drafted', 'Site Signals Mapped', 'Workflow Preview Ready'],
     feed: ['Operating model scanned', 'Signal groups assembled', 'Preview dashboard generated'],
   },
@@ -57,6 +57,8 @@ function resolveResponse(command) {
   if (
     value.includes('vendor') ||
     value.includes('vendors') ||
+    value.includes('partner') ||
+    value.includes('partners') ||
     value.includes('coverage') ||
     value.includes('crew') ||
     value.includes('crews')
@@ -310,7 +312,7 @@ export default function CommandLabPage({ onLock }) {
           <div className="mx-auto max-w-7xl border border-white/10 bg-white/[0.035] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-8">
             <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/75">Future Modules</div>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-400">
-              Future lab modules can test executive summaries, dispatch previews, vendor scorecards and financial command visibility without touching production workflows.
+              Future lab modules can test executive summaries, routing previews, partner scorecards and financial command visibility without touching production workflows.
             </p>
           </div>
         </section>

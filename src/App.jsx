@@ -49,7 +49,7 @@ const operatingSignals = [
 
 const platformMetrics = [
   ['Active workflows', '128'],
-  ['Sites online', '317'],
+  ['Operating units', '317'],
   ['System events', '2.4k'],
   ['Response queues', '18'],
 ]
@@ -62,12 +62,12 @@ const integrationLines = [
   },
   {
     title: 'Systems integration',
-    text: 'Connect existing services, databases, vendor processes, and field activity into one command layer without forcing every team into a new silo.',
+    text: 'Connect existing services, databases, partner processes, and team activity into one command layer without forcing every department into a new silo.',
     icon: Network,
   },
   {
     title: 'Unified execution',
-    text: 'Give leadership, operators, field teams, and partners a shared source of truth from intake to completion.',
+    text: 'Give leadership, operators, internal teams, and partners a shared source of truth from intake to completion.',
     icon: Waypoints,
   },
 ]
@@ -85,13 +85,13 @@ const deploymentItems = [
   'Permission-aware workflows',
   'Real-world rollout support',
   'Executive visibility',
-  'Partner and vendor access',
+  'Partner and team access',
 ]
 
 const serviceCards = [
   {
     title: 'Command Center Platform',
-    text: 'A flagship platform for operational control, vendor coordination, live visibility, and execution.',
+    text: 'A flagship platform for operational control, team coordination, live visibility, and execution.',
     icon: CircuitBoard,
     href: '/platform',
   },
@@ -172,7 +172,7 @@ const builtOnItems = [
   },
   {
     title: 'Integrated',
-    text: 'Connect the tools, data, teams, and vendors that already move the business.',
+    text: 'Connect the tools, data, teams, and partners that already move the business.',
     icon: Layers3,
   },
   {
@@ -188,23 +188,23 @@ const applications = [
     status: 'Live Platform',
     type: 'Flagship Platform',
     description:
-      'Central command system for operations, vendor coordination, and real-time execution.',
+      'Central command system for operations, team coordination, and real-time execution.',
     action: 'View Platform',
     href: '/spark-command-center',
   },
   {
-    name: 'Spark Vendor Hub',
+    name: 'Spark Partner Hub',
     status: 'In Development',
     type: 'Partner Portal',
     description:
-      'Partner and vendor coordination portal for proposals, job updates, compliance, and communication.',
+      'Partner coordination portal for requests, approvals, compliance, and communication.',
   },
   {
     name: 'Spark Client Portal',
     status: 'In Development',
     type: 'Customer Experience',
     description:
-      'Customer-facing portal for service visibility, approvals, messaging, and operational status.',
+      'Customer-facing portal for project visibility, approvals, messaging, and operational status.',
   },
   {
     name: 'Spark Signal AI',
@@ -225,7 +225,7 @@ const applications = [
     status: 'Concept',
     type: 'Mobile Execution',
     description:
-      'Mobile-first execution app for field teams, operators, and distributed service partners.',
+      'Mobile-first execution app for operators, internal teams, and distributed partners.',
   },
   {
     name: 'Spark Workflow Studio',
@@ -242,39 +242,39 @@ const applications = [
       'Enterprise multi-product command environment for live operations visibility and intervention.',
   },
   {
-    name: 'Spark Site Lens',
+    name: 'Spark Operations Lens',
     status: 'Pipeline',
-    type: 'Site Visibility',
+    type: 'Operational Visibility',
     description:
-      'Site visibility layer for conditions, compliance, field imagery, and issue tracking.',
+      'Visibility layer for operating conditions, compliance, records, and issue tracking.',
   },
   {
-    name: 'Spark Dispatch Grid',
+    name: 'Spark Routing Grid',
     status: 'In Development',
-    type: 'Dispatch Operations',
+    type: 'Workflow Routing',
     description:
-      'Real-time dispatch coordination environment for multi-site scheduling, routing, and execution control.',
+      'Real-time coordination environment for scheduling, routing, approvals, and execution control.',
   },
   {
     name: 'Spark Ops Intelligence',
     status: 'Pipeline',
     type: 'Operational Analytics',
     description:
-      'Operational insights layer for performance analysis, service trends, and decision support.',
+      'Operational insights layer for performance analysis, operating trends, and decision support.',
   },
   {
     name: 'Spark Access Portal',
     status: 'Coming Soon',
     type: 'Secure Access',
     description:
-      'Secure access environment for client, team, and vendor-side platform entry.',
+      'Secure access environment for client, team, and partner-side platform entry.',
   },
   {
     name: 'Spark Asset Watch',
     status: 'Concept',
     type: 'Risk Monitoring',
     description:
-      'Monitoring layer for asset conditions, site risk signals, and maintenance visibility.',
+      'Monitoring layer for operational assets, risk signals, and system visibility.',
   },
   {
     name: 'Spark Workflow Engine',
@@ -291,11 +291,11 @@ const applications = [
       'AI-assisted command environment for workflow support, triage recommendations, and operational reasoning.',
   },
   {
-    name: 'Spark Service Network',
+    name: 'Spark Partner Network',
     status: 'Concept',
-    type: 'Service Coordination',
+    type: 'Partner Coordination',
     description:
-      'Distributed service coordination layer connecting operators, vendors, and platform workflows.',
+      'Distributed coordination layer connecting operators, partners, and platform workflows.',
   },
 ]
 
@@ -312,7 +312,7 @@ const intakeInitialState = {
 
 const projectTypeOptions = [
   'Command Center Platform',
-  'Vendor / Operations System',
+  'Partner / Operations System',
   'Customer Portal',
   'AI / Automation Tool',
   'Data / Reporting System',
@@ -323,7 +323,7 @@ const scaleOptions = ['Single location', 'Multi-site (2-50)', 'Regional (50-250)
 const timelineOptions = ['ASAP', '1-3 months', '3-6 months', 'Exploring']
 const budgetOptions = ['Under 10k', '10k-25k', '25k-75k', '75k+', 'Not sure']
 
-const buildTrackProducts = new Set(['Spark Vendor Hub', 'Spark Dispatch Grid', 'Spark Workflow Engine'])
+const buildTrackProducts = new Set(['Spark Partner Hub', 'Spark Routing Grid', 'Spark Workflow Engine'])
 
 function FadeIn({ children, className = '', delay = 0, ...props }) {
   return (
@@ -908,7 +908,7 @@ function CommandConsole() {
                   One network view for distributed operations.
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-slate-300">
-                  Spark builds systems that support teams across regions, workflows, vendors, and sites without losing command visibility.
+                  Spark builds systems that support teams across regions, departments, workflows, and locations without losing command visibility.
                 </p>
               </div>
 
@@ -994,7 +994,7 @@ function SiteFooter() {
                 </div>
                 {column.title === 'Access' ? (
                   <p className="mt-5 max-w-[16rem] text-xs leading-6 text-slate-500">
-                    Explore Spark's private lab for experimental tools, product prototypes and next-generation website concepts.
+                    Explore Spark's private lab for experimental tools, product prototypes, and advanced website concepts.
                   </p>
                 ) : null}
               </div>
@@ -1278,12 +1278,12 @@ function LandingPage({ page = 'home' }) {
             <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
               <FadeIn>
                 <SectionIntro eyebrow="02 / Platform" title="A command layer built to support actual operational decisions.">
-                  Spark does not stop at visual polish. The platform work is designed around intake, routing, visibility, accountability, and the handoffs that determine whether operations stay under control.
+                  Spark platform work is designed around intake, routing, visibility, accountability, and the handoffs that determine whether operations stay under control.
                 </SectionIntro>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   {[
-                    ['Live visibility', 'Bring requests, field context, status, and exceptions into one operational view.'],
-                    ['Controlled routing', 'Move work through teams, vendors, and approvals with clearer ownership.'],
+                    ['Live visibility', 'Bring requests, operating context, status, and exceptions into one operational view.'],
+                    ['Controlled routing', 'Move work through teams, partners, and approvals with clearer ownership.'],
                     ['Leadership reporting', 'Turn day-to-day execution into records leaders can review and trust.'],
                     ['Scalable structure', 'Support growth across locations, roles, and workflows without rebuilding the foundation.'],
                   ].map(([title, text]) => (
@@ -1317,7 +1317,7 @@ function LandingPage({ page = 'home' }) {
                 <div className="mt-5 border border-amber-200/20 bg-gradient-to-br from-amber-200/[0.08] to-cyan-200/[0.04] p-4">
                   <div className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">Command Center Value</div>
                   <p className="mt-3 text-sm leading-6 text-slate-300">
-                    A stronger operational surface for teams that need connected systems, clearer response paths, and a platform that can mature with the business.
+                    A stronger operational surface for teams that need connected systems, clearer response paths, and tools that can adapt as the business grows.
                   </p>
                 </div>
               </FadeIn>
@@ -1336,7 +1336,7 @@ function LandingPage({ page = 'home' }) {
                   Built for connected operations across real world teams and locations.
                 </h2>
                 <p className="mt-5 max-w-xl text-base leading-8 text-slate-300 sm:text-lg">
-                  Spark systems support companies as they grow across regions, locations, workflows, vendors, and leadership layers without losing the operational thread.
+                  Spark systems support companies as they grow across regions, locations, workflows, teams, and leadership layers without losing the operational thread.
                 </p>
               </FadeIn>
 
@@ -1384,7 +1384,7 @@ function LandingPage({ page = 'home' }) {
                 One builder. Real systems. Built from the inside out.
               </h2>
               <p className="relative z-10 mt-6 text-base leading-8 text-slate-300 sm:text-lg">
-                SparkCommand Systems was built by someone who needed better tools and decided to build them. From the Command Center platform to custom client systems, every system is designed around operational reality, not just aesthetics.
+                SparkCommand Systems was built from firsthand experience with operational pressure, disconnected tools, and the communication gaps that slow real work down. From the Command Center platform to custom client systems, every build is designed around control, clarity, and execution.
               </p>
               <Link to="/contact" className="relative z-10 mt-8 inline-flex items-center gap-2 text-base font-semibold text-cyan-100 transition hover:text-white">
                 Contact the development team
@@ -1398,9 +1398,9 @@ function LandingPage({ page = 'home' }) {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/16 to-transparent" />
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <SectionIntro eyebrow="05 / Proof" title="Built with operational credibility, not marketing filler." />
+              <SectionIntro eyebrow="05 / Proof" title="Built from operational work." />
               <p className="max-w-md text-sm leading-7 text-slate-400">
-                The site should read like a software company with a point of view, clear delivery model, and systems thinking behind the visuals.
+                Built around real operational workflows, not disconnected software layers.
               </p>
             </div>
 
@@ -1509,7 +1509,7 @@ function LandingPage({ page = 'home' }) {
           <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
               <SectionIntro eyebrow="Flagship Platform" title="Command center software for live operational control.">
-                Spark builds platforms that turn scattered operational work into a controlled environment: intake, dispatch, vendor coordination, site visibility, approvals, and executive reporting.
+                Spark builds platforms that turn scattered operational work into a controlled environment: intake, routing, partner coordination, workflow visibility, approvals, and executive reporting.
               </SectionIntro>
               <div className="grid gap-4 sm:grid-cols-3">
                 {['Coordinate work', 'Monitor signals', 'Close the loop'].map((item, index) => {
@@ -1525,7 +1525,7 @@ function LandingPage({ page = 'home' }) {
                       <p className="mt-3 text-sm leading-6 text-slate-400">
                         {[
                           'Route activity through structured workflows instead of disconnected requests.',
-                          'Surface live changes, exception states, and location-level context.',
+                          'Surface live changes, exception states, and operational context.',
                           'Move from response to completion with records leadership can trust.',
                         ][index]}
                       </p>
@@ -1546,13 +1546,13 @@ function LandingPage({ page = 'home' }) {
                 />
                 <h3 className="text-3xl font-semibold tracking-[-0.02em] text-white">Built as a working operational layer, not a presentation dashboard.</h3>
                 <p className="mt-5 text-base leading-8 text-slate-300">
-                  The platform is meant to support real deployment value: fewer blind spots, clearer routing, cleaner partner coordination, and faster leadership visibility.
+                  The platform is meant to support real deployment value: fewer blind spots, clearer routing, cleaner coordination, and faster leadership visibility.
                 </p>
               </div>
               <div className="grid bg-[#060d16] sm:grid-cols-2">
                 {[
                   ['Intake', 'Capture operational requests and events in a structured command flow.'],
-                  ['Dispatch', 'Route work to internal teams, vendors, or site-level stakeholders.'],
+                  ['Routing', 'Move work to internal teams, partners, or approval owners.'],
                   ['Visibility', 'Track status, exceptions, and operational context in real time.'],
                   ['Closeout', 'Turn completion data into usable records and reporting.'],
                 ].map(([title, text], index) => {
@@ -1618,7 +1618,7 @@ function LandingPage({ page = 'home' }) {
                 <div className="absolute inset-x-10 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-200/25 to-transparent" />
                 <div className="absolute inset-y-10 left-1/2 w-px bg-gradient-to-b from-transparent via-amber-200/20 to-transparent" />
                 <div className="relative grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10">
-                  {['CRM', 'ERP', 'Field', 'Data', 'Vendors', 'Clients', 'AI', 'Reports', 'Portal'].map((item) => (
+                  {['CRM', 'ERP', 'Ops', 'Data', 'Partners', 'Clients', 'AI', 'Reports', 'Portal'].map((item) => (
                     <div key={item} className="bg-gradient-to-br from-[#0a1422] to-[#050a12] px-3 py-5 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
                       {item}
                     </div>
@@ -1644,14 +1644,14 @@ function LandingPage({ page = 'home' }) {
         <section id="pipeline" className="relative overflow-hidden py-16 sm:py-28">
           <BrandFrame
             src={corporateLogo}
-            alt="Spark future technology system"
+            alt="Spark product pipeline system"
             className="absolute left-1/2 top-12 h-20 w-20 -translate-x-1/2 opacity-25 sm:h-24 sm:w-24"
             imageClassName="scale-[2.15]"
           />
           <div className="absolute inset-x-0 top-28 h-72 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_45%)]" />
           <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-8">
-            <SectionIntro eyebrow="Future Products" title="A product pipeline built from the same operational backbone." align="center">
-              Spark is a parent technology company, not a single app. The roadmap expands from command center platforms into AI-enabled tools, data systems, portals, and additional operational products.
+            <SectionIntro eyebrow="Product Pipeline" title="Additional products built from the same operational backbone." align="center">
+              Spark builds command center platforms, AI-enabled workflow tools, data systems, portals, and operational products from the same practical operating model.
             </SectionIntro>
 
             <div className="relative mt-14 grid gap-px overflow-hidden border border-white/10 bg-white/10 shadow-[0_28px_110px_rgba(0,0,0,0.4)] md:grid-cols-2 lg:grid-cols-4">
@@ -1682,10 +1682,10 @@ function LandingPage({ page = 'home' }) {
           <div className="mx-auto grid max-w-7xl gap-10 px-3 sm:px-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12 lg:px-8">
             <FadeIn>
               <SectionIntro eyebrow="Enterprise Scale" title="Designed for rollout across real-world operating environments.">
-                Spark systems are shaped for organizations with multiple sites, distributed teams, mixed technology stacks, and operational work that has to move reliably.
+                Spark systems are shaped for organizations with multiple locations, distributed teams, mixed technology stacks, and operational work that has to move reliably.
               </SectionIntro>
               <div className="mt-8 max-w-xl border-l border-cyan-200/30 pl-5 text-sm leading-7 text-slate-400">
-                The goal is controlled adoption: clear access, durable workflows, useful reporting, and a command layer that can expand as products and operations mature.
+                The goal is controlled adoption: clear access, durable workflows, useful reporting, and a command layer that can expand as the operation grows.
               </div>
             </FadeIn>
 
@@ -1831,7 +1831,7 @@ function ApplicationsPage() {
                 Applications built for operational command.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Access the Spark platform ecosystem: live command systems, development-stage portals, AI tools, data systems, and future operational products.
+                Access Spark command systems, development-stage portals, AI tools, data systems, and planned operational products.
               </p>
             </FadeIn>
 
@@ -1871,7 +1871,7 @@ function ApplicationsPage() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-6 text-slate-400">
-                Flagship platform first, build-track systems next, future products staged behind the command backbone.
+                The flagship platform leads the catalog, with build-track systems and planned modules organized behind the command backbone.
               </p>
             </div>
 
@@ -1964,27 +1964,27 @@ function AboutSparkPage() {
                   About Spark
                 </div>
                 <h1 className="mt-6 max-w-2xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96]">
-                  Built from one operational problem into a command systems company.
+                  Built from real operational experience into a command systems company.
                 </h1>
                 <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                  Spark began as a focused tool for making live operations easier to see, route, and control.
+                  SparkCommand Systems was founded by Shawn Parker, Founder and Systems Architect, to build software for teams that need clearer control over work, data, communication, and execution.
                 </p>
               </div>
             </div>
 
             <div className="relative bg-[#060d16] p-5 sm:p-10">
               <p className="max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl sm:leading-9">
-                That work exposed the larger problem: operations were not missing another isolated app. They were missing a connected layer between workflows, field activity, data, approvals, vendors, and leadership visibility.
+                Shawn's background moved from labor and field-level execution into leadership, management, coordination, and system design. That experience made the same bottlenecks clear: important work scattered across disconnected tools, communication gaps, slow handoffs, and limited visibility under pressure.
               </p>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
-                Spark Command Systems is being built around that larger need. The company now develops command platforms, integration layers, AI-ready tools, portals, and data systems that bring fragmented operations into one execution environment.
+                SparkCommand Systems is built around that reality. The company develops command platforms, custom software, operational dashboards, workflow systems, websites, portals, and integrated internal tools that help businesses run with more structure and control.
               </p>
 
               <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
                 {[
-                  ['Starting point', 'Focused operations tool'],
-                  ['Problem found', 'Fragmented systems'],
-                  ['Company direction', 'Command systems'],
+                  ['Founder', 'Shawn Parker'],
+                  ['Role', 'Founder and Systems Architect'],
+                  ['Company focus', 'Command systems'],
                 ].map(([label, value]) => (
                   <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
                     <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -2050,7 +2050,7 @@ function SCSComingSoonPage() {
                   Spark Command Center
                 </h1>
                 <p className="mt-6 max-w-lg text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                  Unify operations, vendors, and real-time execution in one command system.
+                  Unify operations, teams, partners, and real-time execution in one command system.
                 </p>
               </div>
             </div>

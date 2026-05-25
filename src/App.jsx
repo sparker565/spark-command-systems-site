@@ -470,7 +470,7 @@ function CommandSelect({ value, onChange, options }) {
 
 function MobileMenuPanel({ page = '' }) {
   return (
-    <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 xl:hidden">
+    <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 2xl:hidden">
       <div className="grid gap-2">
         {navItems.map((item) => (
           <Link
@@ -1064,7 +1064,7 @@ function LandingPage({ page = 'home' }) {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 xl:flex">
+          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 2xl:flex">
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -1104,7 +1104,7 @@ function LandingPage({ page = 'home' }) {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white xl:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white 2xl:hidden"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -1763,7 +1763,7 @@ function ApplicationsHeader() {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 xl:flex">
+          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 2xl:flex">
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -1799,7 +1799,7 @@ function ApplicationsHeader() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white xl:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white 2xl:hidden"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -2144,6 +2144,17 @@ function WebsitesPage() {
             backgroundPosition: 'center',
           }}
         >
+          <video
+            className="absolute inset-0 hidden h-full w-full object-cover opacity-28 sm:block"
+            src="/assets/spark-intro-loop.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020407]/78 via-[#020407]/82 to-[#020407]/98" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_22%,rgba(245,158,11,0.16),transparent_26%),radial-gradient(circle_at_84%_18%,rgba(34,211,238,0.08),transparent_28%)]" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#020407] to-transparent" />
           <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">

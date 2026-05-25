@@ -470,7 +470,7 @@ function CommandSelect({ value, onChange, options }) {
 
 function MobileMenuPanel({ page = '' }) {
   return (
-    <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 2xl:hidden">
+    <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 min-[1640px]:hidden">
       <div className="grid gap-2">
         {navItems.map((item) => (
           <Link
@@ -1051,25 +1051,25 @@ function LandingPage({ page = 'home' }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
           <div className="relative flex items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
-            <Link to="/" className="flex w-[10.5rem] shrink-0 items-center gap-3 sm:w-[13.5rem] sm:gap-4">
+            <Link to="/" className="flex w-[12.75rem] shrink-0 items-center gap-3 sm:w-[16.25rem] sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
               imageClassName="scale-[2.15]"
             />
-            <div className="min-w-0 overflow-hidden">
+            <div className="shrink-0">
               <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
-              <div className="hidden truncate whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
+              <div className="hidden whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
           </Link>
 
-          <nav className="hidden min-w-0 items-center gap-1 border border-white/10 bg-white/[0.035] p-1 2xl:flex">
+          <nav className="hidden min-w-0 items-center gap-1 border border-white/10 bg-white/[0.035] p-1 min-[1640px]:flex">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className={`whitespace-nowrap px-3 py-2 text-sm font-semibold transition ${
+                className={`whitespace-nowrap px-2.5 py-2 text-sm font-semibold transition ${
                   page === item.href.slice(1)
                     ? 'bg-cyan-200/[0.12] text-cyan-100 shadow-[inset_0_0_0_1px_rgba(165,243,252,0.12)]'
                     : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
@@ -1104,7 +1104,7 @@ function LandingPage({ page = 'home' }) {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white 2xl:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white min-[1640px]:hidden"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -1750,25 +1750,25 @@ function ApplicationsHeader() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
         <div className="relative flex items-center justify-between gap-2 px-3 py-2.5 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
-          <Link to="/" className="flex w-[10.5rem] shrink-0 items-center gap-3 sm:w-[13.5rem] sm:gap-4">
+          <Link to="/" className="flex w-[12.75rem] shrink-0 items-center gap-3 sm:w-[16.25rem] sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0"
               imageClassName="scale-[2.15]"
             />
-            <div className="min-w-0 overflow-hidden">
+            <div className="shrink-0">
               <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
-              <div className="hidden truncate whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
+              <div className="hidden whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 2xl:flex">
+          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 min-[1640px]:flex">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className="whitespace-nowrap px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                className="whitespace-nowrap px-2.5 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
               >
                 {item.label}
               </Link>
@@ -1799,7 +1799,7 @@ function ApplicationsHeader() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white 2xl:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white min-[1640px]:hidden"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

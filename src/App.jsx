@@ -35,6 +35,7 @@ const usaNetworkImage = '/assets/usa-network.png'
 const navItems = [
   { label: 'About', href: '/about' },
   { label: 'Platform', href: '/platform' },
+  { label: 'Websites', href: '/websites' },
   { label: 'Integration', href: '/integration' },
   { label: 'Pipeline', href: '/pipeline' },
   { label: 'Deployment', href: '/deployment' },
@@ -105,7 +106,7 @@ const serviceCards = [
     title: 'Websites and Upgrades',
     text: 'Modern websites, rebuilds, and upgrades built to clarify the offer and support real business growth.',
     icon: Building2,
-    href: '/contact',
+    href: '/websites',
   },
 ]
 
@@ -137,6 +138,7 @@ const footerColumns = [
   {
     title: 'Solutions',
     links: [
+      ['Websites', '/websites'],
       ['Integration', '/integration'],
       ['Pipeline', '/pipeline'],
       ['Development Team', '/contact'],
@@ -2018,6 +2020,435 @@ function AboutSparkPage() {
   )
 }
 
+function WebsitesPage() {
+  const websiteBuildInitialState = {
+    businessName: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    currentWebsite: '',
+    buildType: 'New Website',
+    timeline: 'Exploring options',
+    notes: '',
+  }
+
+  const buildTypeOptions = [
+    'New Website',
+    'Website Upgrade',
+    'Website + Hosting Support',
+    'Website + Custom Dashboard',
+    'Website + Client Portal',
+    'Custom System / App Build',
+  ]
+
+  const websiteTimelineOptions = [
+    'ASAP',
+    '2 to 4 weeks',
+    '1 to 3 months',
+    'Exploring options',
+  ]
+
+  const [websiteFormData, setWebsiteFormData] = useState(websiteBuildInitialState)
+  const [isWebsiteSubmitted, setIsWebsiteSubmitted] = useState(false)
+  const [isWebsiteSubmitting, setIsWebsiteSubmitting] = useState(false)
+  const [websiteSubmitError, setWebsiteSubmitError] = useState('')
+
+  const starterItems = [
+    'Responsive website',
+    'Mobile optimization',
+    'Hosting',
+    'IT support',
+    'Contact forms',
+    'Branding integration',
+    'Basic SEO setup',
+  ]
+
+  const scaleItems = [
+    ['Dashboards', 'Turn website activity, business records, and operational data into focused views leaders can use.'],
+    ['Client portals', 'Give customers, partners, or internal teams a secure place to access updates, requests, files, and approvals.'],
+    ['Workflow systems', 'Move work from inboxes and spreadsheets into structured steps with ownership and status visibility.'],
+    ['Automations', 'Reduce repeated admin work with forms, routing, notifications, and connected business processes.'],
+    ['Command centers', 'Expand from a public website into a command layer for operations, reporting, and execution control.'],
+    ['Integrated tools', 'Connect the website foundation to CRMs, databases, reporting tools, and internal systems over time.'],
+  ]
+
+  const customOptions = [
+    ['Custom Dashboards', 'Operational views for metrics, records, activity, exceptions, and business performance.'],
+    ['Client Portals', 'Secure access environments for clients, partners, teams, requests, documents, and approvals.'],
+    ['Workflow Automation', 'Structured intake, routing, notifications, task flow, and repeatable business processes.'],
+    ['Command Center Systems', 'Expanded platform builds for teams that need live visibility, control, and reporting.'],
+  ]
+
+  const reasons = [
+    ['Systems-focused approach', 'The website is planned as part of a larger operating system, not a standalone brochure.'],
+    ['Operational understanding', 'Builds are shaped around how requests, data, decisions, and handoffs actually move.'],
+    ['Scalable architecture', 'Start with a clean website and leave room for dashboards, portals, integrations, and tools.'],
+    ['Long-term partnership', 'Hosting, support, upgrades, and future systems can stay connected under one technical direction.'],
+  ]
+
+  const updateWebsiteField = (field, value) => {
+    setWebsiteFormData((current) => ({ ...current, [field]: value }))
+  }
+
+  const handleWebsiteSubmit = async (event) => {
+    event.preventDefault()
+
+    setIsWebsiteSubmitting(true)
+    setWebsiteSubmitError('')
+
+    try {
+      const response = await fetch('https://formspree.io/f/mzdyaowb', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: 'New Spark Website Build Request',
+          name: websiteFormData.contactName,
+          company: websiteFormData.businessName,
+          email: websiteFormData.email,
+          phone: websiteFormData.phone,
+          projectType: websiteFormData.buildType,
+          currentWebsite: websiteFormData.currentWebsite || 'Not provided',
+          problemDescription: websiteFormData.notes,
+          scale: 'Website build request',
+          timeline: websiteFormData.timeline,
+          budget: 'Website package or custom quote',
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Formspree submission failed')
+      }
+
+      setIsWebsiteSubmitted(true)
+    } catch {
+      setWebsiteSubmitError('Something went wrong while submitting your request. Please try again or contact sparker565@gmail.com directly.')
+    } finally {
+      setIsWebsiteSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+      <ApplicationsHeader />
+
+      <main className="relative">
+        <section
+          className="relative overflow-hidden px-3 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8"
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.94) 0%, rgba(2,4,7,0.98) 100%), url(${circuitBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_22%,rgba(245,158,11,0.16),transparent_26%),radial-gradient(circle_at_84%_18%,rgba(34,211,238,0.08),transparent_28%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#020407] to-transparent" />
+          <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <FadeIn>
+              <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-100">
+                CUSTOM WEBSITE BUILDS
+              </div>
+              <h1 className="mt-7 max-w-5xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96] lg:text-7xl">
+                Turn your ordinary website into a custom business command center.
+              </h1>
+              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300 sm:text-xl sm:leading-9">
+                Modern websites built to grow with your business. Launch with a clean professional online presence and expand into custom dashboards, integrations, automations and operational tools over time.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#website-build-request"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.3)] transition hover:bg-amber-200"
+                >
+                  Start a Website Build
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href="#website-build-request"
+                  className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
+                >
+                  Request Custom Build Options
+                </a>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.08} className="relative overflow-hidden border border-white/10 bg-[#060d16]/88 p-5 shadow-[0_34px_130px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.055)] backdrop-blur-xl sm:p-6">
+              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(245,158,11,0.1),transparent_24%),radial-gradient(circle_at_16%_88%,rgba(34,211,238,0.06),transparent_30%)]" />
+              <div className="relative">
+                <div className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">Website Foundation</div>
+                <div className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
+                  {[
+                    ['Launch', 'Clean professional website'],
+                    ['Support', 'Hosting and IT help'],
+                    ['Expand', 'Dashboards, portals, tools'],
+                  ].map(([label, value]) => (
+                    <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-5">
+                      <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                      <div className="mt-2 text-base font-semibold text-white">{value}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+              <FadeIn>
+                <SectionIntro eyebrow="Starter Package" title="Starter Website Package">
+                  A clean launch package for businesses that need a professional website foundation with ongoing hosting and support.
+                </SectionIntro>
+                <div className="mt-7 border border-amber-200/24 bg-amber-200/[0.08] p-5 shadow-[0_0_56px_rgba(245,158,11,0.1)]">
+                  <div className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-100">Pricing</div>
+                  <div className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                    $200 Build + $75/month hosting and IT support
+                  </div>
+                  <p className="mt-5 text-sm leading-7 text-slate-300">
+                    This is the base package. Advanced custom builds, integrations, portals, automations and platform systems are quoted separately based on project scope.
+                  </p>
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={0.08} className="grid gap-3 sm:grid-cols-2">
+                {starterItems.map((item) => (
+                  <div key={item} className="border border-white/10 bg-gradient-to-br from-white/[0.055] via-white/[0.03] to-white/[0.02] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 shrink-0 text-amber-100" />
+                      <span className="text-sm font-semibold text-slate-100">{item}</span>
+                    </div>
+                  </div>
+                ))}
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/20 to-transparent" />
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <SectionIntro eyebrow="Scale Beyond a Website" title="Start with a website. Build toward a system." />
+              <p className="max-w-md text-sm leading-7 text-slate-400">
+                SparkCommand websites are built as foundations for business systems that can grow into dashboards, portals, automations and command center platforms.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {scaleItems.map(([title, text], index) => (
+                <FadeIn key={title} delay={index * 0.04} className="relative overflow-hidden border border-white/10 bg-[#060d16]/82 p-5 shadow-[0_20px_80px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.05)]">
+                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
+                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">0{index + 1}</div>
+                  <h3 className="mt-3 text-xl font-semibold text-white">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.94) 0%, rgba(2,4,7,0.96) 100%), url(${circuitBackground})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <div className="relative mx-auto max-w-7xl">
+            <SectionIntro eyebrow="Custom Build Options" title="Website builds that can become business tools." align="center">
+              Start with the public website, then extend the same foundation into private tools when the business is ready.
+            </SectionIntro>
+            <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {customOptions.map(([title, text], index) => {
+                const Icon = [DatabaseZap, Building2, Waypoints, CircuitBoard][index]
+
+                return (
+                  <FadeIn key={title} delay={index * 0.06} className="group relative min-h-[18rem] overflow-hidden border border-white/10 bg-gradient-to-br from-[#08111d] to-[#04080f] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.34)] transition hover:border-amber-200/35 hover:shadow-[0_34px_120px_rgba(0,0,0,0.45),0_0_52px_rgba(245,158,11,0.08)]">
+                    <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/38 to-transparent transition group-hover:via-amber-200/68" />
+                    <div className="mb-6 flex h-11 w-11 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.07] text-cyan-100">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">Option 0{index + 1}</div>
+                    <h3 className="mt-4 text-xl font-semibold text-white">{title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                  </FadeIn>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <FadeIn>
+              <SectionIntro eyebrow="Why SparkCommand" title="A website build with systems architecture behind it.">
+                SparkCommand Systems treats the website as the first layer of a larger business technology foundation.
+              </SectionIntro>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#website-build-request"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
+                >
+                  Start a Website Build
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href="#website-build-request"
+                  className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                >
+                  Request a Demo
+                </a>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.08} className="grid gap-3 sm:grid-cols-2">
+              {reasons.map(([title, text]) => (
+                <div key={title} className="border border-white/10 bg-gradient-to-br from-[#08111d] via-[#06101a] to-[#04080e] p-5 shadow-[0_16px_60px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.05)]">
+                  <h3 className="text-lg font-semibold text-white">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                </div>
+              ))}
+            </FadeIn>
+          </div>
+        </section>
+
+        <section id="website-build-request" className="relative scroll-mt-24 px-3 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:px-8">
+          <div className="mx-auto max-w-7xl overflow-hidden border border-amber-200/22 bg-[#060d16]/92 shadow-[0_38px_150px_rgba(0,0,0,0.62),0_0_90px_rgba(245,158,11,0.08)]">
+            <div
+              className="grid gap-px bg-white/10 xl:grid-cols-[0.82fr_1.18fr]"
+              style={{
+                backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.97) 0%, rgba(6,13,22,0.94) 100%), url(${circuitBackground})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div className="relative bg-[#03070d]/94 p-6 sm:p-9 lg:p-11">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#03070d] via-[#03070d]/78 to-[#03070d]/50" />
+                <div className="relative">
+                  <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-amber-100">
+                    Website Build Request
+                  </div>
+                  <h2 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl">
+                    Turn your ordinary website into a custom business command center.
+                  </h2>
+                  <p className="mt-6 max-w-xl text-base leading-8 text-slate-300 sm:text-lg">
+                    Tell us what you need built. We'll help shape the right starting point, whether it is a website, upgrade, dashboard, portal, or custom system.
+                  </p>
+                  <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
+                    The $200 build + $75/month hosting and IT support package is the starting package. Advanced custom builds, integrations, dashboards, portals, and app systems are quoted based on scope.
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative bg-[#060d16] p-5 sm:p-8 lg:p-10">
+                <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
+                {isWebsiteSubmitted ? (
+                  <div className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-6 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:p-9">
+                    <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-amber-200/30 bg-amber-200/[0.08] text-amber-100">
+                      <CheckCircle2 className="h-8 w-8" />
+                    </div>
+                    <h3 className="text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">Request received.</h3>
+                    <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-300">
+                      Our development team will review your website build request and follow up shortly.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWebsiteFormData(websiteBuildInitialState)
+                        setIsWebsiteSubmitted(false)
+                        setWebsiteSubmitError('')
+                      }}
+                      className="mx-auto mt-8 inline-flex items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                    >
+                      Submit another request
+                    </button>
+                  </div>
+                ) : (
+                  <form
+                    onSubmit={handleWebsiteSubmit}
+                    className="space-y-9 border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_28px_90px_rgba(0,0,0,0.18)] sm:p-7"
+                  >
+                    <div>
+                      <div className="mb-6 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Business</div>
+                      <div className="grid gap-6 md:grid-cols-2">
+                        <FieldShell label="Business Name" required>
+                          <input required value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
+                        </FieldShell>
+                        <FieldShell label="Contact Name" required>
+                          <input required value={websiteFormData.contactName} onChange={(event) => updateWebsiteField('contactName', event.target.value)} className={inputClassName()} placeholder="Your name" />
+                        </FieldShell>
+                        <FieldShell label="Email" required>
+                          <input required type="email" value={websiteFormData.email} onChange={(event) => updateWebsiteField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
+                        </FieldShell>
+                        <FieldShell label="Phone" required>
+                          <input required type="tel" value={websiteFormData.phone} onChange={(event) => updateWebsiteField('phone', event.target.value)} className={inputClassName()} placeholder="Best phone number" />
+                        </FieldShell>
+                        <FieldShell label="Current Website URL">
+                          <input type="url" value={websiteFormData.currentWebsite} onChange={(event) => updateWebsiteField('currentWebsite', event.target.value)} className={inputClassName()} placeholder="https://example.com" />
+                        </FieldShell>
+                        <FieldShell label="Build Type">
+                          <CommandSelect value={websiteFormData.buildType} onChange={(value) => updateWebsiteField('buildType', value)} options={buildTypeOptions} />
+                        </FieldShell>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="mb-6 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Project</div>
+                      <div className="grid gap-6">
+                        <FieldShell label="Estimated Timeline">
+                          <CommandSelect value={websiteFormData.timeline} onChange={(value) => updateWebsiteField('timeline', value)} options={websiteTimelineOptions} />
+                        </FieldShell>
+                        <FieldShell label="Project Notes" required>
+                          <textarea
+                            required
+                            value={websiteFormData.notes}
+                            onChange={(event) => updateWebsiteField('notes', event.target.value)}
+                            className={`${inputClassName()} min-h-40 resize-y leading-7`}
+                            placeholder="Tell us whether you need a new website, upgrade, hosting support, dashboard, portal, automation, operational tool, or custom system."
+                          />
+                        </FieldShell>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isWebsiteSubmitting}
+                      className="group inline-flex w-full items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)] disabled:cursor-not-allowed disabled:bg-amber-200/60 disabled:text-black/60 sm:w-auto"
+                    >
+                      {isWebsiteSubmitting ? (
+                        <>
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/25 border-t-black" />
+                          Submitting Request
+                        </>
+                      ) : (
+                        <>
+                          Send Website Build Request
+                          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                        </>
+                      )}
+                    </button>
+                    {websiteSubmitError ? (
+                      <div className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
+                        {websiteSubmitError}
+                      </div>
+                    ) : null}
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+      <ScrollToTopButton />
+    </div>
+  )
+}
+
 function SCSComingSoonPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
@@ -2146,6 +2577,7 @@ export default function SparkCommandSystemsSite() {
         <Route path="/" element={<LandingPage page="home" />} />
         <Route path="/about" element={<AboutSparkPage />} />
         <Route path="/platform" element={<LandingPage page="platform" />} />
+        <Route path="/websites" element={<WebsitesPage />} />
         <Route path="/integration" element={<LandingPage page="integration" />} />
         <Route path="/pipeline" element={<LandingPage page="pipeline" />} />
         <Route path="/deployment" element={<LandingPage page="deployment" />} />

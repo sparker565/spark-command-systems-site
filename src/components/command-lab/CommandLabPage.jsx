@@ -273,7 +273,7 @@ export default function CommandLabPage({ onLock }) {
         <section className="relative overflow-hidden px-4 pb-8 pt-20 sm:px-6 sm:pt-24 lg:px-8">
           <div className="absolute inset-0 z-0 bg-[#020407]" aria-hidden="true">
             <video
-              className="hidden h-full w-full object-cover opacity-35 sm:block"
+              className="hidden h-full w-full object-cover opacity-70 sm:block"
               src="/assets/spark-intro-loop.mp4"
               autoPlay
               muted
@@ -281,7 +281,7 @@ export default function CommandLabPage({ onLock }) {
               playsInline
               preload="metadata"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#020407]/80 via-[#020407]/76 to-[#020407]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#020407]/58 via-[#020407]/54 to-[#020407]/88" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(245,158,11,0.16),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(34,211,238,0.09),transparent_30%)]" />
           </div>
           <div className="relative z-10 mx-auto max-w-7xl">

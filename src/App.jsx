@@ -1040,7 +1040,7 @@ function LandingPage({ page = 'home' }) {
 
       <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
         <div
-          className={`relative mx-auto max-w-7xl overflow-hidden border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl ${
+          className={`relative mx-auto max-w-7xl overflow-hidden border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl 2xl:max-w-[96rem] ${
             isScrolled
               ? 'border-cyan-200/20 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)]'
               : 'border-white/12'
@@ -1050,26 +1050,26 @@ function LandingPage({ page = 'home' }) {
           <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-          <div className="relative flex items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-5 lg:px-6">
-            <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <div className="relative flex items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
+            <Link to="/" className="flex w-[10.5rem] shrink-0 items-center gap-3 sm:w-[13.5rem] sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
               imageClassName="scale-[2.15]"
             />
-            <div className="min-w-0">
-              <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
-              <div className="hidden text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
+            <div className="min-w-0 overflow-hidden">
+              <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
+              <div className="hidden truncate whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-1 border border-white/10 bg-white/[0.035] p-1 2xl:flex">
+          <nav className="hidden min-w-0 items-center gap-1 border border-white/10 bg-white/[0.035] p-1 2xl:flex">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className={`px-4 py-2 text-sm font-semibold transition ${
+                className={`whitespace-nowrap px-3 py-2 text-sm font-semibold transition ${
                   page === item.href.slice(1)
                     ? 'bg-cyan-200/[0.12] text-cyan-100 shadow-[inset_0_0_0_1px_rgba(165,243,252,0.12)]'
                     : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
@@ -1083,19 +1083,19 @@ function LandingPage({ page = 'home' }) {
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
               to="/contact"
-              className="hidden border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] hover:shadow-[0_0_26px_rgba(34,211,238,0.1)] md:inline-flex"
+              className="hidden whitespace-nowrap border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] hover:shadow-[0_0_26px_rgba(34,211,238,0.1)] xl:inline-flex"
             >
               Contact Development Team
             </Link>
             <Link
               to="/contact"
-              className="hidden border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] lg:inline-flex"
+              className="hidden whitespace-nowrap border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] 2xl:inline-flex"
             >
               Book a Demo
             </Link>
             <Link
               to="/applications"
-              className="group inline-flex min-h-11 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
+              className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
             >
               <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>
@@ -1744,22 +1744,22 @@ function ApplicationsHeader() {
 
   return (
     <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
-      <div className="relative mx-auto max-w-7xl overflow-hidden border border-cyan-200/20 bg-[#020407]/72 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)] backdrop-blur-2xl">
+      <div className="relative mx-auto max-w-[96rem] overflow-hidden border border-cyan-200/20 bg-[#020407]/72 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)] backdrop-blur-2xl">
         <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/55 to-transparent" />
         <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-        <div className="relative flex items-center justify-between gap-2 px-3 py-2.5 sm:gap-4 sm:px-5 lg:px-6">
-          <Link to="/" className="flex min-w-0 items-center gap-3 sm:gap-4">
+        <div className="relative flex items-center justify-between gap-2 px-3 py-2.5 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
+          <Link to="/" className="flex w-[10.5rem] shrink-0 items-center gap-3 sm:w-[13.5rem] sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0"
               imageClassName="scale-[2.15]"
             />
-            <div className="min-w-0">
-              <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
-              <div className="hidden text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
+            <div className="min-w-0 overflow-hidden">
+              <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
+              <div className="hidden truncate whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
           </Link>
 
@@ -1768,7 +1768,7 @@ function ApplicationsHeader() {
               <Link
                 key={item.label}
                 to={item.href}
-                className="px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                className="whitespace-nowrap px-3 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
               >
                 {item.label}
               </Link>
@@ -1778,19 +1778,19 @@ function ApplicationsHeader() {
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
               to="/contact"
-              className="hidden border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] md:inline-flex"
+              className="hidden whitespace-nowrap border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] xl:inline-flex"
             >
               Contact Development Team
             </Link>
             <Link
               to="/contact"
-              className="hidden border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] lg:inline-flex"
+              className="hidden whitespace-nowrap border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] 2xl:inline-flex"
             >
               Book a Demo
             </Link>
             <Link
               to="/applications"
-              className="group inline-flex min-h-11 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
+              className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
             >
               <span className="hidden sm:inline">Open App</span>
               <span className="sm:hidden">Apps</span>

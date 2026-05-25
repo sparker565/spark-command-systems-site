@@ -2466,7 +2466,7 @@ function WebsitesPage() {
                     Tell us about your business, your preferred package, and what you need on the site.
                   </p>
                   <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
-                    The $200 build + $75/month hosting and IT support package is the starting package. Advanced custom builds, integrations, dashboards, portals, and app systems are quoted based on scope.
+                    Quick Launch is the starting point for a managed website presence. Advanced dashboards, portals, integrations, automations, and command systems are scoped as scalable project-based builds.
                   </p>
                 </div>
               </div>

@@ -35,7 +35,7 @@ const usaNetworkImage = '/assets/usa-network.png'
 const navItems = [
   { label: 'About', href: '/about' },
   { label: 'Platform', href: '/platform' },
-  { label: 'Websites', href: '/websites' },
+  { label: 'Websites', href: '/website' },
   { label: 'Integration', href: '/integration' },
   { label: 'Pipeline', href: '/pipeline' },
   { label: 'Deployment', href: '/deployment' },
@@ -106,7 +106,7 @@ const serviceCards = [
     title: 'Websites and Upgrades',
     text: 'Modern websites, rebuilds, and upgrades built to clarify the offer and support real business growth.',
     icon: Building2,
-    href: '/websites',
+    href: '/website',
   },
 ]
 
@@ -138,7 +138,7 @@ const footerColumns = [
   {
     title: 'Solutions',
     links: [
-      ['Websites', '/websites'],
+      ['Websites', '/website'],
       ['Integration', '/integration'],
       ['Pipeline', '/pipeline'],
       ['Development Team', '/contact'],
@@ -2021,16 +2021,119 @@ function AboutSparkPage() {
 }
 
 function WebsitesPage() {
-  const websiteBuildInitialState = {
-    businessName: '',
-    contactName: '',
-    email: '',
-    phone: '',
-    currentWebsite: '',
-    buildType: 'New Website',
-    timeline: 'Exploring options',
-    notes: '',
-  }
+  const websitePlans = [
+    {
+      name: 'Starter Landing Page',
+      setup: '$200 setup',
+      monthly: '+ $50/month',
+      badge: 'Lowest upfront cost',
+      description: 'A simple, professional one-page website for businesses that need to get online quickly.',
+      monthlyLabel: '$50/month Managed Website Hosting & Support',
+      included: [
+        '1 landing/home page',
+        'Mobile-friendly layout',
+        'Business name, logo, colors, and contact info',
+        'Call button',
+        'Email or inquiry button',
+        'Google Maps/location link if needed',
+        'Basic SEO title and description',
+        'Domain connection support',
+        'SSL setup',
+        'Managed website hosting',
+        'Basic website support',
+      ],
+      support: [
+        'Hosting management',
+        'SSL/domain support',
+        'Website monitoring',
+        'Basic troubleshooting',
+        'Contact button/form support',
+        '1 small text or photo update per month',
+      ],
+      cta: 'Start with Landing Page',
+    },
+    {
+      name: 'Quick Launch Business Site',
+      setup: '$500 setup',
+      monthly: '+ $100/month',
+      badge: 'Most popular',
+      description: 'A small business website with a homepage, supporting pages, and an inquiry button to help customers reach you.',
+      monthlyLabel: '$100/month Managed Website Hosting, Monitoring & Priority Support',
+      included: [
+        'Home page',
+        '2-3 additional pages',
+        'Mobile-friendly layout',
+        'Services page',
+        'About page',
+        'Contact page',
+        'Business inquiry button',
+        'Contact or inquiry form',
+        'Basic brand styling',
+        'Basic SEO setup',
+        'Domain connection support',
+        'SSL setup',
+        'Managed website hosting',
+        '24/7 website monitoring',
+        'Priority website support',
+      ],
+      support: [
+        'Hosting management',
+        'SSL/domain support',
+        'Website uptime monitoring',
+        'Website-down emergency review',
+        'Contact form support',
+        'Monthly checkup',
+        'Up to 1 hour of small edits per month',
+        'Priority response for website issues',
+      ],
+      cta: 'Start Quick Launch Site',
+    },
+    {
+      name: 'Custom Growth Website',
+      setup: 'Custom Quote',
+      monthly: 'Support quoted by scope',
+      badge: 'Custom build',
+      description: 'For businesses that need more pages, e-commerce, booking, advanced SEO, automations, or a custom design.',
+      monthlyLabel: 'Custom Managed Website Hosting & Support Plan',
+      included: [
+        'Custom page count',
+        'E-commerce options',
+        'Booking system options',
+        'Advanced forms',
+        'SEO/content options',
+        'Integrations',
+        'Custom support plan',
+      ],
+      support: [
+        'Hosting and support scope defined before build',
+        'Integration planning',
+        'Advanced feature support options',
+        'Maintenance plan quoted separately',
+      ],
+      cta: 'Request Custom Quote',
+    },
+  ]
+
+  const monthlySupportCards = [
+    ['Managed Hosting', 'Your website stays hosted, connected, and live.'],
+    ['Monitoring & Support', 'We help watch for website issues and troubleshoot basic problems.'],
+    ['Simple Updates', 'Need a small text or photo change? Starter support includes limited monthly updates.'],
+    ['Peace of Mind', 'You do not need to figure out hosting, SSL, or domain settings alone.'],
+  ]
+
+  const comparisonRows = [
+    ['Setup cost', '$200', '$500', 'Custom'],
+    ['Monthly support', '$50/mo', '$100/mo', 'Custom'],
+    ['Page count', '1 page', '3-4 pages', 'Custom'],
+    ['Inquiry/contact button', 'Included', 'Included', 'Included'],
+    ['Contact form', 'Basic', 'Included', 'Advanced options'],
+    ['Hosting included', 'Yes', 'Yes', 'Quoted'],
+    ['SSL/domain help', 'Yes', 'Yes', 'Quoted'],
+    ['Website monitoring', 'Included', '24/7 monitoring', 'Custom'],
+    ['Monthly edits', '1 small update', 'Up to 1 hour', 'Custom'],
+    ['Priority support', 'Basic', 'Priority', 'Custom'],
+    ['Best for', 'Getting online fast', 'Small business site', 'Growth systems'],
+  ]
 
   const buildTypeOptions = [
     'New Website',
@@ -2048,46 +2151,67 @@ function WebsitesPage() {
     'Exploring options',
   ]
 
+  const yesNoOptions = ['Not sure', 'Yes', 'No']
+  const preferredContactOptions = ['Phone', 'Email', 'Text', 'No preference']
+
+  const websiteBuildInitialState = {
+    selectedPlan: websitePlans[0].name,
+    businessName: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    industry: '',
+    currentWebsite: '',
+    desiredDomain: '',
+    location: '',
+    businessDescription: '',
+    servicesProducts: '',
+    preferredContact: 'Phone',
+    timeline: 'Exploring options',
+    hasLogo: 'Not sure',
+    hasPhotos: 'Not sure',
+    needsCopyHelp: 'Not sure',
+    needsPayments: 'Not sure',
+    needsBooking: 'Not sure',
+    needsEmailSetup: 'Not sure',
+    buildType: 'New Website',
+    notes: '',
+  }
+
   const [websiteFormData, setWebsiteFormData] = useState(websiteBuildInitialState)
+  const [selectedPlan, setSelectedPlan] = useState(websitePlans[0].name)
   const [isWebsiteSubmitted, setIsWebsiteSubmitted] = useState(false)
   const [isWebsiteSubmitting, setIsWebsiteSubmitting] = useState(false)
   const [websiteSubmitError, setWebsiteSubmitError] = useState('')
 
-  const starterItems = [
-    'Responsive website',
-    'Mobile optimization',
-    'Hosting',
-    'IT support',
-    'Contact forms',
-    'Branding integration',
-    'Basic SEO setup',
+  const processSteps = [
+    'Pick your starter plan',
+    'Send your business details',
+    'We build and review the site',
+    'Your website goes live',
+    'We host and support it monthly',
   ]
 
-  const scaleItems = [
-    ['Dashboards', 'Turn website activity, business records, and operational data into focused views leaders can use.'],
-    ['Client portals', 'Give customers, partners, or internal teams a secure place to access updates, requests, files, and approvals.'],
-    ['Workflow systems', 'Move work from inboxes and spreadsheets into structured steps with ownership and status visibility.'],
-    ['Automations', 'Reduce repeated admin work with forms, routing, notifications, and connected business processes.'],
-    ['Command centers', 'Expand from a public website into a command layer for operations, reporting, and execution control.'],
-    ['Integrated tools', 'Connect the website foundation to CRMs, databases, reporting tools, and internal systems over time.'],
-  ]
-
-  const customOptions = [
-    ['Custom Dashboards', 'Operational views for metrics, records, activity, exceptions, and business performance.'],
-    ['Client Portals', 'Secure access environments for clients, partners, teams, requests, documents, and approvals.'],
-    ['Workflow Automation', 'Structured intake, routing, notifications, task flow, and repeatable business processes.'],
-    ['Command Center Systems', 'Expanded platform builds for teams that need live visibility, control, and reporting.'],
-  ]
-
-  const reasons = [
-    ['Systems-focused approach', 'The website is planned as part of a larger operating system, not a standalone brochure.'],
-    ['Operational understanding', 'Builds are shaped around how requests, data, decisions, and handoffs actually move.'],
-    ['Scalable architecture', 'Start with a clean website and leave room for dashboards, portals, integrations, and tools.'],
-    ['Long-term partnership', 'Hosting, support, upgrades, and future systems can stay connected under one technical direction.'],
+  const faqs = [
+    ['Is $50/month just for hosting?', 'No. The monthly plan includes managed website hosting, SSL/domain support, website monitoring, basic troubleshooting, and limited small updates. You are paying for the convenience of having someone manage the website for you.'],
+    ['What is included in the $200 Starter Landing Page?', 'It includes one professional landing page with your business information, contact buttons, basic styling, mobile-friendly layout, domain connection support, SSL setup, and managed website hosting.'],
+    ['What is included in the $500 Quick Launch Site?', 'It includes a homepage, 2-3 supporting pages, an inquiry button or form, mobile-friendly design, basic SEO setup, hosting, website monitoring, and priority website support.'],
+    ['Do I own the website?', 'Ownership and transfer details are confirmed before the project begins.'],
+    ['Can I cancel monthly support?', 'Monthly support terms are confirmed before the project begins. Some starter packages may require a minimum service term so we can keep the upfront build cost low.'],
+    ['What is not included?', 'New pages, major redesigns, e-commerce, booking systems, advanced SEO, paid ads, business email migration, computer support, printer support, POS support, and general IT support are quoted separately.'],
+    ['How fast can my site go live?', 'Simple starter sites can usually move quickly once we have your business details, logo, photos, and content. Final timing depends on client response time and project scope.'],
   ]
 
   const updateWebsiteField = (field, value) => {
     setWebsiteFormData((current) => ({ ...current, [field]: value }))
+  }
+
+  const selectWebsitePlan = (planName) => {
+    setSelectedPlan(planName)
+    updateWebsiteField('selectedPlan', planName)
+    window.requestAnimationFrame(() => {
+      document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
   }
 
   const handleWebsiteSubmit = async (event) => {
@@ -2105,13 +2229,26 @@ function WebsitesPage() {
         },
         body: JSON.stringify({
           _subject: 'New Spark Website Build Request',
+          selectedPlan: websiteFormData.selectedPlan,
           name: websiteFormData.contactName,
           company: websiteFormData.businessName,
           email: websiteFormData.email,
           phone: websiteFormData.phone,
+          businessType: websiteFormData.industry,
           projectType: websiteFormData.buildType,
           currentWebsite: websiteFormData.currentWebsite || 'Not provided',
-          problemDescription: websiteFormData.notes,
+          desiredDomain: websiteFormData.desiredDomain || 'Not provided',
+          location: websiteFormData.location,
+          businessDescription: websiteFormData.businessDescription,
+          servicesProducts: websiteFormData.servicesProducts,
+          preferredContact: websiteFormData.preferredContact,
+          hasLogo: websiteFormData.hasLogo,
+          hasPhotos: websiteFormData.hasPhotos,
+          needsCopyHelp: websiteFormData.needsCopyHelp,
+          needsPayments: websiteFormData.needsPayments,
+          needsBooking: websiteFormData.needsBooking,
+          needsEmailSetup: websiteFormData.needsEmailSetup,
+          problemDescription: websiteFormData.notes || 'Not provided',
           scale: 'Website build request',
           timeline: websiteFormData.timeline,
           budget: 'Website package or custom quote',
@@ -2144,44 +2281,45 @@ function WebsitesPage() {
             backgroundPosition: 'center',
           }}
         >
-          <video
-            className="absolute inset-0 hidden h-full w-full object-cover opacity-28 sm:block"
-            src="/assets/spark-intro-loop.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#020407]/78 via-[#020407]/82 to-[#020407]/98" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_22%,rgba(245,158,11,0.16),transparent_26%),radial-gradient(circle_at_84%_18%,rgba(34,211,238,0.08),transparent_28%)]" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#020407] to-transparent" />
           <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <FadeIn>
               <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-100">
-                CUSTOM WEBSITE BUILDS
+                SMALL BUSINESS WEBSITE PACKAGES
               </div>
               <h1 className="mt-7 max-w-5xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96] lg:text-7xl">
-                Turn your ordinary website into a custom business command center.
+                Small Business Websites Built Fast
               </h1>
               <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300 sm:text-xl sm:leading-9">
-                Modern websites built to grow with your business. Launch with a clean professional online presence and expand into custom dashboards, integrations, automations and operational tools over time.
+                Affordable starter website packages for businesses that need to get online quickly, look professional, and have someone they can call when the site needs help.
+              </p>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
+                Pick a starter package, send us your business details, and we will help you get online.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#website-build-request"
+                <button
+                  type="button"
+                  onClick={() => document.getElementById('starter-plans')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                   className="inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.3)] transition hover:bg-amber-200"
                 >
-                  Start a Website Build
+                  Choose a Starter Plan
                   <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#website-build-request"
+                </button>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                   className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
                 >
-                  Request Custom Build Options
-                </a>
+                  Request a Website Build
+                </button>
+              </div>
+              <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
+                {['Low upfront cost', 'Hosted and supported', 'Built for small businesses'].map((point) => (
+                  <div key={point} className="bg-[#02070d]/76 p-4 text-sm font-semibold text-slate-200">
+                    {point}
+                  </div>
+                ))}
               </div>
             </FadeIn>
 
@@ -2192,9 +2330,9 @@ function WebsitesPage() {
                 <div className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">Website Foundation</div>
                 <div className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
                   {[
-                    ['Launch', 'Clean professional website'],
-                    ['Support', 'Hosting and IT help'],
-                    ['Expand', 'Dashboards, portals, tools'],
+                    ['Starter', '$200 setup + $50/mo'],
+                    ['Popular', '$500 setup + $100/mo'],
+                    ['Monthly value', 'Managed Website Hosting & Support'],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-5">
                       <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -2207,86 +2345,64 @@ function WebsitesPage() {
           </div>
         </section>
 
-        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <section id="starter-plans" className="relative scroll-mt-24 px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-              <FadeIn>
-                <SectionIntro eyebrow="Starter Package" title="Starter Website Package">
-                  A clean launch package for businesses that need a professional website foundation with ongoing hosting and support.
-                </SectionIntro>
-                <div className="mt-7 border border-amber-200/24 bg-amber-200/[0.08] p-5 shadow-[0_0_56px_rgba(245,158,11,0.1)]">
-                  <div className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-100">Pricing</div>
-                  <div className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-                    $200 Build + $75/month hosting and IT support
-                  </div>
-                  <p className="mt-5 text-sm leading-7 text-slate-300">
-                    This is the base package. Advanced custom builds, integrations, portals, automations and platform systems are quoted separately based on project scope.
-                  </p>
-                </div>
-              </FadeIn>
-
-              <FadeIn delay={0.08} className="grid gap-3 sm:grid-cols-2">
-                {starterItems.map((item) => (
-                  <div key={item} className="border border-white/10 bg-gradient-to-br from-white/[0.055] via-white/[0.03] to-white/[0.02] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 shrink-0 text-amber-100" />
-                      <span className="text-sm font-semibold text-slate-100">{item}</span>
-                    </div>
-                  </div>
-                ))}
-              </FadeIn>
-            </div>
-          </div>
-        </section>
-
-        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/20 to-transparent" />
-          <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-              <SectionIntro eyebrow="Scale Beyond a Website" title="Start with a website. Build toward a system." />
-              <p className="max-w-md text-sm leading-7 text-slate-400">
-                SparkCommand websites are built as foundations for business systems that can grow into dashboards, portals, automations and command center platforms.
-              </p>
-            </div>
-            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {scaleItems.map(([title, text], index) => (
-                <FadeIn key={title} delay={index * 0.04} className="relative overflow-hidden border border-white/10 bg-[#060d16]/82 p-5 shadow-[0_20px_80px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.05)]">
-                  <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
-                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">0{index + 1}</div>
-                  <h3 className="mt-3 text-xl font-semibold text-white">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.035]"
-            style={{
-              backgroundImage: `linear-gradient(180deg, rgba(2,4,7,0.94) 0%, rgba(2,4,7,0.96) 100%), url(${circuitBackground})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <SectionIntro eyebrow="Custom Build Options" title="Website builds that can become business tools." align="center">
-              Start with the public website, then extend the same foundation into private tools when the business is ready.
+            <SectionIntro eyebrow="Starter Plans" title="Launch your small business website without the scary upfront cost." align="center">
+              We help small businesses get a professional website built, hosted, and live quickly with simple monthly support.
             </SectionIntro>
-            <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {customOptions.map(([title, text], index) => {
-                const Icon = [DatabaseZap, Building2, Waypoints, CircuitBoard][index]
+            <div className="mt-10 grid gap-4 lg:grid-cols-3">
+              {websitePlans.map((plan) => {
+                const isSelected = selectedPlan === plan.name
 
                 return (
-                  <FadeIn key={title} delay={index * 0.06} className="group relative min-h-[18rem] overflow-hidden border border-white/10 bg-gradient-to-br from-[#08111d] to-[#04080f] p-5 shadow-[0_24px_90px_rgba(0,0,0,0.34)] transition hover:border-amber-200/35 hover:shadow-[0_34px_120px_rgba(0,0,0,0.45),0_0_52px_rgba(245,158,11,0.08)]">
-                    <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/38 to-transparent transition group-hover:via-amber-200/68" />
-                    <div className="mb-6 flex h-11 w-11 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.07] text-cyan-100">
-                      <Icon className="h-5 w-5" />
+                  <FadeIn
+                    key={plan.name}
+                    className={`relative flex min-h-full flex-col overflow-hidden border p-5 shadow-[0_24px_90px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.05)] transition sm:p-6 ${
+                      isSelected
+                        ? 'border-amber-200/60 bg-amber-200/[0.08] shadow-[0_0_70px_rgba(245,158,11,0.14),0_24px_90px_rgba(0,0,0,0.34)]'
+                        : 'border-white/10 bg-[#060d16]/86 hover:border-amber-200/35'
+                    }`}
+                  >
+                    <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/50 to-transparent" />
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">
+                        {plan.badge}
+                      </div>
+                      {isSelected ? <div className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-100">Selected</div> : null}
                     </div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/70">Option 0{index + 1}</div>
-                    <h3 className="mt-4 text-xl font-semibold text-white">{title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                    <h2 className="mt-5 text-2xl font-semibold text-white">{plan.name}</h2>
+                    <div className="mt-5">
+                      <div className="text-3xl font-semibold tracking-[-0.03em] text-white">{plan.setup}</div>
+                      <div className="mt-1 text-lg font-semibold text-amber-100">{plan.monthly}</div>
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-slate-300">{plan.description}</p>
+                    <div className="mt-5 border border-white/10 bg-black/20 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/85">{plan.monthlyLabel}</div>
+                    </div>
+                    <div className="mt-5 grid gap-2">
+                      {plan.included.map((item) => (
+                        <div key={item} className="flex items-start gap-2 text-sm leading-6 text-slate-300">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-100" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-5 border-t border-white/10 pt-5">
+                      <div className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Support includes</div>
+                      <div className="mt-3 grid gap-2">
+                        {plan.support.map((item) => (
+                          <div key={item} className="text-sm leading-6 text-slate-400">{item}</div>
+                        ))}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => selectWebsitePlan(plan.name)}
+                      className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-amber-300 px-5 py-3 text-sm font-bold text-black transition hover:bg-amber-200"
+                    >
+                      {plan.cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
                   </FadeIn>
                 )
               })}
@@ -2294,36 +2410,36 @@ function WebsitesPage() {
           </div>
         </section>
 
-        <section className="relative px-3 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
-          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <FadeIn>
-              <SectionIntro eyebrow="Why SparkCommand" title="A website build with systems architecture behind it.">
-                SparkCommand Systems treats the website as the first layer of a larger business technology foundation.
-              </SectionIntro>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#website-build-request"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
-                >
-                  Start a Website Build
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#website-build-request"
-                  className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
-                >
-                  Request a Demo
-                </a>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.08} className="grid gap-3 sm:grid-cols-2">
-              {reasons.map(([title, text]) => (
-                <div key={title} className="border border-white/10 bg-gradient-to-br from-[#08111d] via-[#06101a] to-[#04080e] p-5 shadow-[0_16px_60px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.05)]">
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl overflow-hidden border border-white/10 bg-[#060d16]/86 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.34)] sm:p-7">
+            <SectionIntro eyebrow="Monthly Support" title="What your monthly plan covers" />
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {monthlySupportCards.map(([title, text]) => (
+                <FadeIn key={title} className="border border-white/10 bg-white/[0.035] p-5">
                   <h3 className="text-lg font-semibold text-white">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-400">{text}</p>
+                </FadeIn>
+              ))}
+            </div>
+            <p className="mt-6 border border-amber-200/20 bg-amber-200/[0.06] p-4 text-sm leading-7 text-amber-50">
+              Monthly website support covers the website, hosting, domain/SSL support, forms, monitoring, and minor included updates. General business IT support, computers, Wi-Fi, printers, POS systems, email migrations, and third-party software are not included unless quoted separately.
+            </p>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <SectionIntro eyebrow="Compare Plans" title="Pick the package that fits where your business is now." align="center" />
+            <div className="mt-8 overflow-hidden border border-white/10 bg-white/10">
+              {comparisonRows.map(([label, starter, quick, custom]) => (
+                <div key={label} className="grid gap-px bg-white/10 md:grid-cols-[1.1fr_1fr_1fr_1fr]">
+                  <div className="bg-[#07101b] p-4 text-sm font-semibold text-white">{label}</div>
+                  <div className="bg-[#04080f] p-4 text-sm text-slate-300">{starter}</div>
+                  <div className="bg-[#04080f] p-4 text-sm text-slate-300">{quick}</div>
+                  <div className="bg-[#04080f] p-4 text-sm text-slate-300">{custom}</div>
                 </div>
               ))}
-            </FadeIn>
+            </div>
           </div>
         </section>
 
@@ -2344,10 +2460,10 @@ function WebsitesPage() {
                     Website Build Request
                   </div>
                   <h2 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl">
-                    Turn your ordinary website into a custom business command center.
+                    Request your website build.
                   </h2>
                   <p className="mt-6 max-w-xl text-base leading-8 text-slate-300 sm:text-lg">
-                    Tell us what you need built. We'll help shape the right starting point, whether it is a website, upgrade, dashboard, portal, or custom system.
+                    Tell us about your business, your preferred package, and what you need on the site.
                   </p>
                   <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
                     The $200 build + $75/month hosting and IT support package is the starting package. Advanced custom builds, integrations, dashboards, portals, and app systems are quoted based on scope.
@@ -2386,6 +2502,12 @@ function WebsitesPage() {
                     <div>
                       <div className="mb-6 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Business</div>
                       <div className="grid gap-6 md:grid-cols-2">
+                        <FieldShell label="Selected Plan" required>
+                          <CommandSelect value={websiteFormData.selectedPlan} onChange={(value) => {
+                            updateWebsiteField('selectedPlan', value)
+                            setSelectedPlan(value)
+                          }} options={websitePlans.map((plan) => plan.name)} />
+                        </FieldShell>
                         <FieldShell label="Business Name" required>
                           <input required value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
                         </FieldShell>
@@ -2398,8 +2520,17 @@ function WebsitesPage() {
                         <FieldShell label="Phone" required>
                           <input required type="tel" value={websiteFormData.phone} onChange={(event) => updateWebsiteField('phone', event.target.value)} className={inputClassName()} placeholder="Best phone number" />
                         </FieldShell>
+                        <FieldShell label="Business Type / Industry" required>
+                          <input required value={websiteFormData.industry} onChange={(event) => updateWebsiteField('industry', event.target.value)} className={inputClassName()} placeholder="Restaurant, contractor, salon, shop, etc." />
+                        </FieldShell>
                         <FieldShell label="Current Website URL">
                           <input type="url" value={websiteFormData.currentWebsite} onChange={(event) => updateWebsiteField('currentWebsite', event.target.value)} className={inputClassName()} placeholder="https://example.com" />
+                        </FieldShell>
+                        <FieldShell label="Desired Domain Name">
+                          <input value={websiteFormData.desiredDomain} onChange={(event) => updateWebsiteField('desiredDomain', event.target.value)} className={inputClassName()} placeholder="yourbusiness.com" />
+                        </FieldShell>
+                        <FieldShell label="Business Location / City" required>
+                          <input required value={websiteFormData.location} onChange={(event) => updateWebsiteField('location', event.target.value)} className={inputClassName()} placeholder="City, state, or service area" />
                         </FieldShell>
                         <FieldShell label="Build Type">
                           <CommandSelect value={websiteFormData.buildType} onChange={(value) => updateWebsiteField('buildType', value)} options={buildTypeOptions} />
@@ -2413,13 +2544,59 @@ function WebsitesPage() {
                         <FieldShell label="Estimated Timeline">
                           <CommandSelect value={websiteFormData.timeline} onChange={(value) => updateWebsiteField('timeline', value)} options={websiteTimelineOptions} />
                         </FieldShell>
-                        <FieldShell label="Project Notes" required>
+                        <FieldShell label="Preferred Contact Method">
+                          <CommandSelect value={websiteFormData.preferredContact} onChange={(value) => updateWebsiteField('preferredContact', value)} options={preferredContactOptions} />
+                        </FieldShell>
+                        <FieldShell label="What does the business do?" required>
                           <textarea
                             required
+                            value={websiteFormData.businessDescription}
+                            onChange={(event) => updateWebsiteField('businessDescription', event.target.value)}
+                            className={`${inputClassName()} min-h-40 resize-y leading-7`}
+                            placeholder="Give us the simple version of what your business does."
+                          />
+                        </FieldShell>
+                        <FieldShell label="Main services/products" required>
+                          <textarea
+                            required
+                            value={websiteFormData.servicesProducts}
+                            onChange={(event) => updateWebsiteField('servicesProducts', event.target.value)}
+                            className={`${inputClassName()} min-h-32 resize-y leading-7`}
+                            placeholder="List your main services, products, menu items, packages, or offers."
+                          />
+                        </FieldShell>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="mb-6 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Optional Details</div>
+                      <div className="grid gap-6 md:grid-cols-2">
+                        <FieldShell label="Do you already have a logo?">
+                          <CommandSelect value={websiteFormData.hasLogo} onChange={(value) => updateWebsiteField('hasLogo', value)} options={yesNoOptions} />
+                        </FieldShell>
+                        <FieldShell label="Do you already have photos?">
+                          <CommandSelect value={websiteFormData.hasPhotos} onChange={(value) => updateWebsiteField('hasPhotos', value)} options={yesNoOptions} />
+                        </FieldShell>
+                        <FieldShell label="Do you need help writing website text?">
+                          <CommandSelect value={websiteFormData.needsCopyHelp} onChange={(value) => updateWebsiteField('needsCopyHelp', value)} options={yesNoOptions} />
+                        </FieldShell>
+                        <FieldShell label="Do you need online payments/e-commerce?">
+                          <CommandSelect value={websiteFormData.needsPayments} onChange={(value) => updateWebsiteField('needsPayments', value)} options={yesNoOptions} />
+                        </FieldShell>
+                        <FieldShell label="Do you need booking/scheduling?">
+                          <CommandSelect value={websiteFormData.needsBooking} onChange={(value) => updateWebsiteField('needsBooking', value)} options={yesNoOptions} />
+                        </FieldShell>
+                        <FieldShell label="Do you need business email setup?">
+                          <CommandSelect value={websiteFormData.needsEmailSetup} onChange={(value) => updateWebsiteField('needsEmailSetup', value)} options={yesNoOptions} />
+                        </FieldShell>
+                      </div>
+                      <div className="mt-6">
+                        <FieldShell label="Notes or special requests">
+                          <textarea
                             value={websiteFormData.notes}
                             onChange={(event) => updateWebsiteField('notes', event.target.value)}
-                            className={`${inputClassName()} min-h-40 resize-y leading-7`}
-                            placeholder="Tell us whether you need a new website, upgrade, hosting support, dashboard, portal, automation, operational tool, or custom system."
+                            className={`${inputClassName()} min-h-32 resize-y leading-7`}
+                            placeholder="Anything else we should know before we follow up?"
                           />
                         </FieldShell>
                       </div>
@@ -2451,6 +2628,56 @@ function WebsitesPage() {
                 )}
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <SectionIntro eyebrow="How It Works" title="A simple path from request to live website." align="center" />
+            <div className="mt-10 grid gap-4 md:grid-cols-5">
+              {processSteps.map((step, index) => (
+                <FadeIn key={step} delay={index * 0.04} className="border border-white/10 bg-[#060d16]/82 p-5 text-center">
+                  <div className="mx-auto flex h-10 w-10 items-center justify-center border border-amber-200/25 bg-amber-200/[0.08] text-sm font-bold text-amber-100">
+                    {index + 1}
+                  </div>
+                  <p className="mt-4 text-sm font-semibold leading-6 text-slate-200">{step}</p>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <SectionIntro eyebrow="FAQ" title="Clear answers before you request a build." align="center" />
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {faqs.map(([question, answer]) => (
+                <FadeIn key={question} className="border border-white/10 bg-gradient-to-br from-[#08111d] via-[#06101a] to-[#04080e] p-5">
+                  <h3 className="text-lg font-semibold text-white">{question}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-400">{answer}</p>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
+          <div className="mx-auto max-w-7xl overflow-hidden border border-amber-200/24 bg-[#060d16]/90 p-6 text-center shadow-[0_42px_160px_rgba(0,0,0,0.62),0_0_92px_rgba(245,158,11,0.12)] sm:p-9 lg:p-12">
+            <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/85">Ready to launch</div>
+            <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
+              Ready to get your business online?
+            </h2>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
+              Choose a starter plan and send us your details. We will help turn it into a professional website your customers can visit, call from, and inquire through.
+            </p>
+            <button
+              type="button"
+              onClick={() => document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_44px_rgba(245,158,11,0.32)] transition hover:bg-amber-200"
+            >
+              Start Website Request
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </section>
       </main>
@@ -2588,6 +2815,7 @@ export default function SparkCommandSystemsSite() {
         <Route path="/" element={<LandingPage page="home" />} />
         <Route path="/about" element={<AboutSparkPage />} />
         <Route path="/platform" element={<LandingPage page="platform" />} />
+        <Route path="/website" element={<WebsitesPage />} />
         <Route path="/websites" element={<WebsitesPage />} />
         <Route path="/integration" element={<LandingPage page="integration" />} />
         <Route path="/pipeline" element={<LandingPage page="pipeline" />} />

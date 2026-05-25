@@ -1,135 +1,167 @@
-import { useEffect, useState } from 'react'
-import CommandInputDemo from './CommandInputDemo'
-import CommandReactionPanel from './CommandReactionPanel'
-import InteractiveMapExpansion from './InteractiveMapExpansion'
-import SignalBackground from './SignalBackground'
-import SystemModeToggle from './SystemModeToggle'
+import { useEffect, useState } from "react";
+import CommandInputDemo from "./CommandInputDemo";
+import CommandReactionPanel from "./CommandReactionPanel";
+import InteractiveMapExpansion from "./InteractiveMapExpansion";
+import SignalBackground from "./SignalBackground";
+import SystemModeToggle from "./SystemModeToggle";
 
 const responses = {
   vendor: {
-    mode: 'vendor',
-    video: '/videos/vendor-network.mp4',
-    videoLabel: 'LIVE NETWORK SIGNAL',
-    tone: 'gold',
-    status: 'Mapping partner network...',
-    headline: 'Partner Network Mapped',
-    copy: 'Spark is visualizing coverage, readiness, and execution gaps across your operating network.',
-    metrics: ['42 Partners Indexed', '18 Units Need Review', '6 Priority Alerts'],
-    feed: ['Partner roles scanned', 'Coverage gaps detected', 'Execution view generated'],
-    labels: ['Coverage Online', 'Partner Signal Active', 'Command View Ready'],
+    mode: "vendor",
+    video: "/videos/vendor-network.mp4",
+    videoLabel: "LIVE NETWORK SIGNAL",
+    tone: "gold",
+    status: "Mapping partner network...",
+    headline: "Partner Network Mapped",
+    copy: "Spark is visualizing coverage, readiness, and execution gaps across your operating network.",
+    metrics: [
+      "42 Partners Indexed",
+      "18 Units Need Review",
+      "6 Priority Alerts",
+    ],
+    feed: [
+      "Partner roles scanned",
+      "Coverage gaps detected",
+      "Execution view generated",
+    ],
+    labels: ["Coverage Online", "Partner Signal Active", "Command View Ready"],
   },
   risk: {
-    mode: 'risk',
-    video: '/videos/risk-detection.mp4',
-    videoLabel: 'RISK SIGNAL ACTIVE',
-    tone: 'risk',
-    status: 'Scanning operational risk...',
-    headline: 'Risk Visibility Online',
-    copy: 'Spark is organizing alerts, service exposure and unresolved operational threats into one command view.',
-    metrics: ['12 Open Risks', '4 Critical Units', '9 Aging Requests'],
-    feed: ['Critical alerts grouped', 'Aging requests surfaced', 'Risk command view generated'],
-    labels: ['Alert Signal Active', 'Critical Units Flagged', 'Risk View Ready'],
+    mode: "risk",
+    video: "/videos/risk-detection.mp4",
+    videoLabel: "RISK SIGNAL ACTIVE",
+    tone: "risk",
+    status: "Scanning operational risk...",
+    headline: "Risk Visibility Online",
+    copy: "Spark is organizing alerts, service exposure and unresolved operational threats into one command view.",
+    metrics: ["12 Open Risks", "4 Critical Units", "9 Aging Requests"],
+    feed: [
+      "Critical alerts grouped",
+      "Aging requests surfaced",
+      "Risk command view generated",
+    ],
+    labels: [
+      "Alert Signal Active",
+      "Critical Units Flagged",
+      "Risk View Ready",
+    ],
   },
   command: {
-    mode: 'command',
-    video: '/videos/chaos-to-command.mp4',
-    videoLabel: 'SYSTEM TRANSFORMATION',
-    tone: 'gold',
-    status: 'Converting chaos into command...',
-    headline: 'Command Center Transformation Started',
-    copy: 'Spark is converting scattered emails, spreadsheets and texts into structured operational control.',
-    metrics: ['Inbox Noise Reduced', 'Workflows Organized', 'Command View Generated'],
-    feed: ['Unstructured updates captured', 'Workflow paths organized', 'Command view generated'],
-    labels: ['Chaos Reduced', 'Workflow Signal Active', 'Command View Ready'],
+    mode: "command",
+    video: "/videos/chaos-to-command.mp4",
+    videoLabel: "SYSTEM TRANSFORMATION",
+    tone: "gold",
+    status: "Converting chaos into command...",
+    headline: "Command Center Transformation Started",
+    copy: "Spark is converting scattered emails, spreadsheets and texts into structured operational control.",
+    metrics: [
+      "Inbox Noise Reduced",
+      "Workflows Organized",
+      "Command View Generated",
+    ],
+    feed: [
+      "Unstructured updates captured",
+      "Workflow paths organized",
+      "Command view generated",
+    ],
+    labels: ["Chaos Reduced", "Workflow Signal Active", "Command View Ready"],
   },
   default: {
-    mode: 'standard',
-    status: 'Generating command preview...',
-    headline: 'Spark Command Preview Generated',
-    copy: 'Your operational command layer is being assembled from teams, partners, alerts and workflows.',
-    metrics: ['Command Layer Drafted', 'Site Signals Mapped', 'Workflow Preview Ready'],
-    feed: ['Operating model scanned', 'Signal groups assembled', 'Preview dashboard generated'],
+    mode: "standard",
+    status: "Generating command preview...",
+    headline: "Spark Command Preview Generated",
+    copy: "Your operational command layer is being assembled from teams, partners, alerts and workflows.",
+    metrics: [
+      "Command Layer Drafted",
+      "Site Signals Mapped",
+      "Workflow Preview Ready",
+    ],
+    feed: [
+      "Operating model scanned",
+      "Signal groups assembled",
+      "Preview dashboard generated",
+    ],
   },
-}
+};
 
 function resolveResponse(command) {
-  const value = command.toLowerCase()
+  const value = command.toLowerCase();
   if (
-    value.includes('vendor') ||
-    value.includes('vendors') ||
-    value.includes('partner') ||
-    value.includes('partners') ||
-    value.includes('coverage') ||
-    value.includes('crew') ||
-    value.includes('crews')
+    value.includes("vendor") ||
+    value.includes("vendors") ||
+    value.includes("partner") ||
+    value.includes("partners") ||
+    value.includes("coverage") ||
+    value.includes("crew") ||
+    value.includes("crews")
   ) {
-    return responses.vendor
+    return responses.vendor;
   }
   if (
-    value.includes('risk') ||
-    value.includes('risks') ||
-    value.includes('alert') ||
-    value.includes('alerts') ||
-    value.includes('critical') ||
-    value.includes('exposure') ||
-    value.includes('threat')
+    value.includes("risk") ||
+    value.includes("risks") ||
+    value.includes("alert") ||
+    value.includes("alerts") ||
+    value.includes("critical") ||
+    value.includes("exposure") ||
+    value.includes("threat")
   ) {
-    return responses.risk
+    return responses.risk;
   }
   if (
-    value.includes('chaos') ||
-    value.includes('command') ||
-    value.includes('organize') ||
-    value.includes('workflow') ||
-    value.includes('workflows') ||
-    value.includes('build') ||
-    value.includes('client command center')
+    value.includes("chaos") ||
+    value.includes("command") ||
+    value.includes("organize") ||
+    value.includes("workflow") ||
+    value.includes("workflows") ||
+    value.includes("build") ||
+    value.includes("client command center")
   ) {
-    return responses.command
+    return responses.command;
   }
-  return responses.default
+  return responses.default;
 }
 
 export default function CommandLabPage({ onLock }) {
-  const [activeResponse, setActiveResponse] = useState(responses.default)
-  const [signal, setSignal] = useState(0)
-  const [autoDemoOn, setAutoDemoOn] = useState(true)
-  const [manualTick, setManualTick] = useState(0)
+  const [activeResponse, setActiveResponse] = useState(responses.default);
+  const [signal, setSignal] = useState(0);
+  const [autoDemoOn, setAutoDemoOn] = useState(true);
+  const [manualTick, setManualTick] = useState(0);
 
   const handleCommand = (command) => {
-    setActiveResponse(resolveResponse(command))
-    setSignal((current) => current + 1)
-  }
+    setActiveResponse(resolveResponse(command));
+    setSignal((current) => current + 1);
+  };
 
   const handleUserCommand = (command) => {
-    setManualTick((current) => current + 1)
-    handleCommand(command)
-  }
+    setManualTick((current) => current + 1);
+    handleCommand(command);
+  };
 
   useEffect(() => {
-    if (!autoDemoOn) return undefined
+    if (!autoDemoOn) return undefined;
 
-    const cycle = [responses.vendor, responses.risk, responses.command]
-    let index = 0
-    let intervalId
+    const cycle = [responses.vendor, responses.risk, responses.command];
+    let index = 0;
+    let intervalId;
 
     const timeoutId = window.setTimeout(() => {
-      setActiveResponse(cycle[index])
-      setSignal((current) => current + 1)
-      index = (index + 1) % cycle.length
+      setActiveResponse(cycle[index]);
+      setSignal((current) => current + 1);
+      index = (index + 1) % cycle.length;
 
       intervalId = window.setInterval(() => {
-        setActiveResponse(cycle[index])
-        setSignal((current) => current + 1)
-        index = (index + 1) % cycle.length
-      }, 5000)
-    }, 5000)
+        setActiveResponse(cycle[index]);
+        setSignal((current) => current + 1);
+        index = (index + 1) % cycle.length;
+      }, 5000);
+    }, 5000);
 
     return () => {
-      window.clearTimeout(timeoutId)
-      if (intervalId) window.clearInterval(intervalId)
-    }
-  }, [autoDemoOn, manualTick])
+      window.clearTimeout(timeoutId);
+      if (intervalId) window.clearInterval(intervalId);
+    };
+  }, [autoDemoOn, manualTick]);
 
   return (
     <div className="command-lab-page min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
@@ -238,8 +270,21 @@ export default function CommandLabPage({ onLock }) {
       <SignalBackground />
 
       <main className="relative z-10">
-        <section className="relative px-4 pb-8 pt-20 sm:px-6 sm:pt-24 lg:px-8">
-          <div className="mx-auto max-w-7xl">
+        <section className="relative overflow-hidden px-4 pb-8 pt-20 sm:px-6 sm:pt-24 lg:px-8">
+          <div className="absolute inset-0 z-0 bg-[#020407]" aria-hidden="true">
+            <video
+              className="hidden h-full w-full object-cover opacity-35 sm:block"
+              src="/assets/spark-intro-loop.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#020407]/80 via-[#020407]/76 to-[#020407]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(245,158,11,0.16),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(34,211,238,0.09),transparent_30%)]" />
+          </div>
+          <div className="relative z-10 mx-auto max-w-7xl">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="inline-flex w-fit border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-amber-100">
                 Experimental System Preview
@@ -262,7 +307,9 @@ export default function CommandLabPage({ onLock }) {
               A live experiment in AI-driven operations visibility.
             </p>
             <p className="mt-6 max-w-2xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
-              A private Spark ecosystem for testing new product ideas, advanced website interactions and command system concepts before they move into production.
+              A private Spark ecosystem for testing new product ideas, advanced
+              website interactions and command system concepts before they move
+              into production.
             </p>
           </div>
         </section>
@@ -273,21 +320,23 @@ export default function CommandLabPage({ onLock }) {
           <div className="mx-auto max-w-7xl">
             <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
-              <div className="text-xs font-semibold uppercase tracking-[0.34em] text-cyan-100/70">Feature Test 02</div>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight text-white sm:text-5xl">
-                Video-backed system response.
-              </h2>
+                <div className="text-xs font-semibold uppercase tracking-[0.34em] text-cyan-100/70">
+                  Feature Test 02
+                </div>
+                <h2 className="mt-4 text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                  Video-backed system response.
+                </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setAutoDemoOn((current) => !current)}
                 className={`inline-flex min-h-11 items-center justify-center border px-4 text-sm font-bold transition ${
                   autoDemoOn
-                    ? 'border-emerald-200/25 bg-emerald-200/[0.08] text-emerald-100 hover:bg-emerald-200/[0.12]'
-                    : 'border-white/12 bg-white/[0.04] text-slate-300 hover:bg-white/[0.075] hover:text-white'
+                    ? "border-emerald-200/25 bg-emerald-200/[0.08] text-emerald-100 hover:bg-emerald-200/[0.12]"
+                    : "border-white/12 bg-white/[0.04] text-slate-300 hover:bg-white/[0.075] hover:text-white"
                 }`}
               >
-                Auto Demo: {autoDemoOn ? 'On' : 'Off'}
+                Auto Demo: {autoDemoOn ? "On" : "Off"}
               </button>
             </div>
             <CommandReactionPanel response={activeResponse} signal={signal} />
@@ -300,9 +349,14 @@ export default function CommandLabPage({ onLock }) {
               Feature Test 03 / AI Command Interface (Experimental)
             </div>
             <p className="mb-7 max-w-2xl text-sm leading-7 text-slate-400">
-              Submit a sample operational prompt to activate the command simulation above.
+              Submit a sample operational prompt to activate the command
+              simulation above.
             </p>
-            <CommandInputDemo activeMode={activeResponse.mode} onCommand={handleUserCommand} onUserAction={() => setManualTick((current) => current + 1)} />
+            <CommandInputDemo
+              activeMode={activeResponse.mode}
+              onCommand={handleUserCommand}
+              onUserAction={() => setManualTick((current) => current + 1)}
+            />
           </div>
         </section>
 
@@ -310,13 +364,17 @@ export default function CommandLabPage({ onLock }) {
 
         <section className="relative px-4 pb-20 pt-8 sm:px-6 sm:pb-28 lg:px-8">
           <div className="mx-auto max-w-7xl border border-white/10 bg-white/[0.035] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-8">
-            <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/75">Future Modules</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/75">
+              Future Modules
+            </div>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-400">
-              Future lab modules can test executive summaries, routing previews, partner scorecards and financial command visibility without touching production workflows.
+              Future lab modules can test executive summaries, routing previews,
+              partner scorecards and financial command visibility without
+              touching production workflows.
             </p>
           </div>
         </section>
       </main>
     </div>
-  )
+  );
 }

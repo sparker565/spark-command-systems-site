@@ -1152,6 +1152,14 @@ function LandingPage({ page = 'home' }) {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
+                  to="/start"
+                  className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_40px_rgba(245,158,11,0.24)] transition hover:bg-amber-200"
+                  aria-label="Open Spark Intake at sparkcommands.com/start"
+                >
+                  Start Intake
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </Link>
+                <Link
                   to="/platform"
                   className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >

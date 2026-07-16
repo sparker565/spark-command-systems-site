@@ -31,7 +31,7 @@ const heroCommandImage = '/assets/hero-command.jpeg'
 const circuitBackground = '/assets/bg-circuit.jpeg'
 const globeBackground = '/assets/bg-globe.jpeg'
 const usaNetworkImage = '/assets/usa-network.png'
-const intakeAppUrl = 'https://spark-intake-xi.vercel.app'
+const intakeAppUrl = 'https://spark-intake-xi.vercel.app/start'
 
 const navItems = [
   { label: 'About', href: '/about' },
@@ -2805,48 +2805,7 @@ function ExternalRedirect({ to }) {
 }
 
 function StartIntakePage() {
-  const [isFrameLoading, setIsFrameLoading] = useState(true)
-
-  return (
-    <main className="min-h-screen bg-[#020407] text-white antialiased">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(245,158,11,0.14),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(34,211,238,0.12),transparent_28%),linear-gradient(180deg,#020407_0%,#06101a_100%)]" />
-      <section className="relative flex min-h-screen flex-col px-0 py-0 sm:px-4 sm:py-4 lg:px-6 lg:py-6">
-        <div className="flex shrink-0 items-center border-b border-white/10 bg-[#020407]/88 px-4 py-3 backdrop-blur-xl sm:mb-4 sm:rounded-lg sm:border sm:px-5">
-          <div className="min-w-0">
-            <div className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-200/85">Spark Command Systems Intake</div>
-            <p className="mt-1 hidden text-sm text-slate-300 sm:block">Start your project with Spark Command Systems.</p>
-          </div>
-        </div>
-
-        <div className="relative min-h-0 flex-1 overflow-hidden bg-[#06101a] shadow-[0_28px_120px_rgba(0,0,0,0.52)] sm:rounded-lg sm:border sm:border-white/10">
-          {isFrameLoading ? (
-            <div className="absolute inset-0 z-10 grid place-items-center bg-[#020407]">
-              <div className="px-5 text-center">
-                <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-cyan-100/20 border-t-amber-200" />
-                <p className="mt-5 text-sm font-semibold uppercase tracking-[0.24em] text-slate-300">Loading Spark Intake</p>
-              </div>
-            </div>
-          ) : null}
-
-          <iframe
-            src={intakeAppUrl}
-            title="Spark Command Systems Intake"
-            loading="eager"
-            onLoad={() => setIsFrameLoading(false)}
-            className="h-full min-h-[calc(100svh-4.25rem)] w-full border-0 bg-white sm:min-h-[calc(100svh-7.5rem)]"
-          />
-        </div>
-
-        <p className="shrink-0 bg-[#020407]/88 px-4 py-3 text-center text-xs leading-5 text-slate-400 sm:bg-transparent sm:pb-0">
-          If the intake form does not load,{' '}
-          <a href={intakeAppUrl} target="_blank" rel="noreferrer" className="font-semibold text-cyan-100 hover:text-white">
-            open Spark Intake directly
-          </a>
-          .
-        </p>
-      </section>
-    </main>
-  )
+  return <ExternalRedirect to={intakeAppUrl} />
 }
 
 export default function SparkCommandSystemsSite() {

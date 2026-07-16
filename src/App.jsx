@@ -31,7 +31,7 @@ const heroCommandImage = '/assets/hero-command.jpeg'
 const circuitBackground = '/assets/bg-circuit.jpeg'
 const globeBackground = '/assets/bg-globe.jpeg'
 const usaNetworkImage = '/assets/usa-network.png'
-const intakeAppUrl = 'https://spark-intake-xi.vercel.app/start'
+const intakeAppUrl = 'https://start.sparkcommands.com'
 
 const navItems = [
   { label: 'About', href: '/about' },

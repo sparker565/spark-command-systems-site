@@ -10,9 +10,12 @@ import {
   CircuitBoard,
   DatabaseZap,
   Layers3,
+  LockKeyhole,
+  LogIn,
   Menu,
   Network,
   RadioTower,
+  Sparkles,
   ShieldCheck,
   Waypoints,
   X,
@@ -28,10 +31,13 @@ import {
 const corporateLogo = '/assets/corporate-logo.png'
 const logoFull = '/assets/logo-full.png'
 const heroCommandImage = '/assets/hero-command.jpeg'
+const heroScrollImage = '/assets/spark-scroll-hero.png'
+const founderPhoto = '/assets/founder-shawn-parker.png'
 const circuitBackground = '/assets/bg-circuit.jpeg'
 const globeBackground = '/assets/bg-globe.jpeg'
 const usaNetworkImage = '/assets/usa-network.png'
 const intakeAppUrl = 'https://start.sparkcommands.com'
+const clientLoginPath = '/client-login'
 
 const navItems = [
   { label: 'About', href: '/about' },
@@ -149,6 +155,7 @@ const footerColumns = [
     title: 'Access',
     links: [
       ['Open App', '/applications'],
+      ['Client Login', clientLoginPath],
       ['Command Center', '/spark-command-center'],
       ['Command Lab Ecosystem', '/command-lab-login'],
       ['Book a Demo', '/contact'],
@@ -496,10 +503,10 @@ function MobileMenuPanel({ page = '' }) {
           Contact Development Team
         </Link>
         <Link
-          to="/contact"
+          to={clientLoginPath}
           className="flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
         >
-          Book a Demo
+          Client Login
         </Link>
       </div>
     </div>
@@ -1020,13 +1027,50 @@ function SiteFooter() {
   )
 }
 
+function HeroScrollVisual({ progress }) {
+  const imageTransform = `translate3d(${progress * 22}px, ${progress * 38}px, 0) scale(${1.04 + progress * 0.08})`
+  const signalTransform = `translate3d(${-progress * 36}px, ${progress * 18}px, 0)`
+  const coreTransform = `translate3d(0, ${progress * -18}px, 0) scale(${1 + progress * 0.04})`
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <img
+        src={heroScrollImage}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover object-[58%_50%] opacity-90"
+        style={{ transform: imageTransform }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,7,0.96)_0%,rgba(2,4,7,0.88)_34%,rgba(2,4,7,0.52)_68%,rgba(2,4,7,0.36)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_46%,rgba(245,158,11,0.2),transparent_26%),radial-gradient(circle_at_34%_50%,rgba(34,211,238,0.11),transparent_28%)]" />
+      <div
+        className="absolute left-[10%] top-[18%] h-px w-[78%] bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent"
+        style={{ transform: signalTransform, opacity: 0.32 + progress * 0.28 }}
+      />
+      <div
+        className="absolute bottom-[18%] right-[8%] h-px w-[66%] bg-gradient-to-r from-transparent via-amber-200/42 to-transparent"
+        style={{ transform: signalTransform, opacity: 0.36 + progress * 0.24 }}
+      />
+      <div
+        className="absolute right-[16%] top-[26%] h-40 w-40 border border-amber-200/18 bg-amber-200/[0.025] shadow-[0_0_70px_rgba(245,158,11,0.12)]"
+        style={{ transform: coreTransform, opacity: 0.2 + progress * 0.22 }}
+      />
+      <div className="absolute inset-0 opacity-[0.1] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:104px_104px]" />
+      <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#020407] via-[#020407]/86 to-transparent" />
+    </div>
+  )
+}
+
 function LandingPage({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [heroScrollProgress, setHeroScrollProgress] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
       setIsScrolled(window.scrollY > 28)
+      setHeroScrollProgress(prefersReducedMotion ? 0 : Math.min(1, Math.max(0, window.scrollY / 560)))
     }
 
     handleScroll()
@@ -1095,6 +1139,13 @@ function LandingPage({ page = 'home' }) {
               Book a Demo
             </Link>
             <Link
+              to={clientLoginPath}
+              className="hidden whitespace-nowrap border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-sm font-semibold text-amber-50 transition hover:border-amber-100/45 hover:bg-amber-200/[0.14] lg:inline-flex"
+            >
+              <LockKeyhole className="mr-2 h-4 w-4" />
+              Client Login
+            </Link>
+            <Link
               to="/applications"
               className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
             >
@@ -1120,20 +1171,13 @@ function LandingPage({ page = 'home' }) {
         {page === 'home' && (
         <>
         <section
-          className="relative -mt-16 overflow-hidden pt-16 sm:pt-24 lg:min-h-[40rem]"
-          style={{
-            backgroundImage: `linear-gradient(90deg, rgba(2,4,7,0.94) 0%, rgba(2,4,7,0.8) 38%, rgba(2,4,7,0.64) 100%), url(${globeBackground})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
+          className="relative -mt-16 overflow-hidden bg-[#020407] pt-16 sm:pt-24 lg:min-h-[42rem]"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_38%,rgba(245,158,11,0.16),transparent_24%),radial-gradient(circle_at_68%_50%,rgba(34,211,238,0.08),transparent_28%)]" />
-          <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:96px_96px]" />
+          <HeroScrollVisual progress={heroScrollProgress} />
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#020407] via-[#020407]/88 to-transparent" />
-          <div className="mx-auto grid max-w-7xl gap-8 px-3 pb-12 pt-6 sm:px-5 sm:pb-16 sm:pt-8 lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:px-8 lg:pb-16 lg:pt-12">
+          <div className="mx-auto grid max-w-7xl gap-8 px-3 pb-14 pt-6 sm:px-5 sm:pb-16 sm:pt-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:pb-18 lg:pt-14">
             <div className="relative z-10">
-              <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] sm:px-4 sm:text-xs sm:tracking-[0.28em]">
+              <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] backdrop-blur sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
                 Platforms. Systems. Websites.
               </div>
@@ -1164,6 +1208,13 @@ function LandingPage({ page = 'home' }) {
                   className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
                 >
                   Explore the company
+                </Link>
+                <Link
+                  to={clientLoginPath}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 border border-amber-200/25 bg-black/28 px-7 py-4 text-base font-semibold text-amber-50 shadow-[0_0_34px_rgba(245,158,11,0.12)] backdrop-blur transition hover:border-amber-100/45 hover:bg-amber-200/[0.11]"
+                >
+                  <LockKeyhole className="h-4 w-4" />
+                  Client Login
                 </Link>
               </div>
 
@@ -1724,6 +1775,113 @@ function LandingPage({ page = 'home' }) {
   )
 }
 
+function ClientLoginPage() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+
+      <header className="relative z-20 px-3 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 border border-white/10 bg-[#020407]/72 px-4 py-3 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl sm:px-5">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
+            <BrandFrame
+              src={corporateLogo}
+              alt="Spark Command Systems"
+              className="h-10 w-10 shrink-0"
+              imageClassName="scale-[2.15]"
+            />
+            <div className="min-w-0">
+              <div className="truncate text-sm font-semibold uppercase tracking-[0.3em] text-white">Spark</div>
+              <div className="hidden truncate text-[0.68rem] uppercase tracking-[0.28em] text-slate-400 sm:block">Command Systems</div>
+            </div>
+          </Link>
+          <Link
+            to="/"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center border border-white/15 bg-white/[0.04] px-4 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 sm:px-5"
+          >
+            Back Home
+          </Link>
+        </div>
+      </header>
+
+      <main className="relative">
+        <section className="relative overflow-hidden px-3 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-14 lg:px-8">
+          <div className="pointer-events-none absolute inset-0">
+            <img
+              src={heroScrollImage}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover object-[62%_50%] opacity-55"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,7,0.98)_0%,rgba(2,4,7,0.86)_48%,rgba(2,4,7,0.68)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_46%,rgba(34,211,238,0.1),transparent_24%),radial-gradient(circle_at_76%_42%,rgba(245,158,11,0.16),transparent_28%)]" />
+          </div>
+
+          <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <section className="max-w-3xl">
+              <div className="mb-6 inline-flex items-center gap-3 border border-amber-200/25 bg-amber-200/[0.08] px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-amber-100 shadow-[0_0_32px_rgba(245,158,11,0.1)] backdrop-blur">
+                <LockKeyhole className="h-4 w-4" />
+                Client Access
+              </div>
+              <h1 className="text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl">
+                Spark Core login is being prepared.
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-xl sm:leading-9">
+                This will become the secure entry point for client-side Spark Core access once the core platform is ready to connect.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  to="/contact"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
+                >
+                  Contact Development Team
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/applications"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
+                >
+                  View Applications
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </section>
+
+            <section className="relative overflow-hidden border border-white/10 bg-[#060d16]/88 p-5 shadow-[0_34px_130px_rgba(0,0,0,0.48),0_0_72px_rgba(245,158,11,0.08)] backdrop-blur-xl sm:p-6 lg:p-8">
+              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
+              <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-amber-200/10 blur-3xl" />
+              <div className="relative flex h-16 w-16 items-center justify-center border border-amber-200/25 bg-amber-200/[0.08] text-amber-100 shadow-[0_0_34px_rgba(245,158,11,0.16)]">
+                <LogIn className="h-7 w-7" />
+              </div>
+              <div className="relative mt-8 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100/70">Spark Core</div>
+              <h2 className="relative mt-4 text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">
+                Client portal connection pending.
+              </h2>
+              <div className="relative mt-7 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
+                {[
+                  ['Access', 'Client login'],
+                  ['Core', 'Build phase'],
+                  ['Route', 'Ready for link'],
+                ].map(([label, value]) => (
+                  <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-4">
+                    <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
+                    <div className="mt-2 text-sm font-semibold text-white">{value}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="relative mt-6 border-l border-amber-200/35 pl-4 text-sm leading-7 text-slate-400">
+                The public website now has the access point in place. When Spark Core is ready, this route can be switched from the placeholder page to the live authenticated app.
+              </p>
+              <div className="relative mt-8 flex items-center gap-3 text-sm font-semibold text-amber-100">
+                <Sparkles className="h-4 w-4" />
+                Prepared for Spark Core handoff
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  )
+}
+
 function statusTone(status) {
   if (status === 'Active') {
     return 'border-emerald-200/25 bg-emerald-200/[0.08] text-emerald-100'
@@ -1980,6 +2138,21 @@ function AboutSparkPage() {
                 <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
                   SparkCommand Systems was founded by Shawn Parker, Founder and Systems Architect, to build software for teams that need clearer control over work, data, communication, and execution.
                 </p>
+                <div className="mt-8 max-w-sm overflow-hidden border border-amber-200/20 bg-black/38 shadow-[0_28px_100px_rgba(0,0,0,0.42),0_0_58px_rgba(245,158,11,0.08)] backdrop-blur">
+                  <PremiumImage
+                    src={founderPhoto}
+                    fallback={corporateLogo}
+                    alt="Shawn Parker, founder of Spark Command Systems"
+                    className="h-72 w-full bg-[#050b13]"
+                    imageClassName="object-cover object-[50%_18%]"
+                  />
+                  <div className="border-t border-white/10 bg-[#050b13]/88 p-4">
+                    <div className="text-sm font-semibold text-white">Shawn Parker</div>
+                    <div className="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-amber-200/75">
+                      Founder and Systems Architect
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -2834,6 +3007,7 @@ export default function SparkCommandSystemsSite() {
         <Route path="/pipeline" element={<LandingPage page="pipeline" />} />
         <Route path="/deployment" element={<LandingPage page="deployment" />} />
         <Route path="/applications" element={<ApplicationsPage />} />
+        <Route path={clientLoginPath} element={<ClientLoginPage />} />
         <Route path="/contact" element={<LandingPage page="contact" />} />
         <Route
           path="/command-lab-login"

@@ -46,13 +46,26 @@ const navItems = [
   { label: 'Integration', href: '/integration' },
   { label: 'Pipeline', href: '/pipeline' },
   { label: 'Deployment', href: '/deployment' },
+]
+
+const accessLinks = [
+  { label: 'Applications', href: '/applications' },
+  { label: 'Client Login', href: clientLoginPath },
+  { label: 'Command Center', href: '/spark-command-center' },
   { label: 'Command Lab', href: '/command-lab-login' },
 ]
 
 const operatingSignals = [
-  ['Operations layer', 'Live command view'],
-  ['Systems layer', 'Connected data flows'],
-  ['AI layer', 'Signal detection'],
+  ['$299/mo', 'Partnership program'],
+  ['6 months', 'Initial term'],
+  ['Core access', 'Request through intake'],
+]
+
+const partnershipIncludes = [
+  'Custom website build',
+  'Backend CRM system',
+  'Automations',
+  'Hosting and support',
 ]
 
 const platformMetrics = [
@@ -476,6 +489,41 @@ function CommandSelect({ value, onChange, options }) {
   )
 }
 
+function AccessDropdown({ className = '' }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div className={`relative ${className}`} onBlur={() => window.setTimeout(() => setIsOpen(false), 120)}>
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((current) => !current)}
+        className="inline-flex min-h-11 items-center justify-center gap-2 border border-white/15 bg-white/[0.04] px-4 text-sm font-semibold text-white transition hover:border-amber-200/35 hover:bg-amber-200/[0.08] hover:text-amber-50"
+      >
+        Access
+        <ChevronDown className={`h-4 w-4 text-amber-100/80 transition ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen ? (
+        <div className="absolute right-0 top-[calc(100%+0.55rem)] z-50 w-56 overflow-hidden border border-amber-200/20 bg-[#03070d]/98 shadow-[0_22px_70px_rgba(0,0,0,0.62),0_0_36px_rgba(245,158,11,0.09)] backdrop-blur-xl">
+          <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
+          {accessLinks.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              onClick={() => setIsOpen(false)}
+              className="flex min-h-11 items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+            >
+              {item.label}
+              <ArrowRight className="h-4 w-4 text-amber-100/75" />
+            </Link>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 function MobileMenuPanel({ page = '' }) {
   return (
     <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 min-[1640px]:hidden">
@@ -497,17 +545,29 @@ function MobileMenuPanel({ page = '' }) {
       </div>
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         <Link
-          to="/contact"
+          to="/start"
           className="flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-4 text-sm font-semibold text-cyan-50"
+        >
+          Start Intake
+        </Link>
+        <Link
+          to="/contact"
+          className="flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
         >
           Contact Development Team
         </Link>
-        <Link
-          to={clientLoginPath}
-          className="flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
-        >
-          Client Login
-        </Link>
+      </div>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+        {accessLinks.map((item) => (
+          <Link
+            key={item.label}
+            to={item.href}
+            className="flex min-h-12 items-center justify-between border border-white/10 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
+          >
+            {item.label}
+            <ArrowRight className="h-4 w-4 text-amber-100/75" />
+          </Link>
+        ))}
       </div>
     </div>
   )
@@ -1060,6 +1120,63 @@ function HeroScrollVisual({ progress }) {
   )
 }
 
+function PartnershipProgramPanel() {
+  return (
+    <div className="relative mx-auto max-w-2xl lg:max-w-none">
+      <div className="absolute -inset-8 bg-[radial-gradient(circle_at_50%_28%,rgba(245,158,11,0.18),transparent_34%),radial-gradient(circle_at_42%_64%,rgba(34,211,238,0.11),transparent_38%)] blur-2xl" />
+      <div className="relative overflow-hidden border border-amber-200/24 bg-[#07101b]/92 p-5 shadow-[0_36px_140px_rgba(0,0,0,0.68),0_0_90px_rgba(245,158,11,0.09)] backdrop-blur-xl sm:p-6 lg:p-7">
+        <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/80 to-transparent" />
+        <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-amber-200/10 blur-3xl" />
+
+        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100">
+              Spark Core Partnership Program
+            </div>
+            <h2 className="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+              Build the system behind your business.
+            </h2>
+          </div>
+          <div className="shrink-0 border border-amber-200/25 bg-amber-200/[0.08] px-5 py-4 text-left shadow-[0_0_40px_rgba(245,158,11,0.12)] sm:text-right">
+            <div className="text-3xl font-semibold tracking-[-0.03em] text-amber-100">$299/mo</div>
+            <div className="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">6 month initial program</div>
+          </div>
+        </div>
+
+        <p className="relative mt-6 max-w-2xl text-base leading-8 text-slate-300">
+          A practical partnership for businesses that need a modern website, a working backend system, automations, hosting, and support in one clear monthly program.
+        </p>
+
+        <div className="relative mt-7 grid gap-3 sm:grid-cols-2">
+          {partnershipIncludes.map((item) => (
+            <div key={item} className="flex items-center gap-3 border border-white/10 bg-white/[0.045] px-4 py-3">
+              <CheckCircle2 className="h-5 w-5 shrink-0 text-amber-100" />
+              <span className="text-sm font-semibold text-slate-200">{item}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="relative mt-8 flex flex-col gap-3 sm:flex-row">
+          <Link
+            to="/start"
+            className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
+            aria-label="Request access to the Spark Core Partnership Program"
+          >
+            Request Spark Core Access
+            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+          </Link>
+          <Link
+            to="/website"
+            className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+          >
+            View Website Builds
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function LandingPage({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -1085,7 +1202,7 @@ function LandingPage({ page = 'home' }) {
 
       <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
         <div
-          className={`relative mx-auto max-w-7xl overflow-hidden border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl 2xl:max-w-[96rem] ${
+          className={`relative mx-auto max-w-7xl overflow-visible border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl 2xl:max-w-[96rem] ${
             isScrolled
               ? 'border-cyan-200/20 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)]'
               : 'border-white/12'
@@ -1127,32 +1244,15 @@ function LandingPage({ page = 'home' }) {
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
-              to="/contact"
-              className="hidden whitespace-nowrap border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] hover:shadow-[0_0_26px_rgba(34,211,238,0.1)] xl:inline-flex"
-            >
-              Contact Development Team
-            </Link>
-            <Link
-              to="/contact"
-              className="hidden whitespace-nowrap border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] 2xl:inline-flex"
-            >
-              Book a Demo
-            </Link>
-            <Link
-              to={clientLoginPath}
-              className="hidden whitespace-nowrap border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-sm font-semibold text-amber-50 transition hover:border-amber-100/45 hover:bg-amber-200/[0.14] lg:inline-flex"
-            >
-              <LockKeyhole className="mr-2 h-4 w-4" />
-              Client Login
-            </Link>
-            <Link
-              to="/applications"
+              to="/start"
               className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
+              aria-label="Start Spark Core Partnership Program intake"
             >
-              <span className="hidden sm:inline">Open App</span>
-              <span className="sm:hidden">Apps</span>
+              <span className="hidden sm:inline">Start Intake</span>
+              <span className="sm:hidden">Start</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            <AccessDropdown className="hidden sm:block" />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
@@ -1171,6 +1271,7 @@ function LandingPage({ page = 'home' }) {
         {page === 'home' && (
         <>
         <section
+          id="partnership-program"
           className="relative -mt-16 overflow-hidden bg-[#020407] pt-16 sm:pt-24 lg:min-h-[42rem]"
         >
           <HeroScrollVisual progress={heroScrollProgress} />
@@ -1179,43 +1280,29 @@ function LandingPage({ page = 'home' }) {
             <div className="relative z-10">
               <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] backdrop-blur sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
-                Platforms. Systems. Websites.
+                Website. CRM. Automations. Support.
               </div>
               <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl sm:leading-[0.98] lg:text-6xl xl:text-7xl">
-                Technology infrastructure for modern operations.
+                Apply for the Spark Core Partnership Program.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-7 sm:text-xl sm:leading-8">
-                Spark Command Systems builds the Command Center Platform, custom systems and tools, and websites that help teams operate with clarity.
+                Get a custom website build, backend CRM system, automations, hosting, and support through a focused $299/month initial partnership program.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
-                <Link
-                  to="/applications"
-                  className="group inline-flex min-h-12 items-center justify-center gap-2 bg-cyan-200 px-7 py-4 text-base font-bold text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.22)] transition hover:bg-white"
-                >
-                  Open Applications
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
                 <Link
                   to="/start"
                   className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_40px_rgba(245,158,11,0.24)] transition hover:bg-amber-200"
                   aria-label="Open Spark Intake at sparkcommands.com/start"
                 >
-                  Start Intake
+                  Fill Out Intake Form
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </Link>
-                <Link
-                  to="/platform"
-                  className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
+                <a
+                  href="#partnership-program"
+                  className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
                 >
-                  Explore the company
-                </Link>
-                <Link
-                  to={clientLoginPath}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 border border-amber-200/25 bg-black/28 px-7 py-4 text-base font-semibold text-amber-50 shadow-[0_0_34px_rgba(245,158,11,0.12)] backdrop-blur transition hover:border-amber-100/45 hover:bg-amber-200/[0.11]"
-                >
-                  <LockKeyhole className="h-4 w-4" />
-                  Client Login
-                </Link>
+                  View Partnership Details
+                </a>
               </div>
 
               <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:mt-10 sm:grid-cols-3">
@@ -1230,9 +1317,12 @@ function LandingPage({ page = 'home' }) {
 
             <div className="relative z-10">
               <div className="hidden lg:block lg:pl-4">
-                <CommandConsole />
+                <PartnershipProgramPanel />
               </div>
             </div>
+          </div>
+          <div className="relative z-10 mx-auto px-3 pb-12 sm:px-5 lg:hidden">
+            <PartnershipProgramPanel />
           </div>
         </section>
 
@@ -1911,7 +2001,7 @@ function ApplicationsHeader() {
 
   return (
     <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
-      <div className="relative mx-auto max-w-[96rem] overflow-hidden border border-cyan-200/20 bg-[#020407]/72 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)] backdrop-blur-2xl">
+      <div className="relative mx-auto max-w-[96rem] overflow-visible border border-cyan-200/20 bg-[#020407]/72 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)] backdrop-blur-2xl">
         <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/55 to-transparent" />
         <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
@@ -1944,25 +2034,15 @@ function ApplicationsHeader() {
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
-              to="/contact"
-              className="hidden whitespace-nowrap border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-sm font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11] xl:inline-flex"
-            >
-              Contact Development Team
-            </Link>
-            <Link
-              to="/contact"
-              className="hidden whitespace-nowrap border border-white/15 bg-white/[0.035] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/[0.08] 2xl:inline-flex"
-            >
-              Book a Demo
-            </Link>
-            <Link
-              to="/applications"
+              to="/start"
               className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
+              aria-label="Start Spark Core Partnership Program intake"
             >
-              <span className="hidden sm:inline">Open App</span>
-              <span className="sm:hidden">Apps</span>
+              <span className="hidden sm:inline">Start Intake</span>
+              <span className="sm:hidden">Start</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            <AccessDropdown className="hidden sm:block" />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}

@@ -28,8 +28,8 @@ import {
   storeCommandLabAccess,
 } from './components/command-lab/commandLabAccess'
 
-const corporateLogo = '/assets/corporate-logo.png'
-const logoFull = '/assets/logo-full.png'
+const corporateLogo = '/assets/spark-command-systems-logo.png'
+const logoFull = '/assets/spark-command-systems-logo.png'
 const heroCommandImage = '/assets/hero-command.jpeg'
 const heroScrollImage = '/assets/spark-scroll-hero.png'
 const founderPhoto = '/assets/founder-shawn-parker.png'
@@ -642,7 +642,7 @@ function ContactIntakePage() {
               src={corporateLogo}
               alt="Spark Command Systems"
               className="absolute right-6 top-6 hidden h-16 w-16 opacity-35 sm:block"
-              imageClassName="scale-[2.15]"
+              imageClassName="object-contain p-1"
             />
             <div className="relative">
               <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100">
@@ -1074,7 +1074,7 @@ function SiteFooter() {
 
         <div className="flex flex-col gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <BrandFrame src={corporateLogo} alt="Spark Command Systems" className="h-12 w-12" imageClassName="scale-[2.15]" />
+            <BrandFrame src={corporateLogo} alt="Spark Command Systems" className="h-12 w-12" imageClassName="object-contain p-1" />
             <div>
               <div className="text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
               <div className="text-[0.68rem] uppercase tracking-[0.3em] text-slate-500">Command Systems</div>
@@ -1089,6 +1089,7 @@ function SiteFooter() {
 
 function HeroScrollVisual({ progress }) {
   const imageTransform = `translate3d(${progress * 22}px, ${progress * 38}px, 0) scale(${1.04 + progress * 0.08})`
+  const logoTransform = `translate3d(${progress * -34}px, ${progress * 24}px, 0) scale(${0.94 + progress * 0.1}) rotate(${progress * -2}deg)`
   const signalTransform = `translate3d(${-progress * 36}px, ${progress * 18}px, 0)`
   const coreTransform = `translate3d(0, ${progress * -18}px, 0) scale(${1 + progress * 0.04})`
 
@@ -1102,6 +1103,12 @@ function HeroScrollVisual({ progress }) {
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,7,0.96)_0%,rgba(2,4,7,0.88)_34%,rgba(2,4,7,0.52)_68%,rgba(2,4,7,0.36)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_46%,rgba(245,158,11,0.2),transparent_26%),radial-gradient(circle_at_34%_50%,rgba(34,211,238,0.11),transparent_28%)]" />
+      <img
+        src={corporateLogo}
+        alt=""
+        className="absolute right-[1%] top-[7%] hidden w-[min(31vw,25rem)] max-w-[25rem] opacity-50 brightness-125 drop-shadow-[0_0_54px_rgba(245,158,11,0.28)] md:block"
+        style={{ transform: logoTransform }}
+      />
       <div
         className="absolute left-[10%] top-[18%] h-px w-[78%] bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent"
         style={{ transform: signalTransform, opacity: 0.32 + progress * 0.28 }}
@@ -1218,7 +1225,7 @@ function LandingPage({ page = 'home' }) {
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
-              imageClassName="scale-[2.15]"
+              imageClassName="object-contain p-1"
             />
             <div className="shrink-0">
               <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
@@ -1625,7 +1632,7 @@ function LandingPage({ page = 'home' }) {
               src={corporateLogo}
               alt="Spark Command Systems"
               className="relative z-10 mx-auto h-16 w-16"
-              imageClassName="scale-[2.15]"
+              imageClassName="object-contain p-1"
             />
             <div className="relative z-10 mt-6 text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/85">READY TO BUILD</div>
             <h2 className="relative z-10 mx-auto mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
@@ -1694,7 +1701,7 @@ function LandingPage({ page = 'home' }) {
                   src={corporateLogo}
                   alt="Spark command platform product mark"
                   className="mb-8 h-20 w-20 opacity-85"
-                  imageClassName="scale-[2.15]"
+                  imageClassName="object-contain p-1"
                 />
                 <h3 className="text-3xl font-semibold tracking-[-0.02em] text-white">Built as a working operational layer, not a presentation dashboard.</h3>
                 <p className="mt-5 text-base leading-8 text-slate-300">
@@ -1798,7 +1805,7 @@ function LandingPage({ page = 'home' }) {
             src={corporateLogo}
             alt="Spark product pipeline system"
             className="absolute left-1/2 top-12 h-20 w-20 -translate-x-1/2 opacity-25 sm:h-24 sm:w-24"
-            imageClassName="scale-[2.15]"
+            imageClassName="object-contain p-1"
           />
           <div className="absolute inset-x-0 top-28 h-72 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_45%)]" />
           <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-8">
@@ -1877,7 +1884,7 @@ function ClientLoginPage() {
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0"
-              imageClassName="scale-[2.15]"
+              imageClassName="object-contain p-1"
             />
             <div className="min-w-0">
               <div className="truncate text-sm font-semibold uppercase tracking-[0.3em] text-white">Spark</div>
@@ -2012,7 +2019,7 @@ function ApplicationsHeader() {
               src={corporateLogo}
               alt="Spark Command Systems"
               className="h-10 w-10 shrink-0"
-              imageClassName="scale-[2.15]"
+              imageClassName="object-contain p-1"
             />
             <div className="shrink-0">
               <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
@@ -2089,7 +2096,7 @@ function ApplicationsPage() {
                 src={corporateLogo}
                 alt="Spark technology catalog signal"
                 className="absolute -right-4 -top-10 hidden h-20 w-20 opacity-30 lg:block"
-                imageClassName="scale-[2.15]"
+                imageClassName="object-contain p-1"
               />
               <div className="relative border border-white/10 bg-[#060d16]/90 p-5 shadow-[0_34px_130px_rgba(0,0,0,0.48)] backdrop-blur-xl sm:p-6">
                 <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
@@ -2965,7 +2972,7 @@ function SCSComingSoonPage() {
             src={corporateLogo}
             alt="Spark Command Systems"
             className="absolute right-8 top-8 hidden h-20 w-20 opacity-35 lg:block"
-            imageClassName="scale-[2.15]"
+            imageClassName="object-contain p-1"
           />
 
           <div className="grid gap-px bg-white/10 lg:grid-cols-[0.9fr_1.1fr]">

@@ -62,10 +62,10 @@ const operatingSignals = [
 ]
 
 const partnershipIncludes = [
-  'Custom website build',
-  'Backend CRM system',
-  'Automations',
-  'Hosting and support',
+  'Custom website build up to 5 pages',
+  'Backend CRM and client portal access',
+  'One starter business automation',
+  'Hosting, monitoring, maintenance, and priority support',
 ]
 
 const platformMetrics = [
@@ -1154,6 +1154,11 @@ function PartnershipProgramPanel() {
           A practical partnership for businesses that need a modern website, a working backend system, automations, hosting, and support in one clear monthly program.
         </p>
 
+        <div className="relative mt-5 border border-amber-200/24 bg-amber-200/[0.075] p-4">
+          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-100">Six-month initial commitment</div>
+          <div className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">$1,794</div>
+        </div>
+
         <div className="relative mt-7 grid gap-3 sm:grid-cols-2">
           {partnershipIncludes.map((item) => (
             <div key={item} className="flex items-center gap-3 border border-white/10 bg-white/[0.045] px-4 py-3">
@@ -1169,7 +1174,7 @@ function PartnershipProgramPanel() {
             className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
             aria-label="Request access to the Spark Core Partnership Program"
           >
-            Request Spark Core Access
+            Apply for Partnership
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
           </Link>
           <Link
@@ -1179,6 +1184,10 @@ function PartnershipProgramPanel() {
             View Website Builds
           </Link>
         </div>
+
+        <p className="relative mt-5 text-xs leading-6 text-slate-500">
+          Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.
+        </p>
       </div>
     </div>
   )
@@ -2289,119 +2298,187 @@ function AboutSparkPage() {
   )
 }
 
+const websitePricingPackages = [
+  {
+    id: 'launch-website',
+    name: 'Launch Website',
+    price: '$425',
+    priceNote: 'one-time',
+    recurring: 'Hosting, monitoring, and support — $25/month',
+    badge: 'Affordable start',
+    description: 'A professional starting point for new and small businesses that need a credible online presence.',
+    included: [
+      'Up to 3 pages',
+      'Custom branded design',
+      'Fully mobile responsive',
+      'Contact or inquiry form',
+      'Social media links',
+      'Basic on-page SEO',
+      'Google-friendly sitemap',
+      'Deployment and domain connection',
+      'Two revision rounds',
+    ],
+    cta: 'Start My Website',
+  },
+  {
+    id: 'spark-partnership',
+    name: 'Spark Partnership Program',
+    price: '$299/month',
+    priceNote: 'six-month initial partnership',
+    recurring: 'Six-month initial commitment: $1,794',
+    badge: 'Best Value',
+    description:
+      'For businesses that want Spark Command Systems to build, operate, support, and continually improve their digital presence and business systems.',
+    featured: true,
+    included: [
+      'Custom website up to 5 pages',
+      'Fully mobile responsive',
+      'Custom branded design',
+      'Contact, lead, or intake form',
+      'Website build fee included',
+      'Hosting and domain connection',
+      'Website monitoring and maintenance',
+      'Reasonable content and photo updates',
+      'Basic search-engine setup',
+      'Analytics integration',
+      'Spark client portal access',
+      'Monthly project and service updates',
+      'One starter business automation',
+      'Priority support',
+      'Expansion options for dashboards, CRM tools, AI automations, booking, payments, and operations systems',
+    ],
+    disclosure:
+      'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.',
+    cta: 'Apply for Partnership',
+  },
+  {
+    id: 'professional-website',
+    name: 'Professional Website',
+    price: '$795',
+    priceNote: 'one-time',
+    recurring: 'Hosting and support — $50/month',
+    badge: 'Professional build',
+    description: 'A stronger custom website for businesses that need more pages, stronger presentation, and better lead capture.',
+    included: [
+      'Up to 5 pages',
+      'Fully mobile responsive',
+      'Custom interactive design',
+      'Content-management capability when appropriate',
+      'Contact or lead-capture form',
+      'Social media integration',
+      'Basic on-page SEO',
+      'Analytics integration',
+      'Sitemap and favicon',
+      'Three revision rounds',
+      'Complete design and deployment',
+    ],
+    cta: 'Choose Professional',
+  },
+  {
+    id: 'elite-website',
+    name: 'Elite Website',
+    price: '$995',
+    priceNote: 'one-time',
+    recurring: 'Hosting and support — $75/month',
+    badge: 'Premium site',
+    description: 'A premium website package for businesses that need deeper content, stronger forms, and richer customer pathways.',
+    included: [
+      'Up to 10 pages',
+      'Fully mobile responsive',
+      'Premium custom design',
+      'Content-management system when appropriate',
+      'Advanced forms',
+      'Newsletter or email signup',
+      'Site search when appropriate',
+      'Analytics and basic SEO',
+      'Booking or payment integration option',
+      'Three revision rounds',
+      'Complete design and deployment',
+    ],
+    cta: 'Choose Elite',
+  },
+  {
+    id: 'growth-website',
+    name: 'Growth Website',
+    price: '$1,595',
+    priceNote: 'one-time',
+    recurring: 'Managed hosting and priority support — starting at $100/month',
+    badge: 'Growth ready',
+    description: 'A high-end website for businesses ready to connect content, conversion, booking, ordering, and lead capture.',
+    included: [
+      'Up to 15 pages',
+      'High-end interactive design',
+      'Fully mobile responsive',
+      'Content-management system',
+      'Appointment, booking, or ordering integration',
+      'Payment integration',
+      'Custom forms and lead capture',
+      'Downloadable resources',
+      'Analytics and search-engine setup',
+      'Three revision rounds',
+    ],
+    cta: 'Build My Growth Site',
+  },
+  {
+    id: 'business-website',
+    name: 'Business Website',
+    price: '$2,995',
+    priceNote: 'one-time',
+    recurring: 'Managed support — starting at $150/month',
+    badge: 'Business systems',
+    description: 'An advanced website package for businesses with more services, locations, workflows, integrations, and staff handoff needs.',
+    included: [
+      'Up to 25 pages',
+      'Advanced custom website',
+      'Fully mobile responsive',
+      'Content-management system',
+      'Booking, payment, or ordering workflows',
+      'Advanced forms',
+      'Multiple service or location pages',
+      'Analytics and conversion tracking',
+      'Business-system integrations',
+      'Staff training and handoff',
+      'Three revision rounds',
+    ],
+    cta: 'Request a Proposal',
+  },
+  {
+    id: 'custom-platform',
+    name: 'Custom Platform',
+    price: 'Starting at $4,595',
+    priceNote: 'custom proposal',
+    recurring: 'Hosting, platform support, and third-party services priced separately.',
+    badge: 'Custom platform',
+    description: 'For businesses that need more than a traditional website.',
+    included: [
+      'Custom web application or operations portal',
+      'Client or employee login',
+      'CRM or dashboard functionality',
+      'Workflow automations',
+      'Database integration',
+      'Role-based access',
+      'Booking, payment, and business integrations',
+      'Fully mobile-responsive application',
+      'Custom scope, timeline, and proposal',
+    ],
+    cta: 'Discuss My Platform',
+  },
+]
+
 function WebsitesPage() {
-  const websitePlans = [
-    {
-      name: 'Starter Landing Page',
-      setup: '$200 setup',
-      monthly: '+ $50/month',
-      badge: 'Lowest upfront cost',
-      description: 'A simple, professional one-page website for businesses that need to get online quickly.',
-      monthlyLabel: '$50/month Managed Website Hosting & Support',
-      included: [
-        '1 landing/home page',
-        'Mobile-friendly layout',
-        'Business name, logo, colors, and contact info',
-        'Call button',
-        'Email or inquiry button',
-        'Google Maps/location link if needed',
-        'Basic SEO title and description',
-        'Domain connection support',
-        'SSL setup',
-        'Managed website hosting',
-        'Basic website support',
-      ],
-      support: [
-        'Hosting management',
-        'SSL/domain support',
-        'Website monitoring',
-        'Basic troubleshooting',
-        'Contact button/form support',
-        '1 small text or photo update per month',
-      ],
-      cta: 'Start with Landing Page',
-    },
-    {
-      name: 'Quick Launch Business Site',
-      setup: '$500 setup',
-      monthly: '+ $100/month',
-      badge: 'Most popular',
-      description: 'A small business website with a homepage, supporting pages, and an inquiry button to help customers reach you.',
-      monthlyLabel: '$100/month Managed Website Hosting, Monitoring & Priority Support',
-      included: [
-        'Home page',
-        '2-3 additional pages',
-        'Mobile-friendly layout',
-        'Services page',
-        'About page',
-        'Contact page',
-        'Business inquiry button',
-        'Contact or inquiry form',
-        'Basic brand styling',
-        'Basic SEO setup',
-        'Domain connection support',
-        'SSL setup',
-        'Managed website hosting',
-        '24/7 website monitoring',
-        'Priority website support',
-      ],
-      support: [
-        'Hosting management',
-        'SSL/domain support',
-        'Website uptime monitoring',
-        'Website-down emergency review',
-        'Contact form support',
-        'Monthly checkup',
-        'Up to 1 hour of small edits per month',
-        'Priority response for website issues',
-      ],
-      cta: 'Start Quick Launch Site',
-    },
-    {
-      name: 'Custom Growth Website',
-      setup: 'Custom Quote',
-      monthly: 'Support quoted by scope',
-      badge: 'Custom build',
-      description: 'For businesses that need more pages, e-commerce, booking, advanced SEO, automations, or a custom design.',
-      monthlyLabel: 'Custom Managed Website Hosting & Support Plan',
-      included: [
-        'Custom page count',
-        'E-commerce options',
-        'Booking system options',
-        'Advanced forms',
-        'SEO/content options',
-        'Integrations',
-        'Custom support plan',
-      ],
-      support: [
-        'Hosting and support scope defined before build',
-        'Integration planning',
-        'Advanced feature support options',
-        'Maintenance plan quoted separately',
-      ],
-      cta: 'Request Custom Quote',
-    },
-  ]
 
   const monthlySupportCards = [
-    ['Managed Hosting', 'Your website stays hosted, connected, and live.'],
-    ['Monitoring & Support', 'We help watch for website issues and troubleshoot basic problems.'],
-    ['Simple Updates', 'Need a small text or photo change? Starter support includes limited monthly updates.'],
-    ['Peace of Mind', 'You do not need to figure out hosting, SSL, or domain settings alone.'],
+    ['Managed Hosting', 'Spark keeps your website hosted, connected, and supported under the plan matched to your package.'],
+    ['Monitoring & Maintenance', 'Website monitoring, maintenance, forms, and basic support are separated from one-time build pricing.'],
+    ['Content Support', 'Partnership clients receive reasonable content and photo updates as part of the ongoing relationship.'],
+    ['Expansion Path', 'Larger clients can expand into CRM tools, dashboards, automations, booking, payments, and platform work.'],
   ]
 
-  const comparisonRows = [
-    ['Setup cost', '$200', '$500', 'Custom'],
-    ['Monthly support', '$50/mo', '$100/mo', 'Custom'],
-    ['Page count', '1 page', '3-4 pages', 'Custom'],
-    ['Inquiry/contact button', 'Included', 'Included', 'Included'],
-    ['Contact form', 'Basic', 'Included', 'Advanced options'],
-    ['Hosting included', 'Yes', 'Yes', 'Quoted'],
-    ['SSL/domain help', 'Yes', 'Yes', 'Quoted'],
-    ['Website monitoring', 'Included', '24/7 monitoring', 'Custom'],
-    ['Monthly edits', '1 small update', 'Up to 1 hour', 'Custom'],
-    ['Priority support', 'Basic', 'Priority', 'Custom'],
-    ['Best for', 'Getting online fast', 'Small business site', 'Growth systems'],
+  const packageFitCards = [
+    ['Price-conscious launch', 'Launch Website keeps the build simple and credible while still including mobile responsiveness, branded design, and basic SEO.'],
+    ['Best recurring value', 'Spark Partnership Program combines the website build, hosting, support, updates, starter automation, and Spark client portal access.'],
+    ['Larger site build', 'Professional, Elite, Growth, and Business Website packages scale page count, integrations, forms, tracking, and operational needs.'],
+    ['Beyond a website', 'Custom Platform work is scoped for applications, portals, dashboards, CRM functionality, automations, databases, and role-based access.'],
   ]
 
   const buildTypeOptions = [
@@ -2424,7 +2501,7 @@ function WebsitesPage() {
   const preferredContactOptions = ['Phone', 'Email', 'Text', 'No preference']
 
   const websiteBuildInitialState = {
-    selectedPlan: websitePlans[0].name,
+    selectedPlan: websitePricingPackages[1].name,
     businessName: '',
     contactName: '',
     email: '',
@@ -2448,36 +2525,36 @@ function WebsitesPage() {
   }
 
   const [websiteFormData, setWebsiteFormData] = useState(websiteBuildInitialState)
-  const [selectedPlan, setSelectedPlan] = useState(websitePlans[0].name)
+  const [selectedPlan, setSelectedPlan] = useState(websitePricingPackages[1].name)
   const [isWebsiteSubmitted, setIsWebsiteSubmitted] = useState(false)
   const [isWebsiteSubmitting, setIsWebsiteSubmitting] = useState(false)
   const [websiteSubmitError, setWebsiteSubmitError] = useState('')
 
   const processSteps = [
-    'Pick your starter plan',
+    'Choose your package',
     'Send your business details',
-    'We build and review the site',
-    'Your website goes live',
-    'We host and support it monthly',
+    'Approve a written scope',
+    'Spark builds and reviews the work',
+    'Launch, support, and expand',
   ]
 
   const faqs = [
-    ['Is $50/month just for hosting?', 'No. The monthly plan includes managed website hosting, SSL/domain support, website monitoring, basic troubleshooting, and limited small updates. You are paying for the convenience of having someone manage the website for you.'],
-    ['What is included in the $200 Starter Landing Page?', 'It includes one professional landing page with your business information, contact buttons, basic styling, mobile-friendly layout, domain connection support, SSL setup, and managed website hosting.'],
-    ['What is included in the $500 Quick Launch Site?', 'It includes a homepage, 2-3 supporting pages, an inquiry button or form, mobile-friendly design, basic SEO setup, hosting, website monitoring, and priority website support.'],
-    ['Do I own the website?', 'Ownership and transfer details are confirmed before the project begins.'],
-    ['Can I cancel monthly support?', 'Monthly support terms are confirmed before the project begins. Some starter packages may require a minimum service term so we can keep the upfront build cost low.'],
-    ['What is not included?', 'New pages, major redesigns, e-commerce, booking systems, advanced SEO, paid ads, business email migration, computer support, printer support, POS support, and general IT support are quoted separately.'],
-    ['How fast can my site go live?', 'Simple starter sites can usually move quickly once we have your business details, logo, photos, and content. Final timing depends on client response time and project scope.'],
+    ['What is the Spark Partnership Program?', 'It is a six-month initial partnership for businesses that want Spark Command Systems to build, operate, support, and improve their website and business systems for $299/month.'],
+    ['What is the six-month Partnership commitment?', 'The six-month initial commitment is $1,794. It gives Spark enough runway to build the website foundation, support the business, and begin meaningful system improvements.'],
+    ['Are hosting and support included in one-time website builds?', 'One-time builds are priced separately from recurring hosting and support. Each package lists the ongoing plan so build costs and monthly support stay clear.'],
+    ['Are domains and third-party tools included?', 'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.'],
+    ['Do all packages work on mobile?', 'Yes. Every website package and custom platform scope includes fully mobile-responsive design or application behavior.'],
+    ['Can Spark build tools beyond a website?', 'Yes. Custom Platform work can include portals, login areas, dashboards, CRM functionality, workflow automations, databases, booking, payment, and business integrations.'],
+    ['How is final pricing confirmed?', 'Final pricing depends on project scope, required integrations, content readiness, and third-party services. Every project begins with a written scope and approval.'],
   ]
 
   const updateWebsiteField = (field, value) => {
     setWebsiteFormData((current) => ({ ...current, [field]: value }))
   }
 
-  const selectWebsitePlan = (planName) => {
-    setSelectedPlan(planName)
-    updateWebsiteField('selectedPlan', planName)
+  const selectWebsitePlan = (plan) => {
+    setSelectedPlan(plan.name)
+    updateWebsiteField('selectedPlan', plan.name)
     window.requestAnimationFrame(() => {
       document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     })
@@ -2499,6 +2576,7 @@ function WebsitesPage() {
         body: JSON.stringify({
           _subject: 'New Spark Website Build Request',
           selectedPlan: websiteFormData.selectedPlan,
+          selectedPackageId: websitePricingPackages.find((plan) => plan.name === websiteFormData.selectedPlan)?.id || 'not-selected',
           name: websiteFormData.contactName,
           company: websiteFormData.businessName,
           email: websiteFormData.email,
@@ -2520,7 +2598,7 @@ function WebsitesPage() {
           problemDescription: websiteFormData.notes || 'Not provided',
           scale: 'Website build request',
           timeline: websiteFormData.timeline,
-          budget: 'Website package or custom quote',
+          budget: websitePricingPackages.find((plan) => plan.name === websiteFormData.selectedPlan)?.price || 'Website package or custom quote',
         }),
       })
 
@@ -2555,36 +2633,36 @@ function WebsitesPage() {
           <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <FadeIn>
               <div className="inline-flex border border-amber-200/25 bg-amber-200/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-100">
-                SMALL BUSINESS WEBSITE PACKAGES
+                Website Pricing
               </div>
               <h1 className="mt-7 max-w-5xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl sm:leading-[0.96] lg:text-7xl">
-                Small Business Websites Built Fast
+                Professional websites and business systems built around the way you work.
               </h1>
               <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300 sm:text-xl sm:leading-9">
-                Affordable starter website packages for businesses that need to get online quickly, look professional, and have someone they can call when the site needs help.
+                Choose a one-time website build or partner with Spark Command Systems for ongoing development, hosting, support, and automation.
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
-                Pick a starter package, send us your business details, and we will help you get online.
+                Launch affordably, grow into stronger digital systems, or request a custom platform when the business needs more than a traditional website.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
-                  onClick={() => document.getElementById('starter-plans')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  onClick={() => document.getElementById('pricing-packages')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                   className="inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.3)] transition hover:bg-amber-200"
                 >
-                  Choose a Starter Plan
+                  Compare Packages
                   <ArrowRight className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
-                  onClick={() => document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  onClick={() => selectWebsitePlan(websitePricingPackages[1])}
                   className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
                 >
-                  Request a Website Build
+                  Apply for Partnership
                 </button>
               </div>
               <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
-                {['Low upfront cost', 'Hosted and supported', 'Built for small businesses'].map((point) => (
+                {['One-time builds', 'Recurring support', 'Custom platforms'].map((point) => (
                   <div key={point} className="bg-[#02070d]/76 p-4 text-sm font-semibold text-slate-200">
                     {point}
                   </div>
@@ -2599,9 +2677,9 @@ function WebsitesPage() {
                 <div className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">Website Foundation</div>
                 <div className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
                   {[
-                    ['Starter', '$200 setup + $50/mo'],
-                    ['Popular', '$500 setup + $100/mo'],
-                    ['Monthly value', 'Managed Website Hosting & Support'],
+                    ['Launch', '$425 one-time + $25/mo'],
+                    ['Best Value', '$299/mo Partnership'],
+                    ['Platforms', 'Starting at $4,595'],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-5">
                       <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -2614,39 +2692,55 @@ function WebsitesPage() {
           </div>
         </section>
 
-        <section id="starter-plans" className="relative scroll-mt-24 px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <section id="pricing-packages" className="relative scroll-mt-24 px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <SectionIntro eyebrow="Starter Plans" title="Launch your small business website without the scary upfront cost." align="center">
-              We help small businesses get a professional website built, hosted, and live quickly with simple monthly support.
+            <SectionIntro eyebrow="Pricing Packages" title="Professional websites and business systems built around the way you work." align="center">
+              Choose a one-time website build or partner with Spark Command Systems for ongoing development, hosting, support, and automation.
             </SectionIntro>
-            <div className="mt-10 grid gap-4 lg:grid-cols-3">
-              {websitePlans.map((plan) => {
+            <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+              {websitePricingPackages.map((plan) => {
                 const isSelected = selectedPlan === plan.name
+                const isFeatured = Boolean(plan.featured)
 
                 return (
                   <FadeIn
                     key={plan.name}
                     className={`relative flex min-h-full flex-col overflow-hidden border p-5 shadow-[0_24px_90px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.05)] transition sm:p-6 ${
-                      isSelected
-                        ? 'border-amber-200/60 bg-amber-200/[0.08] shadow-[0_0_70px_rgba(245,158,11,0.14),0_24px_90px_rgba(0,0,0,0.34)]'
-                        : 'border-white/10 bg-[#060d16]/86 hover:border-amber-200/35'
+                      isFeatured
+                        ? 'border-amber-200/55 bg-gradient-to-br from-amber-200/[0.12] via-[#07101b]/95 to-cyan-200/[0.045] shadow-[0_0_82px_rgba(245,158,11,0.16),0_24px_90px_rgba(0,0,0,0.34)]'
+                        : isSelected
+                          ? 'border-cyan-200/45 bg-cyan-200/[0.07] shadow-[0_0_70px_rgba(34,211,238,0.1),0_24px_90px_rgba(0,0,0,0.34)]'
+                          : 'border-white/10 bg-[#060d16]/86 hover:border-amber-200/35'
                     }`}
                   >
                     <div className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/50 to-transparent" />
+                    {isFeatured ? <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-amber-200/10 blur-3xl" /> : null}
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">
+                      <div className={`inline-flex border px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] ${
+                        isFeatured
+                          ? 'border-amber-200/35 bg-amber-200/[0.12] text-amber-100'
+                          : 'border-cyan-200/20 bg-cyan-200/[0.06] text-cyan-100'
+                      }`}>
                         {plan.badge}
                       </div>
                       {isSelected ? <div className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-100">Selected</div> : null}
                     </div>
-                    <h2 className="mt-5 text-2xl font-semibold text-white">{plan.name}</h2>
+                    <h2 className="relative mt-5 text-2xl font-semibold text-white">{plan.name}</h2>
+                    {plan.featured ? (
+                      <p className="relative mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-amber-100">
+                        Six-month initial partnership
+                      </p>
+                    ) : null}
                     <div className="mt-5">
-                      <div className="text-3xl font-semibold tracking-[-0.03em] text-white">{plan.setup}</div>
-                      <div className="mt-1 text-lg font-semibold text-amber-100">{plan.monthly}</div>
+                      <div className={`font-semibold tracking-[-0.03em] ${isFeatured ? 'text-4xl text-amber-100' : 'text-3xl text-white'}`}>
+                        {plan.price}
+                      </div>
+                      <div className="mt-1 text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">{plan.priceNote}</div>
                     </div>
                     <p className="mt-4 text-sm leading-6 text-slate-300">{plan.description}</p>
                     <div className="mt-5 border border-white/10 bg-black/20 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/85">{plan.monthlyLabel}</div>
+                      <div className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/85">Ongoing plan</div>
+                      <div className="mt-2 text-sm font-semibold leading-6 text-white">{plan.recurring}</div>
                     </div>
                     <div className="mt-5 grid gap-2">
                       {plan.included.map((item) => (
@@ -2656,18 +2750,19 @@ function WebsitesPage() {
                         </div>
                       ))}
                     </div>
-                    <div className="mt-5 border-t border-white/10 pt-5">
-                      <div className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Support includes</div>
-                      <div className="mt-3 grid gap-2">
-                        {plan.support.map((item) => (
-                          <div key={item} className="text-sm leading-6 text-slate-400">{item}</div>
-                        ))}
-                      </div>
-                    </div>
+                    {plan.disclosure ? (
+                      <p className="mt-5 border border-white/10 bg-black/20 p-4 text-xs leading-6 text-slate-400">
+                        {plan.disclosure}
+                      </p>
+                    ) : null}
                     <button
                       type="button"
-                      onClick={() => selectWebsitePlan(plan.name)}
-                      className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-amber-300 px-5 py-3 text-sm font-bold text-black transition hover:bg-amber-200"
+                      onClick={() => selectWebsitePlan(plan)}
+                      className={`mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 px-5 py-3 text-sm font-bold transition ${
+                        isFeatured
+                          ? 'bg-amber-300 text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] hover:bg-amber-200'
+                          : 'border border-white/15 bg-white/[0.04] text-white hover:border-amber-200/35 hover:bg-amber-200/[0.08] hover:text-amber-50'
+                      }`}
                     >
                       {plan.cta}
                       <ArrowRight className="h-4 w-4" />
@@ -2676,6 +2771,9 @@ function WebsitesPage() {
                 )
               })}
             </div>
+            <p className="mx-auto mt-8 max-w-4xl border border-cyan-200/18 bg-cyan-200/[0.045] p-4 text-center text-sm leading-7 text-slate-300">
+              Final pricing depends on project scope, required integrations, content readiness, and third-party services. Every project begins with a written scope and approval.
+            </p>
           </div>
         </section>
 
@@ -2691,22 +2789,20 @@ function WebsitesPage() {
               ))}
             </div>
             <p className="mt-6 border border-amber-200/20 bg-amber-200/[0.06] p-4 text-sm leading-7 text-amber-50">
-              Monthly website support covers the website, hosting, domain/SSL support, forms, monitoring, and minor included updates. General business IT support, computers, Wi-Fi, printers, POS systems, email migrations, and third-party software are not included unless quoted separately.
+              Ongoing plans cover the approved website or platform scope. Third-party subscriptions, advertising spend, premium integrations, domain registration fees, general business IT support, computers, Wi-Fi, printers, POS systems, and email migrations are separate unless included in a written proposal.
             </p>
           </div>
         </section>
 
         <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <SectionIntro eyebrow="Compare Plans" title="Pick the package that fits where your business is now." align="center" />
-            <div className="mt-8 overflow-hidden border border-white/10 bg-white/10">
-              {comparisonRows.map(([label, starter, quick, custom]) => (
-                <div key={label} className="grid gap-px bg-white/10 md:grid-cols-[1.1fr_1fr_1fr_1fr]">
-                  <div className="bg-[#07101b] p-4 text-sm font-semibold text-white">{label}</div>
-                  <div className="bg-[#04080f] p-4 text-sm text-slate-300">{starter}</div>
-                  <div className="bg-[#04080f] p-4 text-sm text-slate-300">{quick}</div>
-                  <div className="bg-[#04080f] p-4 text-sm text-slate-300">{custom}</div>
-                </div>
+            <SectionIntro eyebrow="How To Choose" title="Pick the package that fits where your business is now." align="center" />
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {packageFitCards.map(([title, text]) => (
+                <FadeIn key={title} className="border border-white/10 bg-gradient-to-br from-[#08111d] via-[#06101a] to-[#04080e] p-5">
+                  <h3 className="text-lg font-semibold text-white">{title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-400">{text}</p>
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -2735,7 +2831,7 @@ function WebsitesPage() {
                     Tell us about your business, your preferred package, and what you need on the site.
                   </p>
                   <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400">
-                    Quick Launch is the starting point for a managed website presence. Advanced dashboards, portals, integrations, automations, and command systems are scoped as scalable project-based builds.
+                    Spark will review your request, confirm the right package, and prepare a written scope before build work begins. Larger dashboards, portals, integrations, automations, and command systems are scoped as scalable project-based builds.
                   </p>
                 </div>
               </div>
@@ -2775,7 +2871,7 @@ function WebsitesPage() {
                           <CommandSelect value={websiteFormData.selectedPlan} onChange={(value) => {
                             updateWebsiteField('selectedPlan', value)
                             setSelectedPlan(value)
-                          }} options={websitePlans.map((plan) => plan.name)} />
+                          }} options={websitePricingPackages.map((plan) => plan.name)} />
                         </FieldShell>
                         <FieldShell label="Business Name" required>
                           <input required value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
@@ -2902,7 +2998,7 @@ function WebsitesPage() {
 
         <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <SectionIntro eyebrow="How It Works" title="A simple path from request to live website." align="center" />
+            <SectionIntro eyebrow="How It Works" title="A simple path from request to approved scope." align="center" />
             <div className="mt-10 grid gap-4 md:grid-cols-5">
               {processSteps.map((step, index) => (
                 <FadeIn key={step} delay={index * 0.04} className="border border-white/10 bg-[#060d16]/82 p-5 text-center">
@@ -2932,19 +3028,19 @@ function WebsitesPage() {
 
         <section className="relative px-3 pb-16 pt-8 sm:px-6 sm:pb-24 lg:px-8">
           <div className="mx-auto max-w-7xl overflow-hidden border border-amber-200/24 bg-[#060d16]/90 p-6 text-center shadow-[0_42px_160px_rgba(0,0,0,0.62),0_0_92px_rgba(245,158,11,0.12)] sm:p-9 lg:p-12">
-            <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/85">Ready to launch</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/85">Ready to build</div>
             <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
-              Ready to get your business online?
+              Ready to choose your Spark website or platform path?
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
-              Choose a starter plan and send us your details. We will help turn it into a professional website your customers can visit, call from, and inquire through.
+              Choose a one-time website build, apply for the Spark Partnership Program, or request a custom platform proposal.
             </p>
             <button
               type="button"
               onClick={() => document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_44px_rgba(245,158,11,0.32)] transition hover:bg-amber-200"
             >
-              Start Website Request
+              Start Request
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>

@@ -1,16 +1,44 @@
-# React + Vite
+# Spark Command Systems Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Production website for Spark Command Systems LLC.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- Vite
+- React Router
+- Tailwind CSS
+- Vercel static hosting
 
-## React Compiler
+## Commands
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run lint
+npm run build
+npm run preview
+```
 
-## Expanding the ESLint configuration
+There is no configured automated test suite or TypeScript check in this repository yet.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deployment Notes
+
+The site is a Vite single-page app deployed on Vercel. Static files in `public/` should be served directly, including:
+
+- `/robots.txt`
+- `/sitemap.xml`
+- favicons
+- public image and video assets
+
+The app still uses client-side route metadata. This improves browser and social metadata after JavaScript runs, but it is not the same as server-rendered or statically prerendered SEO.
+
+## Lead Forms
+
+The main contact and website request forms submit to the existing Formspree workflow. Preserve existing payload field names unless downstream handling is updated.
+
+## Intake Handoff
+
+External intake links should use the contract in `docs/INTAKE-HANDOFF-CONTRACT.md`.
+
+## Command Lab
+
+Command Lab has been removed from the public website router and navigation. Its source files remain under `src/components/command-lab/` only as the migration source of record. See `docs/COMMAND-LAB-MIGRATION-PLAN.md`.

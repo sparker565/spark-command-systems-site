@@ -20,13 +20,6 @@ import {
   Waypoints,
   X,
 } from 'lucide-react'
-import CommandLabGate from './components/command-lab/CommandLabGate'
-import CommandLabLogin from './components/command-lab/CommandLabLogin'
-import {
-  clearCommandLabAccess,
-  hasCommandLabAccess,
-  storeCommandLabAccess,
-} from './components/command-lab/commandLabAccess'
 
 const corporateLogo = '/assets/spark-command-systems-logo.png'
 const logoFull = '/assets/spark-command-systems-logo.png'
@@ -38,22 +31,100 @@ const globeBackground = '/assets/bg-globe.jpeg'
 const usaNetworkImage = '/assets/usa-network.png'
 const intakeAppUrl = 'https://start.sparkcommands.com'
 const clientLoginPath = '/client-login'
+const siteUrl = 'https://sparkcommands.com'
+const socialImage = `${siteUrl}/assets/spark-command-systems-logo.png`
+const serviceAreaLine = 'Based in Massachusetts and serving businesses in Boston and communities throughout the Commonwealth.'
 
 const navItems = [
   { label: 'About', href: '/about' },
-  { label: 'Platform', href: '/platform' },
-  { label: 'Websites', href: '/website' },
-  { label: 'Integration', href: '/integration' },
-  { label: 'Pipeline', href: '/pipeline' },
-  { label: 'Deployment', href: '/deployment' },
+  { label: 'Website Builds', href: '/website' },
+  { label: 'Business Automation', href: '/integration' },
+  { label: 'Apps & Dashboards', href: '/platform' },
+  { label: 'Managed Support', href: '/deployment' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 const accessLinks = [
   { label: 'Applications', href: '/applications' },
   { label: 'Client Login', href: clientLoginPath },
   { label: 'Command Center', href: '/spark-command-center' },
-  { label: 'Command Lab', href: '/command-lab-login' },
 ]
+
+const routeMeta = {
+  '/': {
+    title: 'Spark Command Systems | Websites, Automations, and Business Systems',
+    description:
+      'Spark Command Systems LLC builds websites, automations, custom apps, dashboards, and managed support for Boston and Massachusetts businesses.',
+  },
+  '/about': {
+    title: 'About Spark Command Systems LLC',
+    description:
+      'Learn about Spark Command Systems LLC, a founder-led Massachusetts technology partner building websites, automations, dashboards, and practical business systems.',
+  },
+  '/website': {
+    title: 'Website Builds and Pricing | Spark Command Systems',
+    description:
+      'Compare Spark Command Systems website packages, managed hosting, support, custom platform options, and the $299/month Spark Partnership Program.',
+  },
+  '/websites': {
+    title: 'Website Builds and Pricing | Spark Command Systems',
+    description:
+      'Compare Spark Command Systems website packages, managed hosting, support, custom platform options, and the $299/month Spark Partnership Program.',
+    canonicalPath: '/website',
+  },
+  '/integration': {
+    title: 'Business Automation Services | Spark Command Systems',
+    description:
+      'Business automation, workflow improvement, and systems integration for Massachusetts companies that want less duplicate work and cleaner follow-up.',
+  },
+  '/platform': {
+    title: 'Custom Apps and Dashboards | Spark Command Systems',
+    description:
+      'Custom business apps, dashboards, portals, and operational tools built around how growing Massachusetts businesses actually work.',
+  },
+  '/deployment': {
+    title: 'Managed Website Support | Spark Command Systems',
+    description:
+      'Managed hosting, website support, maintenance, and ongoing improvements for Spark Command Systems clients across Massachusetts.',
+  },
+  '/pipeline': {
+    title: 'Future Business Systems | Spark Command Systems',
+    description:
+      'A look at future Spark Command Systems product directions for AI tools, portals, data systems, and business operations support.',
+    robots: 'noindex, follow',
+  },
+  '/applications': {
+    title: 'Spark Applications | Spark Command Systems',
+    description:
+      'Spark Command Systems application concepts and active platform access points for operational tools, dashboards, portals, and future systems.',
+    robots: 'noindex, follow',
+  },
+  '/contact': {
+    title: 'Contact Spark Command Systems',
+    description:
+      'Contact Spark Command Systems LLC to discuss a website, automation, dashboard, custom app, or ongoing support for your Massachusetts business.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy | Spark Command Systems',
+    description:
+      'Privacy information for Spark Command Systems website inquiries, project intake, communications, and third-party form processing.',
+  },
+  '/terms': {
+    title: 'Terms | Spark Command Systems',
+    description:
+      'Starter website terms for Spark Command Systems, including informational use, project scope, pricing, external links, and written agreements.',
+  },
+  [clientLoginPath]: {
+    title: 'Client Login | Spark Command Systems',
+    description: 'Spark Command Systems client portal access information.',
+    robots: 'noindex, nofollow',
+  },
+  '/spark-command-center': {
+    title: 'Spark Command Center Access',
+    description: 'Secure access point for the Spark Command Center platform.',
+    robots: 'noindex, nofollow',
+  },
+}
 
 const operatingSignals = [
   ['$299/mo', 'Partnership program'],
@@ -69,10 +140,10 @@ const partnershipIncludes = [
 ]
 
 const platformMetrics = [
-  ['Active workflows', '128'],
-  ['Operating units', '317'],
-  ['System events', '2.4k'],
-  ['Response queues', '18'],
+  ['Website systems', 'Build'],
+  ['Workflow gaps', 'Automate'],
+  ['Business data', 'Organize'],
+  ['Ongoing support', 'Manage'],
 ]
 
 const integrationLines = [
@@ -144,23 +215,25 @@ const footerColumns = [
     links: [
       ['About Spark', '/about'],
       ['Contact', '/contact'],
+      ['Privacy', '/privacy'],
+      ['Terms', '/terms'],
       ['Applications', '/applications'],
     ],
   },
   {
     title: 'Platform',
     links: [
-      ['Platform', '/platform'],
-      ['Deployment', '/deployment'],
+      ['Apps & Dashboards', '/platform'],
+      ['Managed Support', '/deployment'],
       ['Command Center Platform', '/spark-command-center'],
     ],
   },
   {
     title: 'Solutions',
     links: [
-      ['Websites', '/website'],
-      ['Integration', '/integration'],
-      ['Pipeline', '/pipeline'],
+      ['Website Builds', '/website'],
+      ['Business Automation', '/integration'],
+      ['Future Systems', '/pipeline'],
       ['Development Team', '/contact'],
     ],
   },
@@ -170,7 +243,6 @@ const footerColumns = [
       ['Open App', '/applications'],
       ['Client Login', clientLoginPath],
       ['Command Center', '/spark-command-center'],
-      ['Command Lab Ecosystem', '/command-lab-login'],
       ['Book a Demo', '/contact'],
     ],
   },
@@ -331,6 +403,11 @@ const intakeInitialState = {
   scale: 'Single location',
   timeline: 'Exploring',
   budget: 'Not sure',
+  website: '',
+}
+
+function cleanText(value, maxLength = 2000) {
+  return String(value || '').trim().replace(/\s+/g, ' ').slice(0, maxLength)
 }
 
 const projectTypeOptions = [
@@ -353,6 +430,206 @@ function FadeIn({ children, className = '', delay = 0, ...props }) {
     <div className={className} data-delay={delay} {...props}>
       {children}
     </div>
+  )
+}
+
+function setNamedMeta(name, content) {
+  let tag = document.querySelector(`meta[name="${name}"]`)
+  if (!tag) {
+    tag = document.createElement('meta')
+    tag.setAttribute('name', name)
+    document.head.appendChild(tag)
+  }
+  tag.setAttribute('content', content)
+}
+
+function setPropertyMeta(property, content) {
+  let tag = document.querySelector(`meta[property="${property}"]`)
+  if (!tag) {
+    tag = document.createElement('meta')
+    tag.setAttribute('property', property)
+    document.head.appendChild(tag)
+  }
+  tag.setAttribute('content', content)
+}
+
+function setCanonical(href) {
+  let tag = document.querySelector('link[rel="canonical"]')
+  if (!tag) {
+    tag = document.createElement('link')
+    tag.setAttribute('rel', 'canonical')
+    document.head.appendChild(tag)
+  }
+  tag.setAttribute('href', href)
+}
+
+function serviceSchema(pathname = '/') {
+  const pathMeta = routeMeta[pathname] || routeMeta['/']
+  const canonicalPath = pathMeta.canonicalPath || pathname
+  const canonicalUrl = `${siteUrl}${canonicalPath === '/' ? '/' : canonicalPath}`
+  const breadcrumbName = canonicalPath === '/' ? 'Home' : pathMeta.title.split('|')[0].trim()
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        name: 'Spark Command Systems LLC',
+        url: siteUrl,
+        logo: socialImage,
+        slogan: 'Command Your Systems.',
+        areaServed: [
+          { '@type': 'City', name: 'Boston', addressRegion: 'MA', addressCountry: 'US' },
+          { '@type': 'AdministrativeArea', name: 'Massachusetts', addressCountry: 'US' },
+        ],
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': `${siteUrl}/#professional-service`,
+        name: 'Spark Command Systems LLC',
+        url: siteUrl,
+        image: socialImage,
+        slogan: 'Command Your Systems.',
+        areaServed: 'Boston and businesses throughout Massachusetts',
+        priceRange: '$$',
+        parentOrganization: { '@id': `${siteUrl}/#organization` },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        name: 'Spark Command Systems',
+        url: siteUrl,
+        publisher: { '@id': `${siteUrl}/#organization` },
+      },
+      {
+        '@type': 'Service',
+        '@id': `${siteUrl}/website#service`,
+        name: 'Website Builds, Managed Support, Automations, and Custom Business Systems',
+        provider: { '@id': `${siteUrl}/#organization` },
+        areaServed: 'Massachusetts',
+        serviceType: ['Website design and development', 'Managed website support', 'Business automation', 'Custom dashboards', 'Custom business applications'],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${siteUrl}/website#faq`,
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What is the Spark Partnership Program?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The Spark Partnership Program is a six-month initial partnership for businesses that want Spark Command Systems to build, host, support, and improve their website and business systems for $299/month.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Are domains and third-party tools included?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.',
+            },
+          },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${siteUrl}/`,
+          },
+          ...(canonicalPath === '/'
+            ? []
+            : [
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: breadcrumbName,
+                  item: canonicalUrl,
+                },
+              ]),
+        ],
+      },
+    ],
+  }
+}
+
+function RouteMetadata() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const meta = routeMeta[location.pathname] || {
+      title: 'Page Not Found | Spark Command Systems',
+      description: 'The page you requested could not be found on Spark Command Systems.',
+      robots: 'noindex, nofollow',
+    }
+    const canonicalPath = meta.canonicalPath || location.pathname
+    const canonicalUrl = `${siteUrl}${canonicalPath === '/' ? '/' : canonicalPath}`
+    const robots = meta.robots || 'index, follow'
+
+    document.title = meta.title
+    setNamedMeta('description', meta.description)
+    setNamedMeta('robots', robots)
+    setCanonical(canonicalUrl)
+    setPropertyMeta('og:title', meta.title)
+    setPropertyMeta('og:description', meta.description)
+    setPropertyMeta('og:url', canonicalUrl)
+    setPropertyMeta('og:type', 'website')
+    setPropertyMeta('og:image', socialImage)
+    setNamedMeta('twitter:card', 'summary_large_image')
+    setNamedMeta('twitter:title', meta.title)
+    setNamedMeta('twitter:description', meta.description)
+    setNamedMeta('twitter:image', socialImage)
+
+    let structuredData = document.getElementById('spark-structured-data')
+    if (!structuredData) {
+      structuredData = document.createElement('script')
+      structuredData.type = 'application/ld+json'
+      structuredData.id = 'spark-structured-data'
+      document.head.appendChild(structuredData)
+    }
+    structuredData.textContent = JSON.stringify(serviceSchema(location.pathname))
+  }, [location.pathname])
+
+  return null
+}
+
+function currentCampaignParams() {
+  if (typeof window === 'undefined') return {}
+
+  const params = new URLSearchParams(window.location.search)
+  return ['campaign', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].reduce((memo, key) => {
+    const value = params.get(key)
+    if (value) memo[key] = value
+    return memo
+  }, {})
+}
+
+function buildIntakeUrl({ packageName, packageId, campaign } = {}) {
+  const url = new URL(intakeAppUrl)
+  url.searchParams.set('source', 'sparkcommands.com')
+  if (packageName) url.searchParams.set('package', packageName)
+  if (packageId) url.searchParams.set('package_id', packageId)
+  if (campaign) url.searchParams.set('campaign', campaign)
+
+  Object.entries(currentCampaignParams()).forEach(([key, value]) => {
+    if (!url.searchParams.has(key)) url.searchParams.set(key, value)
+  })
+
+  return url.toString()
+}
+
+function IntakeLink({ children, packageName, packageId, campaign, ...props }) {
+  const href = buildIntakeUrl({ packageName, packageId, campaign })
+
+  return (
+    <a href={href} {...props}>
+      {children}
+    </a>
   )
 }
 
@@ -524,14 +801,15 @@ function AccessDropdown({ className = '' }) {
   )
 }
 
-function MobileMenuPanel({ page = '' }) {
+function MobileMenuPanel({ page = '', onNavigate = () => {} }) {
   return (
-    <div className="relative border-t border-white/10 bg-[#03070d]/92 p-3 min-[1640px]:hidden">
+    <div id="mobile-navigation" className="relative border-t border-white/10 bg-[#03070d]/96 p-3 min-[1640px]:hidden">
       <div className="grid gap-2">
         {navItems.map((item) => (
           <Link
             key={item.label}
             to={item.href}
+            onClick={onNavigate}
             className={`flex min-h-12 items-center justify-between border px-4 text-sm font-semibold ${
               page === item.href.slice(1)
                 ? 'border-cyan-200/20 bg-cyan-200/[0.09] text-cyan-100'
@@ -544,14 +822,15 @@ function MobileMenuPanel({ page = '' }) {
         ))}
       </div>
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
-        <Link
-          to="/start"
+        <IntakeLink
+          onClick={onNavigate}
           className="flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-4 text-sm font-semibold text-cyan-50"
         >
           Start Intake
-        </Link>
+        </IntakeLink>
         <Link
           to="/contact"
+          onClick={onNavigate}
           className="flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
         >
           Contact Development Team
@@ -562,6 +841,7 @@ function MobileMenuPanel({ page = '' }) {
           <Link
             key={item.label}
             to={item.href}
+            onClick={onNavigate}
             className="flex min-h-12 items-center justify-between border border-white/10 bg-white/[0.035] px-4 text-sm font-semibold text-slate-200"
           >
             {item.label}
@@ -586,27 +866,34 @@ function ContactIntakePage() {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
+    if (formData.website.trim()) {
+      setIsSubmitted(true)
+      return
+    }
+
     setIsSubmitting(true)
     setSubmitError('')
 
     try {
+      const payload = {
+        _subject: 'New Spark Development Inquiry',
+        name: cleanText(formData.name, 120),
+        company: cleanText(formData.company, 160) || 'Not provided',
+        email: cleanText(formData.email, 160).toLowerCase(),
+        projectType: formData.projectType,
+        problemDescription: cleanText(formData.problem, 3000),
+        scale: formData.scale,
+        timeline: formData.timeline,
+        budget: formData.budget || 'Not sure',
+      }
+
       const response = await fetch('https://formspree.io/f/mzdyaowb', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          _subject: 'New Spark Development Inquiry',
-          name: formData.name,
-          company: formData.company || 'Not provided',
-          email: formData.email,
-          projectType: formData.projectType,
-          problemDescription: formData.problem,
-          scale: formData.scale,
-          timeline: formData.timeline,
-          budget: formData.budget || 'Not sure',
-        }),
+        body: JSON.stringify(payload),
       })
 
       if (!response.ok) {
@@ -652,10 +939,10 @@ function ContactIntakePage() {
                 Start a Development Conversation
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Work directly with Spark Command Systems to plan platforms, operational systems, dashboards, integrations, custom tools, and website builds or upgrades.
+                Work directly with Spark Command Systems to plan website builds, automations, dashboards, integrations, custom tools, and managed support for your Massachusetts business.
               </p>
               <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400/85">
-                Structured intake helps translate your platform, workflow, website, dashboard, integration, or custom tool idea into a clear build path.
+                Structured intake helps translate your workflow, website, dashboard, integration, or custom tool idea into a clear build path. {serviceAreaLine}
               </p>
 
               <div className="mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3 xl:grid-cols-1">
@@ -682,7 +969,7 @@ function ContactIntakePage() {
                 </div>
                 <h2 className="text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">Request received.</h2>
                 <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-300">
-                  Our development team will review your inquiry and follow up shortly.
+                  Spark Command Systems will review your inquiry and typically respond within one business day.
                 </p>
                 <button
                   type="button"
@@ -701,17 +988,23 @@ function ContactIntakePage() {
                 onSubmit={handleSubmit}
                 className="space-y-11 border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_28px_90px_rgba(0,0,0,0.18)] sm:p-7 lg:p-8"
               >
+                <div className="hidden" aria-hidden="true">
+                  <label>
+                    Website
+                    <input name="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={(event) => updateField('website', event.target.value)} />
+                  </label>
+                </div>
                 <div>
                   <div className="mb-7 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Identity</div>
                   <div className="grid gap-7 md:grid-cols-2">
                     <FieldShell label="Name" required>
-                      <input required value={formData.name} onChange={(event) => updateField('name', event.target.value)} className={inputClassName()} placeholder="Your name" />
+                      <input required maxLength={120} value={formData.name} onChange={(event) => updateField('name', event.target.value)} className={inputClassName()} placeholder="Your name" />
                     </FieldShell>
                     <FieldShell label="Company">
-                      <input value={formData.company} onChange={(event) => updateField('company', event.target.value)} className={inputClassName()} placeholder="Company or organization" />
+                      <input maxLength={160} value={formData.company} onChange={(event) => updateField('company', event.target.value)} className={inputClassName()} placeholder="Company or organization" />
                     </FieldShell>
                     <FieldShell label="Email" required>
-                      <input required type="email" value={formData.email} onChange={(event) => updateField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
+                      <input required type="email" maxLength={160} value={formData.email} onChange={(event) => updateField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
                     </FieldShell>
                     <FieldShell label="Project Type">
                       <CommandSelect value={formData.projectType} onChange={(value) => updateField('projectType', value)} options={projectTypeOptions} />
@@ -724,6 +1017,7 @@ function ContactIntakePage() {
                   <FieldShell label="Describe what you want to improve, automate, or build" required>
                     <textarea
                       required
+                      maxLength={3000}
                       value={formData.problem}
                       onChange={(event) => updateField('problem', event.target.value)}
                       className={`${inputClassName()} min-h-40 resize-y leading-7`}
@@ -764,6 +1058,9 @@ function ContactIntakePage() {
                     </>
                   )}
                 </button>
+                <p className="max-w-2xl text-xs leading-6 text-slate-500">
+                  Spark Command Systems typically responds within one business day. Your information is used only to review and respond to your request. See the <Link to="/privacy" className="text-cyan-100 underline-offset-4 hover:underline">Privacy Policy</Link>.
+                </p>
                 {submitError ? (
                   <div className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
                     {submitError}
@@ -1043,7 +1340,10 @@ function SiteFooter() {
               imageClassName="object-contain object-left"
             />
             <p className="mt-5 text-sm leading-7 text-slate-400">
-              Spark Command Systems builds command platforms, custom systems, tools, and websites for teams that need clarity across real work.
+              Spark Command Systems LLC builds websites, automations, dashboards, and managed support for Massachusetts businesses that need cleaner operations.
+            </p>
+            <p className="mt-4 text-sm leading-7 text-slate-500">
+              {serviceAreaLine}
             </p>
           </div>
 
@@ -1064,7 +1364,7 @@ function SiteFooter() {
                 </div>
                 {column.title === 'Access' ? (
                   <p className="mt-5 max-w-[16rem] text-xs leading-6 text-slate-500">
-                    Explore Spark's private lab for experimental tools, product prototypes, and advanced website concepts.
+                    Client access is provided after a written scope or active service relationship is confirmed.
                   </p>
                 ) : null}
               </div>
@@ -1080,7 +1380,7 @@ function SiteFooter() {
               <div className="text-[0.68rem] uppercase tracking-[0.3em] text-slate-500">Command Systems</div>
             </div>
           </div>
-          <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems. Platforms, systems, tools, and websites.</div>
+          <div className="text-sm text-slate-500">(c) 2026 Spark Command Systems LLC. Command Your Systems.</div>
         </div>
       </div>
     </footer>
@@ -1141,7 +1441,7 @@ function PartnershipProgramPanel() {
               Spark Core Partnership Program
             </div>
             <h2 className="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-              Build the system behind your business.
+              Ongoing website and systems support, not just basic hosting.
             </h2>
           </div>
           <div className="shrink-0 border border-amber-200/25 bg-amber-200/[0.08] px-5 py-4 text-left shadow-[0_0_40px_rgba(245,158,11,0.12)] sm:text-right">
@@ -1151,12 +1451,15 @@ function PartnershipProgramPanel() {
         </div>
 
         <p className="relative mt-6 max-w-2xl text-base leading-8 text-slate-300">
-          A practical partnership for businesses that need a modern website, a working backend system, automations, hosting, and support in one clear monthly program.
+          A focused six-month starting relationship for Massachusetts businesses that want Spark to build the website foundation, host and support it, and identify practical automation or dashboard opportunities as the business grows.
         </p>
 
         <div className="relative mt-5 border border-amber-200/24 bg-amber-200/[0.075] p-4">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-100">Six-month initial commitment</div>
           <div className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">$1,794</div>
+          <p className="mt-2 text-xs leading-6 text-slate-300">
+            Onboarding starts with business goals, website priorities, support expectations, and the first automation opportunity. Larger custom apps, premium integrations, advertising, and third-party services are scoped separately.
+          </p>
         </div>
 
         <div className="relative mt-7 grid gap-3 sm:grid-cols-2">
@@ -1169,14 +1472,15 @@ function PartnershipProgramPanel() {
         </div>
 
         <div className="relative mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link
-            to="/start"
+          <IntakeLink
+            packageName="Spark Partnership Program"
+            packageId="spark-partnership"
             className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
             aria-label="Request access to the Spark Core Partnership Program"
           >
             Apply for Partnership
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-          </Link>
+          </IntakeLink>
           <Link
             to="/website"
             className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white transition hover:border-white/30 hover:bg-white/10"
@@ -1212,6 +1516,25 @@ function LandingPage({ page = 'home' }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
@@ -1228,16 +1551,16 @@ function LandingPage({ page = 'home' }) {
           <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-          <div className="relative flex items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
-            <Link to="/" className="flex w-[12.75rem] shrink-0 items-center gap-3 sm:w-[16.25rem] sm:gap-4">
+          <div className="relative flex items-center justify-between gap-2 px-2 py-3 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
+            <Link to="/" className="flex min-w-0 flex-1 items-center gap-2 sm:max-w-[16.25rem] sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
-              className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
+              className="h-9 w-9 shrink-0 sm:h-12 sm:w-12"
               imageClassName="object-contain p-1"
             />
-            <div className="shrink-0">
-              <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
+            <div className="min-w-0">
+              <div className="truncate whitespace-nowrap text-sm font-semibold uppercase tracking-[0.24em] text-white sm:tracking-[0.34em]">Spark</div>
               <div className="hidden whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
           </Link>
@@ -1259,31 +1582,42 @@ function LandingPage({ page = 'home' }) {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <Link
-              to="/start"
-              className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] sm:px-5"
+            <IntakeLink
+              className="group hidden min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 hover:shadow-[0_0_42px_rgba(245,158,11,0.38)] min-[370px]:inline-flex sm:px-5"
               aria-label="Start Spark Core Partnership Program intake"
             >
               <span className="hidden sm:inline">Start Intake</span>
               <span className="sm:hidden">Start</span>
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </IntakeLink>
             <AccessDropdown className="hidden sm:block" />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white min-[1640px]:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.04] text-white transition hover:border-amber-200/35 hover:bg-amber-200/[0.08] focus:outline-none focus:ring-2 focus:ring-amber-100/70 focus:ring-offset-2 focus:ring-offset-[#020407] min-[1640px]:hidden"
               aria-label="Toggle navigation menu"
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
           </div>
-          {isMobileMenuOpen ? <MobileMenuPanel page={page} /> : null}
+          {isMobileMenuOpen ? <MobileMenuPanel page={page} onNavigate={() => setIsMobileMenuOpen(false)} /> : null}
         </div>
       </header>
 
       <main id="top">
+        {['platform', 'integration', 'pipeline', 'deployment'].includes(page) ? (
+          <h1 className="sr-only">
+            {{
+              platform: 'Custom apps and dashboards for growing businesses',
+              integration: 'Business automation and workflow integration services',
+              pipeline: 'Future Spark business system directions',
+              deployment: 'Managed website support and operational rollout services',
+            }[page]}
+          </h1>
+        ) : null}
         {page === 'home' && (
         <>
         <section
@@ -1296,23 +1630,27 @@ function LandingPage({ page = 'home' }) {
             <div className="relative z-10">
               <div className="mb-6 inline-flex items-center gap-3 border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-100 shadow-[0_0_32px_rgba(34,211,238,0.1)] backdrop-blur sm:px-4 sm:text-xs sm:tracking-[0.28em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-200 shadow-[0_0_14px_rgba(253,230,138,0.9)]" />
-                Website. CRM. Automations. Support.
+                Websites. Automations. Dashboards. Support.
               </div>
               <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl sm:leading-[0.98] lg:text-6xl xl:text-7xl">
-                Apply for the Spark Core Partnership Program.
+                Websites and business systems built for Massachusetts companies.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-7 sm:text-xl sm:leading-8">
-                Get a custom website build, backend CRM system, automations, hosting, and support through a focused $299/month initial partnership program.
+                Spark Command Systems LLC builds professional websites, practical automations, custom dashboards, and ongoing support that help small and growing businesses reduce duplicated work, improve follow-up, and look credible online.
+              </p>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
+                {serviceAreaLine}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
-                <Link
-                  to="/start"
+                <IntakeLink
+                  packageName="Spark Partnership Program"
+                  packageId="spark-partnership"
                   className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_40px_rgba(245,158,11,0.24)] transition hover:bg-amber-200"
-                  aria-label="Open Spark Intake at sparkcommands.com/start"
+                  aria-label="Open Spark intake for the Spark Partnership Program"
                 >
-                  Fill Out Intake Form
+                  Apply for Partnership
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </Link>
+                </IntakeLink>
                 <a
                   href="#partnership-program"
                   className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
@@ -2015,6 +2353,25 @@ function statusTone(status) {
 function ApplicationsHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
       <div className="relative mx-auto max-w-[96rem] overflow-visible border border-cyan-200/20 bg-[#020407]/72 shadow-[0_18px_80px_rgba(0,0,0,0.46),0_0_34px_rgba(34,211,238,0.06)] backdrop-blur-2xl">
@@ -2022,16 +2379,16 @@ function ApplicationsHeader() {
         <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-cyan-200/45 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(34,211,238,0.1),transparent_24%)]" />
 
-        <div className="relative flex items-center justify-between gap-2 px-3 py-2.5 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
-          <Link to="/" className="flex w-[12.75rem] shrink-0 items-center gap-3 sm:w-[16.25rem] sm:gap-4">
+        <div className="relative flex items-center justify-between gap-2 px-2 py-2.5 sm:gap-3 sm:px-5 lg:gap-4 lg:px-6">
+          <Link to="/" className="flex min-w-0 flex-1 items-center gap-2 sm:max-w-[16.25rem] sm:gap-4">
             <BrandFrame
               src={corporateLogo}
               alt="Spark Command Systems"
-              className="h-10 w-10 shrink-0"
+              className="h-9 w-9 shrink-0 sm:h-10 sm:w-10"
               imageClassName="object-contain p-1"
             />
-            <div className="shrink-0">
-              <div className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.34em] text-white">Spark</div>
+            <div className="min-w-0">
+              <div className="truncate whitespace-nowrap text-sm font-semibold uppercase tracking-[0.24em] text-white sm:tracking-[0.34em]">Spark</div>
               <div className="hidden whitespace-nowrap text-[0.68rem] uppercase tracking-[0.3em] text-slate-400 sm:block">Command Systems</div>
             </div>
           </Link>
@@ -2049,27 +2406,28 @@ function ApplicationsHeader() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <Link
-              to="/start"
-              className="group inline-flex min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 sm:px-5"
+            <IntakeLink
+              className="group hidden min-h-11 shrink-0 items-center gap-2 bg-amber-300 px-3 py-2 text-sm font-bold text-black shadow-[0_0_32px_rgba(245,158,11,0.28)] transition hover:bg-amber-200 min-[370px]:inline-flex sm:px-5"
               aria-label="Start Spark Core Partnership Program intake"
             >
               <span className="hidden sm:inline">Start Intake</span>
               <span className="sm:hidden">Start</span>
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </IntakeLink>
             <AccessDropdown className="hidden sm:block" />
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.04] text-white min-[1640px]:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.04] text-white transition hover:border-amber-200/35 hover:bg-amber-200/[0.08] focus:outline-none focus:ring-2 focus:ring-amber-100/70 focus:ring-offset-2 focus:ring-offset-[#020407] min-[1640px]:hidden"
               aria-label="Toggle navigation menu"
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
-        {isMobileMenuOpen ? <MobileMenuPanel /> : null}
+        {isMobileMenuOpen ? <MobileMenuPanel onNavigate={() => setIsMobileMenuOpen(false)} /> : null}
       </div>
     </header>
   )
@@ -2232,7 +2590,10 @@ function AboutSparkPage() {
                   Built from real operational experience into a command systems company.
                 </h1>
                 <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                  SparkCommand Systems was founded by Shawn Parker, Founder and Systems Architect, to build software for teams that need clearer control over work, data, communication, and execution.
+                  Spark Command Systems LLC was founded by Shawn Parker, Founder and Systems Architect, to build websites, automations, dashboards, and practical software for teams that need clearer control over work, data, communication, and execution.
+                </p>
+                <p className="mt-4 max-w-xl text-sm leading-7 text-slate-400">
+                  {serviceAreaLine}
                 </p>
                 <div className="mt-8 max-w-sm overflow-hidden border border-amber-200/20 bg-black/38 shadow-[0_28px_100px_rgba(0,0,0,0.42),0_0_58px_rgba(245,158,11,0.08)] backdrop-blur">
                   <PremiumImage
@@ -2257,7 +2618,7 @@ function AboutSparkPage() {
                 Shawn's background moved from labor and field-level execution into leadership, management, coordination, and system design. That experience made the same bottlenecks clear: important work scattered across disconnected tools, communication gaps, slow handoffs, and limited visibility under pressure.
               </p>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-400">
-                SparkCommand Systems is built around that reality. The company develops command platforms, custom software, operational dashboards, workflow systems, websites, portals, and integrated internal tools that help businesses run with more structure and control.
+                Spark Command Systems is built around that reality. The company develops websites, custom software, dashboards, workflow systems, portals, and integrated internal tools that help businesses run with more structure and control.
               </p>
 
               <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
@@ -2522,6 +2883,7 @@ function WebsitesPage() {
     needsEmailSetup: 'Not sure',
     buildType: 'New Website',
     notes: '',
+    website: '',
   }
 
   const [websiteFormData, setWebsiteFormData] = useState(websiteBuildInitialState)
@@ -2552,54 +2914,54 @@ function WebsitesPage() {
     setWebsiteFormData((current) => ({ ...current, [field]: value }))
   }
 
-  const selectWebsitePlan = (plan) => {
-    setSelectedPlan(plan.name)
-    updateWebsiteField('selectedPlan', plan.name)
-    window.requestAnimationFrame(() => {
-      document.getElementById('website-build-request')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    })
-  }
-
   const handleWebsiteSubmit = async (event) => {
     event.preventDefault()
+
+    if (websiteFormData.website.trim()) {
+      setIsWebsiteSubmitted(true)
+      return
+    }
 
     setIsWebsiteSubmitting(true)
     setWebsiteSubmitError('')
 
     try {
+      const selectedPackage = websitePricingPackages.find((plan) => plan.name === websiteFormData.selectedPlan)
+      const payload = {
+        _subject: 'New Spark Website Build Request',
+        selectedPlan: websiteFormData.selectedPlan,
+        selectedPackageId: selectedPackage?.id || 'not-selected',
+        name: cleanText(websiteFormData.contactName, 120),
+        company: cleanText(websiteFormData.businessName, 160),
+        email: cleanText(websiteFormData.email, 160).toLowerCase(),
+        phone: cleanText(websiteFormData.phone, 80),
+        businessType: cleanText(websiteFormData.industry, 160),
+        projectType: websiteFormData.buildType,
+        currentWebsite: cleanText(websiteFormData.currentWebsite, 240) || 'Not provided',
+        desiredDomain: cleanText(websiteFormData.desiredDomain, 160) || 'Not provided',
+        location: cleanText(websiteFormData.location, 160),
+        businessDescription: cleanText(websiteFormData.businessDescription, 3000),
+        servicesProducts: cleanText(websiteFormData.servicesProducts, 3000),
+        preferredContact: websiteFormData.preferredContact,
+        hasLogo: websiteFormData.hasLogo,
+        hasPhotos: websiteFormData.hasPhotos,
+        needsCopyHelp: websiteFormData.needsCopyHelp,
+        needsPayments: websiteFormData.needsPayments,
+        needsBooking: websiteFormData.needsBooking,
+        needsEmailSetup: websiteFormData.needsEmailSetup,
+        problemDescription: cleanText(websiteFormData.notes, 3000) || 'Not provided',
+        scale: 'Website build request',
+        timeline: websiteFormData.timeline,
+        budget: selectedPackage?.price || 'Website package or custom quote',
+      }
+
       const response = await fetch('https://formspree.io/f/mzdyaowb', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          _subject: 'New Spark Website Build Request',
-          selectedPlan: websiteFormData.selectedPlan,
-          selectedPackageId: websitePricingPackages.find((plan) => plan.name === websiteFormData.selectedPlan)?.id || 'not-selected',
-          name: websiteFormData.contactName,
-          company: websiteFormData.businessName,
-          email: websiteFormData.email,
-          phone: websiteFormData.phone,
-          businessType: websiteFormData.industry,
-          projectType: websiteFormData.buildType,
-          currentWebsite: websiteFormData.currentWebsite || 'Not provided',
-          desiredDomain: websiteFormData.desiredDomain || 'Not provided',
-          location: websiteFormData.location,
-          businessDescription: websiteFormData.businessDescription,
-          servicesProducts: websiteFormData.servicesProducts,
-          preferredContact: websiteFormData.preferredContact,
-          hasLogo: websiteFormData.hasLogo,
-          hasPhotos: websiteFormData.hasPhotos,
-          needsCopyHelp: websiteFormData.needsCopyHelp,
-          needsPayments: websiteFormData.needsPayments,
-          needsBooking: websiteFormData.needsBooking,
-          needsEmailSetup: websiteFormData.needsEmailSetup,
-          problemDescription: websiteFormData.notes || 'Not provided',
-          scale: 'Website build request',
-          timeline: websiteFormData.timeline,
-          budget: websitePricingPackages.find((plan) => plan.name === websiteFormData.selectedPlan)?.price || 'Website package or custom quote',
-        }),
+        body: JSON.stringify(payload),
       })
 
       if (!response.ok) {
@@ -2653,13 +3015,13 @@ function WebsitesPage() {
                   Compare Packages
                   <ArrowRight className="h-4 w-4" />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => selectWebsitePlan(websitePricingPackages[1])}
+                <IntakeLink
+                  packageName="Spark Partnership Program"
+                  packageId="spark-partnership"
                   className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
                 >
                   Apply for Partnership
-                </button>
+                </IntakeLink>
               </div>
               <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
                 {['One-time builds', 'Recurring support', 'Custom platforms'].map((point) => (
@@ -2755,9 +3117,9 @@ function WebsitesPage() {
                         {plan.disclosure}
                       </p>
                     ) : null}
-                    <button
-                      type="button"
-                      onClick={() => selectWebsitePlan(plan)}
+                    <IntakeLink
+                      packageName={plan.name}
+                      packageId={plan.id}
                       className={`mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 px-5 py-3 text-sm font-bold transition ${
                         isFeatured
                           ? 'bg-amber-300 text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] hover:bg-amber-200'
@@ -2766,7 +3128,7 @@ function WebsitesPage() {
                     >
                       {plan.cta}
                       <ArrowRight className="h-4 w-4" />
-                    </button>
+                    </IntakeLink>
                   </FadeIn>
                 )
               })}
@@ -2803,6 +3165,45 @@ function WebsitesPage() {
                   <h3 className="text-lg font-semibold text-white">{title}</h3>
                   <p className="mt-3 text-sm leading-7 text-slate-400">{text}</p>
                 </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16]/88 p-5 shadow-[0_28px_110px_rgba(0,0,0,0.42)] sm:p-7">
+            <SectionIntro eyebrow="One-Time vs Partnership" title="Choose a website project or an ongoing systems relationship." />
+            <div className="mt-8 grid gap-4 lg:grid-cols-2">
+              {[
+                {
+                  title: 'One-time website package',
+                  price: 'Upfront build price plus the listed monthly hosting and support plan.',
+                  bestFor: 'Businesses that need a defined website build with a clear scope.',
+                  includes: ['Approved website scope', 'Mobile-responsive design', 'Listed revision rounds', 'Deployment and domain connection support', 'Ongoing hosting/support at the package rate'],
+                  note: 'Final scope, revision rounds, timeline, and payment schedule are confirmed in your written project proposal.',
+                },
+                {
+                  title: 'Spark Partnership Program',
+                  price: '$299/month with a six-month initial commitment.',
+                  bestFor: 'Businesses that want Spark as an ongoing website and systems partner.',
+                  includes: ['Website build fee included for up to 5 pages', 'Managed hosting, monitoring, maintenance, and support', 'Reasonable content and photo updates', 'Monthly project and service updates', 'One starter business automation and expansion planning'],
+                  note: 'Premium integrations, advertising, domain registration fees, large custom apps, and work outside the approved scope are priced separately.',
+                },
+              ].map((option) => (
+                <div key={option.title} className="border border-white/10 bg-black/24 p-5">
+                  <h2 className="text-2xl font-semibold text-white">{option.title}</h2>
+                  <p className="mt-4 text-sm font-semibold leading-7 text-amber-100">{option.price}</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-300">{option.bestFor}</p>
+                  <div className="mt-5 grid gap-2">
+                    {option.includes.map((item) => (
+                      <div key={item} className="flex items-start gap-2 text-sm leading-6 text-slate-300">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-100" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-5 border border-white/10 bg-white/[0.035] p-4 text-xs leading-6 text-slate-400">{option.note}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -2845,7 +3246,7 @@ function WebsitesPage() {
                     </div>
                     <h3 className="text-3xl font-semibold tracking-[-0.02em] text-white sm:text-4xl">Request received.</h3>
                     <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-slate-300">
-                      Our development team will review your website build request and follow up shortly.
+                      Spark Command Systems will review your website build request and typically respond within one business day.
                     </p>
                     <button
                       type="button"
@@ -2864,6 +3265,12 @@ function WebsitesPage() {
                     onSubmit={handleWebsiteSubmit}
                     className="space-y-9 border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_28px_90px_rgba(0,0,0,0.18)] sm:p-7"
                   >
+                    <div className="hidden" aria-hidden="true">
+                      <label>
+                        Website
+                        <input name="website" tabIndex={-1} autoComplete="off" value={websiteFormData.website} onChange={(event) => updateWebsiteField('website', event.target.value)} />
+                      </label>
+                    </div>
                     <div>
                       <div className="mb-6 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Business</div>
                       <div className="grid gap-6 md:grid-cols-2">
@@ -2874,28 +3281,28 @@ function WebsitesPage() {
                           }} options={websitePricingPackages.map((plan) => plan.name)} />
                         </FieldShell>
                         <FieldShell label="Business Name" required>
-                          <input required value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
+                          <input required maxLength={160} value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
                         </FieldShell>
                         <FieldShell label="Contact Name" required>
-                          <input required value={websiteFormData.contactName} onChange={(event) => updateWebsiteField('contactName', event.target.value)} className={inputClassName()} placeholder="Your name" />
+                          <input required maxLength={120} value={websiteFormData.contactName} onChange={(event) => updateWebsiteField('contactName', event.target.value)} className={inputClassName()} placeholder="Your name" />
                         </FieldShell>
                         <FieldShell label="Email" required>
-                          <input required type="email" value={websiteFormData.email} onChange={(event) => updateWebsiteField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
+                          <input required type="email" maxLength={160} value={websiteFormData.email} onChange={(event) => updateWebsiteField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
                         </FieldShell>
                         <FieldShell label="Phone" required>
-                          <input required type="tel" value={websiteFormData.phone} onChange={(event) => updateWebsiteField('phone', event.target.value)} className={inputClassName()} placeholder="Best phone number" />
+                          <input required type="tel" maxLength={80} value={websiteFormData.phone} onChange={(event) => updateWebsiteField('phone', event.target.value)} className={inputClassName()} placeholder="Best phone number" />
                         </FieldShell>
                         <FieldShell label="Business Type / Industry" required>
-                          <input required value={websiteFormData.industry} onChange={(event) => updateWebsiteField('industry', event.target.value)} className={inputClassName()} placeholder="Restaurant, contractor, salon, shop, etc." />
+                          <input required maxLength={160} value={websiteFormData.industry} onChange={(event) => updateWebsiteField('industry', event.target.value)} className={inputClassName()} placeholder="Restaurant, contractor, salon, shop, etc." />
                         </FieldShell>
                         <FieldShell label="Current Website URL">
-                          <input type="url" value={websiteFormData.currentWebsite} onChange={(event) => updateWebsiteField('currentWebsite', event.target.value)} className={inputClassName()} placeholder="https://example.com" />
+                          <input type="url" maxLength={240} value={websiteFormData.currentWebsite} onChange={(event) => updateWebsiteField('currentWebsite', event.target.value)} className={inputClassName()} placeholder="https://example.com" />
                         </FieldShell>
                         <FieldShell label="Desired Domain Name">
-                          <input value={websiteFormData.desiredDomain} onChange={(event) => updateWebsiteField('desiredDomain', event.target.value)} className={inputClassName()} placeholder="yourbusiness.com" />
+                          <input maxLength={160} value={websiteFormData.desiredDomain} onChange={(event) => updateWebsiteField('desiredDomain', event.target.value)} className={inputClassName()} placeholder="yourbusiness.com" />
                         </FieldShell>
                         <FieldShell label="Business Location / City" required>
-                          <input required value={websiteFormData.location} onChange={(event) => updateWebsiteField('location', event.target.value)} className={inputClassName()} placeholder="City, state, or service area" />
+                          <input required maxLength={160} value={websiteFormData.location} onChange={(event) => updateWebsiteField('location', event.target.value)} className={inputClassName()} placeholder="City, state, or service area" />
                         </FieldShell>
                         <FieldShell label="Build Type">
                           <CommandSelect value={websiteFormData.buildType} onChange={(value) => updateWebsiteField('buildType', value)} options={buildTypeOptions} />
@@ -2915,6 +3322,7 @@ function WebsitesPage() {
                         <FieldShell label="What does the business do?" required>
                           <textarea
                             required
+                            maxLength={3000}
                             value={websiteFormData.businessDescription}
                             onChange={(event) => updateWebsiteField('businessDescription', event.target.value)}
                             className={`${inputClassName()} min-h-40 resize-y leading-7`}
@@ -2924,6 +3332,7 @@ function WebsitesPage() {
                         <FieldShell label="Main services/products" required>
                           <textarea
                             required
+                            maxLength={3000}
                             value={websiteFormData.servicesProducts}
                             onChange={(event) => updateWebsiteField('servicesProducts', event.target.value)}
                             className={`${inputClassName()} min-h-32 resize-y leading-7`}
@@ -2959,6 +3368,7 @@ function WebsitesPage() {
                         <FieldShell label="Notes or special requests">
                           <textarea
                             value={websiteFormData.notes}
+                            maxLength={3000}
                             onChange={(event) => updateWebsiteField('notes', event.target.value)}
                             className={`${inputClassName()} min-h-32 resize-y leading-7`}
                             placeholder="Anything else we should know before we follow up?"
@@ -2984,6 +3394,9 @@ function WebsitesPage() {
                         </>
                       )}
                     </button>
+                    <p className="max-w-2xl text-xs leading-6 text-slate-500">
+                      Spark Command Systems typically responds within one business day. Your information is used only to review and respond to your request. See the <Link to="/privacy" className="text-cyan-100 underline-offset-4 hover:underline">Privacy Policy</Link>.
+                    </p>
                     {websiteSubmitError ? (
                       <div className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
                         {websiteSubmitError}
@@ -3142,6 +3555,107 @@ function SCSComingSoonPage() {
   )
 }
 
+function PrivacyPage() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+      <ApplicationsHeader />
+      <main className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <section className="mx-auto max-w-4xl border border-white/10 bg-[#060d16]/92 p-6 shadow-[0_32px_130px_rgba(0,0,0,0.52)] sm:p-9">
+          <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Privacy</div>
+          <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">Privacy Policy</h1>
+          <p className="mt-5 text-sm leading-7 text-slate-400">Effective date: August 4, 2026</p>
+          <div className="mt-8 space-y-7 text-sm leading-7 text-slate-300">
+            <p>
+              Spark Command Systems LLC uses information submitted through this website and connected intake forms to review inquiries, respond to potential clients, prepare project conversations, and provide requested services.
+            </p>
+            <p>
+              Inquiry forms may collect your name, business name, email address, phone number, website URL, business location or service area, project goals, requested features, budget or package interest, and related notes. Spark does not sell submitted lead information.
+            </p>
+            <p>
+              Form submissions on the main website are processed through Formspree. The separate intake application may use its own form handling and hosting configuration. Email communication may be used to respond to your request and coordinate next steps.
+            </p>
+            <p>
+              The website is hosted on Vercel. Analytics may be added in the future to understand website usage, but no analytics provider was found in the current main-site repository during this phase. Data retention depends on operational, email, project, and business record needs unless a specific written agreement says otherwise.
+            </p>
+            <p>
+              For privacy questions, contact Spark Command Systems through the contact form or the email address shown in form error messages. This starter policy should receive legal review as the business grows.
+            </p>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+      <ScrollToTopButton />
+    </div>
+  )
+}
+
+function TermsPage() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+      <ApplicationsHeader />
+      <main className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <section className="mx-auto max-w-4xl border border-white/10 bg-[#060d16]/92 p-6 shadow-[0_32px_130px_rgba(0,0,0,0.52)] sm:p-9">
+          <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Terms</div>
+          <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">Website Terms</h1>
+          <p className="mt-5 text-sm leading-7 text-slate-400">Effective date: August 4, 2026</p>
+          <div className="mt-8 space-y-7 text-sm leading-7 text-slate-300">
+            <p>
+              This website provides general information about Spark Command Systems LLC services, including websites, managed support, automations, dashboards, custom applications, and operational systems consulting.
+            </p>
+            <p>
+              Submitting an inquiry does not create a contract, project approval, final quote, or payment obligation. Spark Command Systems may decline inquiries or recommend a different scope when a request is not a fit.
+            </p>
+            <p>
+              Project scope, timeline, payment schedule, revision expectations, intellectual-property ownership, hosting responsibilities, third-party service costs, and ongoing support terms are confirmed in a written proposal or signed agreement.
+            </p>
+            <p>
+              Published prices are starting points for the listed service paths and may depend on scope, content readiness, integrations, third-party services, and written project requirements. External links, including app and intake links, are provided for convenience.
+            </p>
+            <p>
+              Website content is informational and should not be treated as legal, financial, security, or professional advice. These starter terms should receive legal review as the business grows.
+            </p>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+      <ScrollToTopButton />
+    </div>
+  )
+}
+
+function NotFoundPage() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
+      <SceneBackdrop />
+      <ApplicationsHeader />
+      <main className="relative px-3 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <section className="mx-auto max-w-4xl border border-amber-200/20 bg-[#060d16]/92 p-6 text-center shadow-[0_38px_150px_rgba(0,0,0,0.62),0_0_90px_rgba(245,158,11,0.08)] sm:p-10">
+          <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Page not found</div>
+          <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">This page is not available.</h1>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300">
+            The link may have moved, expired, or never existed. You can return to the main site, compare website services, or contact Spark Command Systems for help.
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link to="/" className="inline-flex min-h-12 items-center justify-center bg-amber-300 px-7 py-4 text-base font-bold text-black hover:bg-amber-200">
+              Back Home
+            </Link>
+            <Link to="/website" className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 hover:border-cyan-100/35">
+              Website Services
+            </Link>
+            <Link to="/contact" className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/[0.04] px-7 py-4 text-base font-semibold text-white hover:border-white/30">
+              Contact Spark
+            </Link>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+      <ScrollToTopButton />
+    </div>
+  )
+}
+
 function RouteScrollReset() {
   const location = useLocation()
 
@@ -3161,25 +3675,18 @@ function ExternalRedirect({ to }) {
 }
 
 function StartIntakePage() {
-  return <ExternalRedirect to={intakeAppUrl} />
+  useEffect(() => {
+    window.location.replace(buildIntakeUrl())
+  }, [])
+
+  return null
 }
 
 export default function SparkCommandSystemsSite() {
-  const [isCommandLabUnlocked, setIsCommandLabUnlocked] = useState(() => hasCommandLabAccess())
-
-  const unlockCommandLab = () => {
-    storeCommandLabAccess()
-    setIsCommandLabUnlocked(true)
-  }
-
-  const lockCommandLab = () => {
-    clearCommandLabAccess()
-    setIsCommandLabUnlocked(false)
-  }
-
   return (
     <BrowserRouter>
       <RouteScrollReset />
+      <RouteMetadata />
       <Routes>
         <Route path="/" element={<LandingPage page="home" />} />
         <Route path="/about" element={<AboutSparkPage />} />
@@ -3192,14 +3699,8 @@ export default function SparkCommandSystemsSite() {
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path={clientLoginPath} element={<ClientLoginPage />} />
         <Route path="/contact" element={<LandingPage page="contact" />} />
-        <Route
-          path="/command-lab-login"
-          element={<CommandLabLogin isUnlocked={isCommandLabUnlocked} onUnlock={unlockCommandLab} />}
-        />
-        <Route
-          path="/command-lab"
-          element={<CommandLabGate isUnlocked={isCommandLabUnlocked} onLock={lockCommandLab} />}
-        />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="/spark-command-center" element={<SCSComingSoonPage />} />
         <Route path="/ams-command-center" element={<Navigate to="/spark-command-center" replace />} />
         <Route path="/ams-login" element={<Navigate to="/spark-command-center" replace />} />
@@ -3211,7 +3712,7 @@ export default function SparkCommandSystemsSite() {
           path="/start"
           element={<StartIntakePage />}
         />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )

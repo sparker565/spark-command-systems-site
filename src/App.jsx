@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { cloneElement, isValidElement, useEffect, useId, useState } from 'react'
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import {
   ArrowRight,
@@ -33,7 +33,7 @@ const intakeAppUrl = 'https://start.sparkcommands.com'
 const clientLoginPath = '/client-login'
 const siteUrl = 'https://sparkcommands.com'
 const socialImage = `${siteUrl}/assets/spark-command-systems-logo.png`
-const serviceAreaLine = 'Based in Massachusetts and serving businesses in Boston and communities throughout the Commonwealth.'
+const serviceAreaLine = 'Serving small and growing businesses across the United States with practical websites, automations, dashboards, and ongoing support.'
 
 const navItems = [
   { label: 'About', href: '/about' },
@@ -54,12 +54,12 @@ const routeMeta = {
   '/': {
     title: 'Spark Command Systems | Websites, Automations, and Business Systems',
     description:
-      'Spark Command Systems LLC builds websites, automations, custom apps, dashboards, and managed support for Boston and Massachusetts businesses.',
+      'Spark Command Systems LLC builds websites, automations, custom apps, dashboards, and managed support for small and growing businesses across the United States.',
   },
   '/about': {
     title: 'About Spark Command Systems LLC',
     description:
-      'Learn about Spark Command Systems LLC, a founder-led Massachusetts technology partner building websites, automations, dashboards, and practical business systems.',
+      'Learn about Spark Command Systems LLC, a founder-led technology partner building websites, automations, dashboards, and practical business systems for growing companies.',
   },
   '/website': {
     title: 'Website Builds and Pricing | Spark Command Systems',
@@ -75,17 +75,17 @@ const routeMeta = {
   '/integration': {
     title: 'Business Automation Services | Spark Command Systems',
     description:
-      'Business automation, workflow improvement, and systems integration for Massachusetts companies that want less duplicate work and cleaner follow-up.',
+      'Business automation, workflow improvement, and systems integration for companies that want less duplicate work and cleaner follow-up.',
   },
   '/platform': {
     title: 'Custom Apps and Dashboards | Spark Command Systems',
     description:
-      'Custom business apps, dashboards, portals, and operational tools built around how growing Massachusetts businesses actually work.',
+      'Custom business apps, dashboards, portals, and operational tools built around how growing businesses actually work.',
   },
   '/deployment': {
     title: 'Managed Website Support | Spark Command Systems',
     description:
-      'Managed hosting, website support, maintenance, and ongoing improvements for Spark Command Systems clients across Massachusetts.',
+      'Managed hosting, website support, maintenance, and ongoing improvements for Spark Command Systems clients across the United States.',
   },
   '/pipeline': {
     title: 'Future Business Systems | Spark Command Systems',
@@ -102,7 +102,7 @@ const routeMeta = {
   '/contact': {
     title: 'Contact Spark Command Systems',
     description:
-      'Contact Spark Command Systems LLC to discuss a website, automation, dashboard, custom app, or ongoing support for your Massachusetts business.',
+      'Contact Spark Command Systems LLC to discuss a website, automation, dashboard, custom app, or ongoing support for your business.',
   },
   '/privacy': {
     title: 'Privacy Policy | Spark Command Systems',
@@ -433,6 +433,17 @@ function FadeIn({ children, className = '', delay = 0, ...props }) {
   )
 }
 
+function SkipLink() {
+  return (
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:border focus:border-amber-200/50 focus:bg-[#020407] focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white focus:shadow-[0_0_34px_rgba(245,158,11,0.22)] focus:outline-none focus:ring-2 focus:ring-amber-100/70"
+    >
+      Skip to main content
+    </a>
+  )
+}
+
 function setNamedMeta(name, content) {
   let tag = document.querySelector(`meta[name="${name}"]`)
   if (!tag) {
@@ -480,8 +491,7 @@ function serviceSchema(pathname = '/') {
         logo: socialImage,
         slogan: 'Command Your Systems.',
         areaServed: [
-          { '@type': 'City', name: 'Boston', addressRegion: 'MA', addressCountry: 'US' },
-          { '@type': 'AdministrativeArea', name: 'Massachusetts', addressCountry: 'US' },
+          { '@type': 'Country', name: 'United States' },
         ],
       },
       {
@@ -491,7 +501,7 @@ function serviceSchema(pathname = '/') {
         url: siteUrl,
         image: socialImage,
         slogan: 'Command Your Systems.',
-        areaServed: 'Boston and businesses throughout Massachusetts',
+        areaServed: 'United States',
         priceRange: '$$',
         parentOrganization: { '@id': `${siteUrl}/#organization` },
       },
@@ -507,7 +517,7 @@ function serviceSchema(pathname = '/') {
         '@id': `${siteUrl}/website#service`,
         name: 'Website Builds, Managed Support, Automations, and Custom Business Systems',
         provider: { '@id': `${siteUrl}/#organization` },
-        areaServed: 'Massachusetts',
+        areaServed: 'United States',
         serviceType: ['Website design and development', 'Managed website support', 'Business automation', 'Custom dashboards', 'Custom business applications'],
       },
       {
@@ -671,20 +681,54 @@ function SectionIntro({ eyebrow, title, children, align = 'left' }) {
   )
 }
 
-function FieldShell({ label, required = false, children }) {
+function mergeIds(...ids) {
+  return ids.filter(Boolean).join(' ') || undefined
+}
+
+function fieldBaseId(value) {
+  return String(value || 'field')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+function isNativeField(type) {
+  return ['input', 'textarea', 'select'].includes(type)
+}
+
+function FieldShell({ label, required = false, hint = '', error = '', children }) {
+  const generatedId = useId()
+  const fieldId = `${fieldBaseId(label)}-${generatedId.replace(/:/g, '')}`
+  const labelId = `${fieldId}-label`
+  const hintId = hint ? `${fieldId}-hint` : undefined
+  const errorId = error ? `${fieldId}-error` : undefined
+
+  const child = isValidElement(children)
+    ? cloneElement(children, {
+        id: children.props.id || fieldId,
+        ...(isNativeField(children.type) ? {} : { labelId: children.props.labelId || labelId }),
+        required: children.props.required ?? required,
+        'aria-describedby': mergeIds(children.props['aria-describedby'], hintId, errorId),
+        'aria-invalid': children.props['aria-invalid'] ?? (error ? true : undefined),
+        'aria-required': children.props['aria-required'] ?? (required ? true : undefined),
+      })
+    : children
+
   return (
-    <label className="group block">
-      <span className="mb-4 block text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-300/75">
+    <div className="group block">
+      <label id={labelId} htmlFor={fieldId} className="mb-4 block text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-300/75">
         {label}
-        {required ? <span className="text-amber-200"> *</span> : null}
-      </span>
-      {children}
-    </label>
+        {required ? <span className="text-amber-200" aria-hidden="true"> *</span> : null}
+      </label>
+      {child}
+      {hint ? <p id={hintId} className="mt-2 text-xs leading-5 text-slate-500">{hint}</p> : null}
+      {error ? <p id={errorId} className="mt-2 text-xs leading-5 text-red-100">{error}</p> : null}
+    </div>
   )
 }
 
 function inputClassName() {
-  return 'w-full border border-white/10 bg-black/35 px-5 py-4 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-100/45 focus:bg-cyan-100/[0.035] focus:shadow-[0_0_28px_rgba(34,211,238,0.1)]'
+  return 'w-full border border-white/10 bg-black/35 px-5 py-4 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-100/45 focus:bg-cyan-100/[0.035] focus:shadow-[0_0_28px_rgba(34,211,238,0.1)] focus-visible:ring-2 focus-visible:ring-cyan-100/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#020407]'
 }
 
 function productTier(app) {
@@ -723,37 +767,116 @@ function productTier(app) {
   }
 }
 
-function CommandSelect({ value, onChange, options }) {
+function CommandSelect({ value, onChange, options, id, labelId, required = false, 'aria-describedby': describedBy }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(Math.max(0, options.indexOf(value)))
+  const generatedId = useId()
+  const selectId = id || `command-select-${generatedId.replace(/:/g, '')}`
+  const listboxId = `${selectId}-listbox`
+  const valueId = `${selectId}-value`
+  const selectedIndex = Math.max(0, options.indexOf(value))
+
+  const chooseOption = (option) => {
+    onChange(option)
+    setIsOpen(false)
+  }
+
+  const toggleSelect = () => {
+    setIsOpen((current) => {
+      if (!current) {
+        setActiveIndex(selectedIndex)
+      }
+      return !current
+    })
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      setIsOpen(true)
+      setActiveIndex((current) => (current + 1) % options.length)
+      return
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      setIsOpen(true)
+      setActiveIndex((current) => (current - 1 + options.length) % options.length)
+      return
+    }
+
+    if (event.key === 'Home') {
+      event.preventDefault()
+      setIsOpen(true)
+      setActiveIndex(0)
+      return
+    }
+
+    if (event.key === 'End') {
+      event.preventDefault()
+      setIsOpen(true)
+      setActiveIndex(options.length - 1)
+      return
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      setIsOpen(false)
+      return
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      if (isOpen) {
+        chooseOption(options[activeIndex])
+      } else {
+        setIsOpen(true)
+      }
+    }
+  }
 
   return (
     <div className="relative" onBlur={() => window.setTimeout(() => setIsOpen(false), 120)}>
       <button
+        id={selectId}
         type="button"
+        role="combobox"
+        aria-haspopup="listbox"
         aria-expanded={isOpen}
-        onClick={() => setIsOpen((current) => !current)}
+        aria-controls={listboxId}
+        aria-activedescendant={isOpen ? `${selectId}-option-${activeIndex}` : undefined}
+        aria-labelledby={mergeIds(labelId, valueId)}
+        aria-describedby={describedBy}
+        aria-required={required || undefined}
+        onClick={toggleSelect}
+        onKeyDown={handleKeyDown}
         className={`${inputClassName()} flex min-h-[3.85rem] items-center justify-between gap-4 text-left hover:border-white/20 hover:bg-white/[0.045]`}
       >
-        <span className="truncate">{value}</span>
+        <span id={valueId} className="truncate">{value}</span>
         <ChevronDown className={`h-4 w-4 shrink-0 text-cyan-100/80 transition ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen ? (
-        <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-40 overflow-hidden border border-cyan-200/20 bg-[#03070d]/98 shadow-[0_22px_70px_rgba(0,0,0,0.62),0_0_36px_rgba(34,211,238,0.1)] backdrop-blur-xl">
+        <div id={listboxId} role="listbox" aria-labelledby={labelId} className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-40 overflow-hidden border border-cyan-200/20 bg-[#03070d]/98 shadow-[0_22px_70px_rgba(0,0,0,0.62),0_0_36px_rgba(34,211,238,0.1)] backdrop-blur-xl">
           <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/55 to-transparent" />
-          {options.map((option) => (
+          {options.map((option, index) => (
             <button
+              id={`${selectId}-option-${index}`}
               key={option}
               type="button"
+              role="option"
+              aria-selected={option === value}
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
-                onChange(option)
-                setIsOpen(false)
+                chooseOption(option)
               }}
+              onMouseEnter={() => setActiveIndex(index)}
               className={`flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold transition ${
                 option === value
                   ? 'bg-cyan-200/[0.09] text-cyan-50'
-                  : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
+                  : index === activeIndex
+                    ? 'bg-white/[0.06] text-white'
+                    : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
               }`}
             >
               {option}
@@ -939,7 +1062,7 @@ function ContactIntakePage() {
                 Start a Development Conversation
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Work directly with Spark Command Systems to plan website builds, automations, dashboards, integrations, custom tools, and managed support for your Massachusetts business.
+                Work directly with Spark Command Systems to plan website builds, automations, dashboards, integrations, custom tools, and managed support for your business.
               </p>
               <p className="mt-6 max-w-xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-slate-400/85">
                 Structured intake helps translate your workflow, website, dashboard, integration, or custom tool idea into a clear build path. {serviceAreaLine}
@@ -963,7 +1086,7 @@ function ContactIntakePage() {
           <div className="relative bg-[#060d16] p-5 sm:p-9 lg:p-12">
             <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
             {isSubmitted ? (
-              <div className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-6 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:min-h-[34rem] sm:p-9">
+              <div role="status" aria-live="polite" className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-6 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:min-h-[34rem] sm:p-9">
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-amber-200/30 bg-amber-200/[0.08] text-amber-100">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
@@ -986,25 +1109,29 @@ function ContactIntakePage() {
             ) : (
               <form
                 onSubmit={handleSubmit}
+                aria-describedby="contact-form-required contact-form-privacy"
                 className="space-y-11 border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_28px_90px_rgba(0,0,0,0.18)] sm:p-7 lg:p-8"
               >
+                <p id="contact-form-required" className="text-sm leading-6 text-slate-400">
+                  Required fields are marked with an asterisk.
+                </p>
                 <div className="hidden" aria-hidden="true">
-                  <label>
+                  <label htmlFor="contact-website-field">
                     Website
-                    <input name="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={(event) => updateField('website', event.target.value)} />
+                    <input id="contact-website-field" name="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={(event) => updateField('website', event.target.value)} />
                   </label>
                 </div>
                 <div>
                   <div className="mb-7 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Identity</div>
                   <div className="grid gap-7 md:grid-cols-2">
                     <FieldShell label="Name" required>
-                      <input required maxLength={120} value={formData.name} onChange={(event) => updateField('name', event.target.value)} className={inputClassName()} placeholder="Your name" />
+                      <input name="name" autoComplete="name" maxLength={120} value={formData.name} onChange={(event) => updateField('name', event.target.value)} className={inputClassName()} placeholder="Your name" />
                     </FieldShell>
                     <FieldShell label="Company">
-                      <input maxLength={160} value={formData.company} onChange={(event) => updateField('company', event.target.value)} className={inputClassName()} placeholder="Company or organization" />
+                      <input name="company" autoComplete="organization" maxLength={160} value={formData.company} onChange={(event) => updateField('company', event.target.value)} className={inputClassName()} placeholder="Company or organization" />
                     </FieldShell>
                     <FieldShell label="Email" required>
-                      <input required type="email" maxLength={160} value={formData.email} onChange={(event) => updateField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
+                      <input name="email" autoComplete="email" type="email" maxLength={160} value={formData.email} onChange={(event) => updateField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
                     </FieldShell>
                     <FieldShell label="Project Type">
                       <CommandSelect value={formData.projectType} onChange={(value) => updateField('projectType', value)} options={projectTypeOptions} />
@@ -1016,7 +1143,7 @@ function ContactIntakePage() {
                   <div className="mb-7 text-sm font-semibold uppercase tracking-[0.28em] text-amber-200/90">Operational Problem</div>
                   <FieldShell label="Describe what you want to improve, automate, or build" required>
                     <textarea
-                      required
+                      name="problem"
                       maxLength={3000}
                       value={formData.problem}
                       onChange={(event) => updateField('problem', event.target.value)}
@@ -1044,6 +1171,7 @@ function ContactIntakePage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  aria-busy={isSubmitting}
                   className="group inline-flex w-full items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)] disabled:cursor-not-allowed disabled:bg-amber-200/60 disabled:text-black/60 sm:w-auto"
                 >
                   {isSubmitting ? (
@@ -1058,11 +1186,11 @@ function ContactIntakePage() {
                     </>
                   )}
                 </button>
-                <p className="max-w-2xl text-xs leading-6 text-slate-500">
+                <p id="contact-form-privacy" className="max-w-2xl text-xs leading-6 text-slate-500">
                   Spark Command Systems typically responds within one business day. Your information is used only to review and respond to your request. See the <Link to="/privacy" className="text-cyan-100 underline-offset-4 hover:underline">Privacy Policy</Link>.
                 </p>
                 {submitError ? (
-                  <div className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
+                  <div role="alert" className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
                     {submitError}
                   </div>
                 ) : null}
@@ -1340,7 +1468,7 @@ function SiteFooter() {
               imageClassName="object-contain object-left"
             />
             <p className="mt-5 text-sm leading-7 text-slate-400">
-              Spark Command Systems LLC builds websites, automations, dashboards, and managed support for Massachusetts businesses that need cleaner operations.
+              Spark Command Systems LLC builds websites, automations, dashboards, and managed support for small and growing businesses that need cleaner operations.
             </p>
             <p className="mt-4 text-sm leading-7 text-slate-500">
               {serviceAreaLine}
@@ -1451,7 +1579,7 @@ function PartnershipProgramPanel() {
         </div>
 
         <p className="relative mt-6 max-w-2xl text-base leading-8 text-slate-300">
-          A focused six-month starting relationship for Massachusetts businesses that want Spark to build the website foundation, host and support it, and identify practical automation or dashboard opportunities as the business grows.
+          A focused six-month starting relationship for businesses that want Spark to build the website foundation, host and support it, and identify practical automation or dashboard opportunities as the business grows.
         </p>
 
         <div className="relative mt-5 border border-amber-200/24 bg-amber-200/[0.075] p-4">
@@ -1607,7 +1735,7 @@ function LandingPage({ page = 'home' }) {
         </div>
       </header>
 
-      <main id="top">
+      <main id="main-content" tabIndex={-1}>
         {['platform', 'integration', 'pipeline', 'deployment'].includes(page) ? (
           <h1 className="sr-only">
             {{
@@ -1633,7 +1761,7 @@ function LandingPage({ page = 'home' }) {
                 Websites. Automations. Dashboards. Support.
               </div>
               <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-white sm:text-5xl sm:leading-[0.98] lg:text-6xl xl:text-7xl">
-                Websites and business systems built for Massachusetts companies.
+                Websites and business systems built for growing companies.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-7 sm:text-xl sm:leading-8">
                 Spark Command Systems LLC builds professional websites, practical automations, custom dashboards, and ongoing support that help small and growing businesses reduce duplicated work, improve follow-up, and look credible online.
@@ -2247,7 +2375,7 @@ function ClientLoginPage() {
         </div>
       </header>
 
-      <main className="relative">
+      <main id="main-content" tabIndex={-1} className="relative">
         <section className="relative overflow-hidden px-3 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-14 lg:px-8">
           <div className="pointer-events-none absolute inset-0">
             <img
@@ -2439,7 +2567,7 @@ function ApplicationsPage() {
       <SceneBackdrop />
       <ApplicationsHeader />
 
-      <main className="relative px-3 pb-14 pt-10 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
+      <main id="main-content" tabIndex={-1} className="relative px-3 pb-14 pt-10 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
         <div className="absolute left-1/2 top-24 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
         <div className="absolute inset-x-0 top-16 h-72 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_46%)]" />
 
@@ -2565,7 +2693,7 @@ function AboutSparkPage() {
       <SceneBackdrop />
       <ApplicationsHeader />
 
-      <main className="relative px-3 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
+      <main id="main-content" tabIndex={-1} className="relative px-3 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
         <div className="absolute left-1/2 top-16 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
         <div className="absolute inset-x-0 top-24 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.13),transparent_46%)]" />
 
@@ -2668,6 +2796,8 @@ const websitePricingPackages = [
     recurring: 'Hosting, monitoring, and support — $25/month',
     badge: 'Affordable start',
     description: 'A professional starting point for new and small businesses that need a credible online presence.',
+    bestFit: 'New businesses that need a credible starter site without a larger system build.',
+    supportModel: 'One-time build with low monthly hosting, monitoring, and support.',
     included: [
       'Up to 3 pages',
       'Custom branded design',
@@ -2690,6 +2820,8 @@ const websitePricingPackages = [
     badge: 'Best Value',
     description:
       'For businesses that want Spark Command Systems to build, operate, support, and continually improve their digital presence and business systems.',
+    bestFit: 'Businesses that want an ongoing website and systems partner instead of a one-time handoff.',
+    supportModel: 'Six-month initial partnership with website build, hosting, updates, support, and starter automation.',
     featured: true,
     included: [
       'Custom website up to 5 pages',
@@ -2720,6 +2852,8 @@ const websitePricingPackages = [
     recurring: 'Hosting and support — $50/month',
     badge: 'Professional build',
     description: 'A stronger custom website for businesses that need more pages, stronger presentation, and better lead capture.',
+    bestFit: 'Businesses that need a stronger public presence and clearer lead capture.',
+    supportModel: 'One-time build with monthly hosting and support.',
     included: [
       'Up to 5 pages',
       'Fully mobile responsive',
@@ -2743,6 +2877,8 @@ const websitePricingPackages = [
     recurring: 'Hosting and support — $75/month',
     badge: 'Premium site',
     description: 'A premium website package for businesses that need deeper content, stronger forms, and richer customer pathways.',
+    bestFit: 'Businesses that need deeper content, stronger forms, and richer customer paths.',
+    supportModel: 'One-time build with higher-touch monthly hosting and support.',
     included: [
       'Up to 10 pages',
       'Fully mobile responsive',
@@ -2766,6 +2902,8 @@ const websitePricingPackages = [
     recurring: 'Managed hosting and priority support — starting at $100/month',
     badge: 'Growth ready',
     description: 'A high-end website for businesses ready to connect content, conversion, booking, ordering, and lead capture.',
+    bestFit: 'Businesses ready to connect content, conversion, booking, ordering, and lead capture.',
+    supportModel: 'One-time build with managed hosting and priority support.',
     included: [
       'Up to 15 pages',
       'High-end interactive design',
@@ -2788,6 +2926,8 @@ const websitePricingPackages = [
     recurring: 'Managed support — starting at $150/month',
     badge: 'Business systems',
     description: 'An advanced website package for businesses with more services, locations, workflows, integrations, and staff handoff needs.',
+    bestFit: 'Businesses with multiple services, locations, workflows, integrations, or team handoffs.',
+    supportModel: 'Proposal-based build with managed support after launch.',
     included: [
       'Up to 25 pages',
       'Advanced custom website',
@@ -2811,6 +2951,8 @@ const websitePricingPackages = [
     recurring: 'Hosting, platform support, and third-party services priced separately.',
     badge: 'Custom platform',
     description: 'For businesses that need more than a traditional website.',
+    bestFit: 'Businesses that need a portal, dashboard, CRM-style workflow, or custom operational app.',
+    supportModel: 'Custom proposal with platform hosting and support priced around the final scope.',
     included: [
       'Custom web application or operations portal',
       'Client or employee login',
@@ -2981,7 +3123,7 @@ function WebsitesPage() {
       <SceneBackdrop />
       <ApplicationsHeader />
 
-      <main className="relative">
+      <main id="main-content" tabIndex={-1} className="relative">
         <section
           className="relative overflow-hidden px-3 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8"
           style={{
@@ -3100,6 +3242,17 @@ function WebsitesPage() {
                       <div className="mt-1 text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">{plan.priceNote}</div>
                     </div>
                     <p className="mt-4 text-sm leading-6 text-slate-300">{plan.description}</p>
+                    <dl className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
+                      {[
+                        ['Best fit', plan.bestFit],
+                        ['Support model', plan.supportModel],
+                      ].map(([term, detail]) => (
+                        <div key={term} className="bg-black/24 p-4">
+                          <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{term}</dt>
+                          <dd className="mt-2 text-sm leading-6 text-slate-200">{detail}</dd>
+                        </div>
+                      ))}
+                    </dl>
                     <div className="mt-5 border border-white/10 bg-black/20 p-4">
                       <div className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/85">Ongoing plan</div>
                       <div className="mt-2 text-sm font-semibold leading-6 text-white">{plan.recurring}</div>
@@ -3240,7 +3393,7 @@ function WebsitesPage() {
               <div className="relative bg-[#060d16] p-5 sm:p-8 lg:p-10">
                 <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/65 to-transparent" />
                 {isWebsiteSubmitted ? (
-                  <div className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-6 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:p-9">
+                  <div role="status" aria-live="polite" className="flex min-h-[26rem] flex-col justify-center border border-cyan-200/20 bg-cyan-200/[0.045] p-6 text-center shadow-[0_0_54px_rgba(34,211,238,0.08)] sm:p-9">
                     <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center border border-amber-200/30 bg-amber-200/[0.08] text-amber-100">
                       <CheckCircle2 className="h-8 w-8" />
                     </div>
@@ -3263,12 +3416,16 @@ function WebsitesPage() {
                 ) : (
                   <form
                     onSubmit={handleWebsiteSubmit}
+                    aria-describedby="website-form-required website-form-privacy"
                     className="space-y-9 border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.055),0_28px_90px_rgba(0,0,0,0.18)] sm:p-7"
                   >
+                    <p id="website-form-required" className="text-sm leading-6 text-slate-400">
+                      Required fields are marked with an asterisk. Submitting this request does not create a payment obligation.
+                    </p>
                     <div className="hidden" aria-hidden="true">
-                      <label>
+                      <label htmlFor="website-request-website-field">
                         Website
-                        <input name="website" tabIndex={-1} autoComplete="off" value={websiteFormData.website} onChange={(event) => updateWebsiteField('website', event.target.value)} />
+                        <input id="website-request-website-field" name="website" tabIndex={-1} autoComplete="off" value={websiteFormData.website} onChange={(event) => updateWebsiteField('website', event.target.value)} />
                       </label>
                     </div>
                     <div>
@@ -3281,28 +3438,28 @@ function WebsitesPage() {
                           }} options={websitePricingPackages.map((plan) => plan.name)} />
                         </FieldShell>
                         <FieldShell label="Business Name" required>
-                          <input required maxLength={160} value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
+                          <input name="businessName" autoComplete="organization" maxLength={160} value={websiteFormData.businessName} onChange={(event) => updateWebsiteField('businessName', event.target.value)} className={inputClassName()} placeholder="Business or organization" />
                         </FieldShell>
                         <FieldShell label="Contact Name" required>
-                          <input required maxLength={120} value={websiteFormData.contactName} onChange={(event) => updateWebsiteField('contactName', event.target.value)} className={inputClassName()} placeholder="Your name" />
+                          <input name="contactName" autoComplete="name" maxLength={120} value={websiteFormData.contactName} onChange={(event) => updateWebsiteField('contactName', event.target.value)} className={inputClassName()} placeholder="Your name" />
                         </FieldShell>
                         <FieldShell label="Email" required>
-                          <input required type="email" maxLength={160} value={websiteFormData.email} onChange={(event) => updateWebsiteField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
+                          <input name="email" autoComplete="email" type="email" maxLength={160} value={websiteFormData.email} onChange={(event) => updateWebsiteField('email', event.target.value)} className={inputClassName()} placeholder="you@company.com" />
                         </FieldShell>
                         <FieldShell label="Phone" required>
-                          <input required type="tel" maxLength={80} value={websiteFormData.phone} onChange={(event) => updateWebsiteField('phone', event.target.value)} className={inputClassName()} placeholder="Best phone number" />
+                          <input name="phone" autoComplete="tel" type="tel" maxLength={80} value={websiteFormData.phone} onChange={(event) => updateWebsiteField('phone', event.target.value)} className={inputClassName()} placeholder="Best phone number" />
                         </FieldShell>
                         <FieldShell label="Business Type / Industry" required>
-                          <input required maxLength={160} value={websiteFormData.industry} onChange={(event) => updateWebsiteField('industry', event.target.value)} className={inputClassName()} placeholder="Restaurant, contractor, salon, shop, etc." />
+                          <input name="industry" maxLength={160} value={websiteFormData.industry} onChange={(event) => updateWebsiteField('industry', event.target.value)} className={inputClassName()} placeholder="Restaurant, contractor, salon, shop, etc." />
                         </FieldShell>
                         <FieldShell label="Current Website URL">
-                          <input type="url" maxLength={240} value={websiteFormData.currentWebsite} onChange={(event) => updateWebsiteField('currentWebsite', event.target.value)} className={inputClassName()} placeholder="https://example.com" />
+                          <input name="currentWebsite" autoComplete="url" type="url" maxLength={240} value={websiteFormData.currentWebsite} onChange={(event) => updateWebsiteField('currentWebsite', event.target.value)} className={inputClassName()} placeholder="https://example.com" />
                         </FieldShell>
                         <FieldShell label="Desired Domain Name">
-                          <input maxLength={160} value={websiteFormData.desiredDomain} onChange={(event) => updateWebsiteField('desiredDomain', event.target.value)} className={inputClassName()} placeholder="yourbusiness.com" />
+                          <input name="desiredDomain" maxLength={160} value={websiteFormData.desiredDomain} onChange={(event) => updateWebsiteField('desiredDomain', event.target.value)} className={inputClassName()} placeholder="yourbusiness.com" />
                         </FieldShell>
                         <FieldShell label="Business Location / City" required>
-                          <input required maxLength={160} value={websiteFormData.location} onChange={(event) => updateWebsiteField('location', event.target.value)} className={inputClassName()} placeholder="City, state, or service area" />
+                          <input name="location" autoComplete="address-level2" maxLength={160} value={websiteFormData.location} onChange={(event) => updateWebsiteField('location', event.target.value)} className={inputClassName()} placeholder="City, state, or service area" />
                         </FieldShell>
                         <FieldShell label="Build Type">
                           <CommandSelect value={websiteFormData.buildType} onChange={(value) => updateWebsiteField('buildType', value)} options={buildTypeOptions} />
@@ -3321,7 +3478,7 @@ function WebsitesPage() {
                         </FieldShell>
                         <FieldShell label="What does the business do?" required>
                           <textarea
-                            required
+                            name="businessDescription"
                             maxLength={3000}
                             value={websiteFormData.businessDescription}
                             onChange={(event) => updateWebsiteField('businessDescription', event.target.value)}
@@ -3331,7 +3488,7 @@ function WebsitesPage() {
                         </FieldShell>
                         <FieldShell label="Main services/products" required>
                           <textarea
-                            required
+                            name="servicesProducts"
                             maxLength={3000}
                             value={websiteFormData.servicesProducts}
                             onChange={(event) => updateWebsiteField('servicesProducts', event.target.value)}
@@ -3367,6 +3524,7 @@ function WebsitesPage() {
                       <div className="mt-6">
                         <FieldShell label="Notes or special requests">
                           <textarea
+                            name="notes"
                             value={websiteFormData.notes}
                             maxLength={3000}
                             onChange={(event) => updateWebsiteField('notes', event.target.value)}
@@ -3380,6 +3538,7 @@ function WebsitesPage() {
                     <button
                       type="submit"
                       disabled={isWebsiteSubmitting}
+                      aria-busy={isWebsiteSubmitting}
                       className="group inline-flex w-full items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_38px_rgba(245,158,11,0.26)] transition hover:bg-amber-200 hover:shadow-[0_0_52px_rgba(245,158,11,0.38)] disabled:cursor-not-allowed disabled:bg-amber-200/60 disabled:text-black/60 sm:w-auto"
                     >
                       {isWebsiteSubmitting ? (
@@ -3394,11 +3553,11 @@ function WebsitesPage() {
                         </>
                       )}
                     </button>
-                    <p className="max-w-2xl text-xs leading-6 text-slate-500">
+                    <p id="website-form-privacy" className="max-w-2xl text-xs leading-6 text-slate-500">
                       Spark Command Systems typically responds within one business day. Your information is used only to review and respond to your request. See the <Link to="/privacy" className="text-cyan-100 underline-offset-4 hover:underline">Privacy Policy</Link>.
                     </p>
                     {websiteSubmitError ? (
-                      <div className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
+                      <div role="alert" className="border border-red-300/20 bg-red-300/[0.06] p-4 text-sm leading-6 text-red-100">
                         {websiteSubmitError}
                       </div>
                     ) : null}
@@ -3471,7 +3630,7 @@ function SCSComingSoonPage() {
       <SceneBackdrop />
       <ApplicationsHeader />
 
-      <main className="relative px-3 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
+      <main id="main-content" tabIndex={-1} className="relative px-3 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-16 lg:px-8">
         <div className="absolute left-1/2 top-16 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full border border-white/[0.04]" />
         <div className="absolute inset-x-0 top-24 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.16),transparent_44%)]" />
 
@@ -3560,7 +3719,7 @@ function PrivacyPage() {
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
       <ApplicationsHeader />
-      <main className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <main id="main-content" tabIndex={-1} className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
         <section className="mx-auto max-w-4xl border border-white/10 bg-[#060d16]/92 p-6 shadow-[0_32px_130px_rgba(0,0,0,0.52)] sm:p-9">
           <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Privacy</div>
           <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">Privacy Policy</h1>
@@ -3595,7 +3754,7 @@ function TermsPage() {
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
       <ApplicationsHeader />
-      <main className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <main id="main-content" tabIndex={-1} className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
         <section className="mx-auto max-w-4xl border border-white/10 bg-[#060d16]/92 p-6 shadow-[0_32px_130px_rgba(0,0,0,0.52)] sm:p-9">
           <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Terms</div>
           <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">Website Terms</h1>
@@ -3630,7 +3789,7 @@ function NotFoundPage() {
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
       <ApplicationsHeader />
-      <main className="relative px-3 py-16 sm:px-6 sm:py-24 lg:px-8">
+      <main id="main-content" tabIndex={-1} className="relative px-3 py-16 sm:px-6 sm:py-24 lg:px-8">
         <section className="mx-auto max-w-4xl border border-amber-200/20 bg-[#060d16]/92 p-6 text-center shadow-[0_38px_150px_rgba(0,0,0,0.62),0_0_90px_rgba(245,158,11,0.08)] sm:p-10">
           <div className="text-xs font-semibold uppercase tracking-[0.34em] text-amber-200/80">Page not found</div>
           <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl">This page is not available.</h1>
@@ -3685,6 +3844,7 @@ function StartIntakePage() {
 export default function SparkCommandSystemsSite() {
   return (
     <BrowserRouter>
+      <SkipLink />
       <RouteScrollReset />
       <RouteMetadata />
       <Routes>

@@ -1,5 +1,7 @@
-import { cloneElement, isValidElement, useEffect, useId, useState } from 'react'
+import { cloneElement, isValidElement, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   ArrowRight,
   Boxes,
@@ -34,6 +36,26 @@ const clientLoginPath = '/client-login'
 const siteUrl = 'https://sparkcommands.com'
 const socialImage = `${siteUrl}/assets/spark-command-systems-logo.png`
 const serviceAreaLine = 'Serving small and growing businesses across the United States with practical websites, automations, dashboards, and ongoing support.'
+
+const heroPremiumGlobe = {
+  alt: '',
+  avif1080: '/assets/hero-premium-command-globe-1080.avif',
+  avif1920: '/assets/hero-premium-command-globe-1920.avif',
+  avif2560: '/assets/hero-premium-command-globe-2560.avif',
+  avif4k: '/assets/hero-premium-command-globe-4k.avif',
+  webp1080: '/assets/hero-premium-command-globe-1080.webp',
+  webp1920: '/assets/hero-premium-command-globe-1920.webp',
+  webp2560: '/assets/hero-premium-command-globe-2560.webp',
+  webp4k: '/assets/hero-premium-command-globe-4k.webp',
+  jpg4k: '/assets/hero-premium-command-globe-4k.jpg',
+}
+
+const heroOfficialLogo = {
+  emblemWebp768: '/assets/hero-official-emblem-768.webp',
+  emblemWebp1254: '/assets/hero-official-emblem-1254.webp',
+  emblemWebp1920: '/assets/hero-official-emblem-1920.webp',
+  emblemPng: '/assets/hero-official-emblem-1920.png',
+}
 
 const navItems = [
   { label: 'About', href: '/about' },
@@ -1427,17 +1449,17 @@ function CommandConsole() {
   )
 }
 
-function ScrollToTopButton() {
+function ScrollToTopButton({ disabled = false, threshold = 420 }) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsVisible(window.scrollY > 420)
+    const handleScroll = () => setIsVisible(!disabled && window.scrollY > threshold)
 
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [disabled, threshold])
 
   return (
     <button
@@ -1555,6 +1577,174 @@ function HeroScrollVisual({ progress }) {
   )
 }
 
+function OfficialHeroEmblem({ className }) {
+  return (
+    <picture className={className}>
+      <source
+        type="image/webp"
+        srcSet={`${heroOfficialLogo.emblemWebp768} 768w, ${heroOfficialLogo.emblemWebp1254} 1254w, ${heroOfficialLogo.emblemWebp1920} 1920w`}
+        sizes="(max-width: 767px) 94vw, min(86vw, 78svh, 56rem)"
+      />
+      <img src={heroOfficialLogo.emblemPng} alt="" loading="eager" fetchPriority="high" decoding="sync" />
+    </picture>
+  )
+}
+
+function IntroLogoLanding() {
+  const rootRef = useRef(null)
+  const pinRef = useRef(null)
+
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const context = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set('.background-activated', { opacity: 1 })
+        gsap.set('.background-base', { opacity: 0 })
+        gsap.set('.official-logo-full', { opacity: 0.92 })
+        gsap.set('.official-logo-alpha', { opacity: 0.92 })
+        gsap.set('.official-logo-star', { opacity: 0 })
+        gsap.set('.logo-container', { scale: 0.62, yPercent: 8 })
+        return
+      }
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: rootRef.current,
+          start: 'top top',
+          end: () => `+=${Math.round(window.innerHeight * 1.8)}`,
+          scrub: true,
+          pin: pinRef.current,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      gsap.set('.official-logo-alpha, .official-logo-star', { opacity: 0 })
+
+      tl.to('.background-activated', { opacity: 1, duration: 0.72 }, 0.03)
+      tl.to('.background-base', { opacity: 0, duration: 0.72 }, 0.03)
+      tl.fromTo(
+        '.background-activated img',
+        { scale: 1.16, yPercent: 3 },
+        { scale: 1.02, yPercent: -1.5, duration: 1 },
+        0,
+      )
+      tl.to('.background-base img', { scale: 1.08, duration: 0.72 }, 0)
+      tl.fromTo(
+        '.globe-light-sweep',
+        { xPercent: -145, opacity: 0 },
+        {
+          keyframes: [
+            { opacity: 0.78, duration: 0.08 },
+            { xPercent: 145, opacity: 0, duration: 0.34 },
+          ],
+        },
+        0.16,
+      )
+      tl.to('.hero-activation-grid', { opacity: 0.18, duration: 0.46 }, 0.18)
+      tl.to(
+        '.logo-container',
+        {
+          scale: 0.62,
+          yPercent: 8,
+          duration: 0.82,
+        },
+        0,
+      )
+      tl.to('.official-logo-alpha', { opacity: 0.92, filter: 'brightness(1.08) drop-shadow(0 24px 74px rgba(0,0,0,0.78))', duration: 0.42 }, 0.02)
+      tl.to('.official-logo-full', { opacity: 0, duration: 0.42 }, 0.04)
+      tl.to(
+        '.official-logo-star',
+        {
+          keyframes: [
+            { scale: 1.14, opacity: 1, filter: 'brightness(2.2) drop-shadow(0 0 42px #f6b90b)', duration: 0.07 },
+            { scale: 1, opacity: 0.28, filter: 'brightness(1.08) drop-shadow(0 0 14px rgba(246,185,11,0.5))', duration: 0.07 },
+            { scale: 1.1, opacity: 0.9, filter: 'brightness(1.95) drop-shadow(0 0 36px #f6b90b)', duration: 0.07 },
+            { scale: 1, opacity: 0.24, filter: 'brightness(1.15) drop-shadow(0 0 18px rgba(246,185,11,0.6))', duration: 0.07 },
+          ],
+        },
+        0.21,
+      )
+      tl.to(
+        '.official-logo-flare',
+        {
+          keyframes: [
+            { opacity: 0.95, scale: 1.4, filter: 'blur(3px) brightness(1.8)', duration: 0.08 },
+            { opacity: 0.18, scale: 0.82, filter: 'blur(6px) brightness(1.1)', duration: 0.08 },
+            { opacity: 0.72, scale: 1.18, filter: 'blur(4px) brightness(1.55)', duration: 0.08 },
+            { opacity: 0, scale: 0.7, filter: 'blur(7px) brightness(1)', duration: 0.08 },
+          ],
+        },
+        0.21,
+      )
+      tl.to('.intro-scroll-cue', { opacity: 0, y: 18, duration: 0.26 }, 0)
+      tl.fromTo('.enter-command-cue', { letterSpacing: '0.5em' }, { opacity: 1, y: 0, letterSpacing: '0.34em', duration: 0.28 }, 0.68)
+      tl.to('.intro-fadeout', { opacity: 0.62, duration: 0.22 }, 0.86)
+    }, rootRef)
+
+    return () => context.revert()
+  }, [])
+
+  return (
+    <section id="hero" ref={rootRef} className="relative bg-black" aria-label="Spark Command Systems cinematic intro">
+      <div ref={pinRef} className="hero-activation-stage">
+        <picture className="background-base">
+          <source
+            type="image/avif"
+            srcSet={`${heroPremiumGlobe.avif1080} 1080w, ${heroPremiumGlobe.avif1920} 1920w, ${heroPremiumGlobe.avif2560} 2560w, ${heroPremiumGlobe.avif4k} 3840w`}
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${heroPremiumGlobe.webp1080} 1080w, ${heroPremiumGlobe.webp1920} 1920w, ${heroPremiumGlobe.webp2560} 2560w, ${heroPremiumGlobe.webp4k} 3840w`}
+            sizes="100vw"
+          />
+          <img src={heroPremiumGlobe.jpg4k} alt={heroPremiumGlobe.alt} loading="eager" fetchPriority="high" decoding="sync" />
+        </picture>
+
+        <picture className="background-activated">
+          <source
+            type="image/avif"
+            srcSet={`${heroPremiumGlobe.avif1080} 1080w, ${heroPremiumGlobe.avif1920} 1920w, ${heroPremiumGlobe.avif2560} 2560w, ${heroPremiumGlobe.avif4k} 3840w`}
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${heroPremiumGlobe.webp1080} 1080w, ${heroPremiumGlobe.webp1920} 1920w, ${heroPremiumGlobe.webp2560} 2560w, ${heroPremiumGlobe.webp4k} 3840w`}
+            sizes="100vw"
+          />
+          <img src={heroPremiumGlobe.jpg4k} alt={heroPremiumGlobe.alt} loading="eager" fetchPriority="high" decoding="sync" />
+        </picture>
+
+        <div className="globe-light-sweep" />
+        <div className="hero-activation-vignette" />
+        <div className="hero-activation-grid" />
+
+        <div className="logo-container" aria-hidden="true">
+          <OfficialHeroEmblem className="official-logo-layer official-logo-full" />
+          <OfficialHeroEmblem className="official-logo-layer official-logo-alpha" />
+          <OfficialHeroEmblem className="official-logo-layer official-logo-star" />
+          <div className="official-logo-flare" />
+        </div>
+
+        <div className="intro-scroll-cue">
+          <a href="#partnership-program" aria-label="Scroll to Spark Command Systems website content">
+            <ArrowRight className="h-4 w-4 rotate-90" />
+          </a>
+        </div>
+        <div className="enter-command-cue">Enter Command</div>
+        <div className="intro-fadeout" />
+        <div className="sr-only" aria-live="polite">
+          Spark Command Systems cinematic intro. Continue scrolling to enter the website.
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function PartnershipProgramPanel() {
   return (
     <div className="relative mx-auto max-w-2xl lg:max-w-none">
@@ -1629,20 +1819,30 @@ function LandingPage({ page = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [heroScrollProgress, setHeroScrollProgress] = useState(0)
+  const [introScrollProgress, setIntroScrollProgress] = useState(page === 'home' ? 0 : 1)
+  const [scrollTopThreshold, setScrollTopThreshold] = useState(420)
 
   useEffect(() => {
     const handleScroll = () => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const viewportHeight = Math.max(1, window.innerHeight)
+      const introElement = document.querySelector('[aria-label="Spark Command Systems cinematic intro"]')
+      const introDistance = introElement ? Math.max(viewportHeight * 2.35, introElement.offsetHeight) : Math.max(420, viewportHeight * 2.35)
+      const introProgress = page === 'home' ? Math.min(1, Math.max(0, window.scrollY / introDistance)) : 1
+      const heroTop = document.getElementById('partnership-program')?.offsetTop || 0
+      const heroLocalScroll = Math.max(0, window.scrollY - heroTop)
 
       setIsScrolled(window.scrollY > 28)
-      setHeroScrollProgress(prefersReducedMotion ? 0 : Math.min(1, Math.max(0, window.scrollY / 560)))
+      setScrollTopThreshold(page === 'home' ? introDistance + 420 : 420)
+      setIntroScrollProgress(prefersReducedMotion && page === 'home' ? Math.min(1, introProgress) : introProgress)
+      setHeroScrollProgress(prefersReducedMotion ? 0 : Math.min(1, Math.max(0, heroLocalScroll / 560)))
     }
 
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [page])
 
   useEffect(() => {
     if (!isMobileMenuOpen) return undefined
@@ -1663,11 +1863,22 @@ function LandingPage({ page = 'home' }) {
     }
   }, [isMobileMenuOpen])
 
+  const headerReveal = page === 'home' ? Math.min(1, Math.max(0, (introScrollProgress - 0.84) / 0.12)) : 1
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#020407] text-white antialiased">
       <SceneBackdrop />
 
-      <header className="sticky top-2 z-50 px-2 sm:top-3 sm:px-5 lg:px-8">
+      <header
+        className={`${page === 'home' ? 'fixed inset-x-0 top-2 sm:top-3' : 'sticky top-2 sm:top-3'} z-50 px-2 transition duration-300 sm:px-5 lg:px-8`}
+        inert={page === 'home' && headerReveal <= 0.35 ? true : undefined}
+        aria-hidden={page === 'home' && headerReveal <= 0.35 ? 'true' : undefined}
+        style={page === 'home' ? {
+          opacity: headerReveal,
+          pointerEvents: headerReveal > 0.35 ? 'auto' : 'none',
+          transform: `translate3d(0, ${(1 - headerReveal) * -10}px, 0)`,
+        } : undefined}
+      >
         <div
           className={`relative mx-auto max-w-7xl overflow-visible border bg-[#020407]/72 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl 2xl:max-w-[96rem] ${
             isScrolled
@@ -1748,9 +1959,10 @@ function LandingPage({ page = 'home' }) {
         ) : null}
         {page === 'home' && (
         <>
+        <IntroLogoLanding />
         <section
           id="partnership-program"
-          className="relative -mt-16 overflow-hidden bg-[#020407] pt-16 sm:pt-24 lg:min-h-[42rem]"
+          className="relative overflow-hidden bg-[#020407] pt-16 sm:pt-24 lg:min-h-[42rem]"
         >
           <HeroScrollVisual progress={heroScrollProgress} />
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
@@ -2342,7 +2554,7 @@ function LandingPage({ page = 'home' }) {
       </main>
 
       <SiteFooter />
-      <ScrollToTopButton />
+      <ScrollToTopButton disabled={page === 'home' && introScrollProgress < 0.98} threshold={scrollTopThreshold} />
     </div>
   )
 }

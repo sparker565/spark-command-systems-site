@@ -29,24 +29,21 @@ Only available values should be sent. Do not invent analytics values.
 
 ## Allowed Package Values
 
-Package IDs must remain stable:
+Package IDs must stay aligned with the active `websitePricingPackages` values:
 
 | Package | `package_id` |
 |---|---|
-| Launch Website | `launch-website` |
+| Starter Website | `starter-website` |
 | Spark Partnership Program | `spark-partnership` |
-| Professional Website | `professional-website` |
-| Elite Website | `elite-website` |
-| Growth Website | `growth-website` |
-| Business Website | `business-website` |
-| Custom Platform | `custom-platform` |
+| Ownership Website | `ownership-website` |
+| Custom Applications | `custom-applications` |
 
 ## Example URLs
 
 ```text
 https://start.sparkcommands.com/?source=sparkcommands.com
 https://start.sparkcommands.com/?source=sparkcommands.com&package=Spark+Partnership+Program&package_id=spark-partnership
-https://start.sparkcommands.com/?source=sparkcommands.com&package=Professional+Website&package_id=professional-website&utm_source=instagram&utm_medium=social&utm_campaign=august-launch
+https://start.sparkcommands.com/?source=sparkcommands.com&package=Starter+Website&package_id=starter-website&utm_source=instagram&utm_medium=social&utm_campaign=august-launch
 ```
 
 ## Fallback Behavior

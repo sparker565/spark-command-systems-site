@@ -86,12 +86,12 @@ const routeMeta = {
   '/website': {
     title: 'Website Builds and Pricing | Spark Command Systems',
     description:
-      'Compare Spark Command Systems website packages, managed hosting, support, custom platform options, and the $299/month Spark Partnership Program.',
+      'Compare Spark Command Systems pricing for one-page starter websites, the $1,800 setup + $299/month Partnership Program, ownership websites, and custom applications.',
   },
   '/websites': {
     title: 'Website Builds and Pricing | Spark Command Systems',
     description:
-      'Compare Spark Command Systems website packages, managed hosting, support, custom platform options, and the $299/month Spark Partnership Program.',
+      'Compare Spark Command Systems pricing for one-page starter websites, the $1,800 setup + $299/month Partnership Program, ownership websites, and custom applications.',
     canonicalPath: '/website',
   },
   '/integration': {
@@ -149,16 +149,16 @@ const routeMeta = {
 }
 
 const operatingSignals = [
-  ['$299/mo', 'Partnership program'],
+  ['$1,800 + $299/mo', 'Partnership program'],
   ['6 months', 'Initial term'],
   ['Core access', 'Request through intake'],
 ]
 
 const partnershipIncludes = [
-  'Custom website build up to 5 pages',
-  'Backend CRM and client portal access',
-  'One starter business automation',
-  'Hosting, monitoring, maintenance, and priority support',
+  'Custom professional website up to five pages',
+  'Hosting, upkeep, troubleshooting, and technical support',
+  'One initial business automation',
+  'Technology consulting and continued improvement guidance',
 ]
 
 const platformMetrics = [
@@ -551,7 +551,7 @@ function serviceSchema(pathname = '/') {
             name: 'What is the Spark Partnership Program?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'The Spark Partnership Program is a six-month initial partnership for businesses that want Spark Command Systems to build, host, support, and improve their website and business systems for $299/month.',
+              text: 'The Spark Partnership Program is a six-month initial partnership for businesses that want Spark Command Systems to build, host, support, consult on, and improve their website and business technology for $1,800 setup plus $299/month.',
             },
           },
           {
@@ -1756,27 +1756,27 @@ function PartnershipProgramPanel() {
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100">
-              Spark Core Partnership Program
+              Spark Partnership Program
             </div>
             <h2 className="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-              Ongoing website and systems support, not just basic hosting.
+              Your website, hosting, support, consulting, and technology improvements managed through one ongoing partnership.
             </h2>
           </div>
           <div className="shrink-0 border border-amber-200/25 bg-amber-200/[0.08] px-5 py-4 text-left shadow-[0_0_40px_rgba(245,158,11,0.12)] sm:text-right">
-            <div className="text-3xl font-semibold tracking-[-0.03em] text-amber-100">$299/mo</div>
-            <div className="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">6 month initial program</div>
+            <div className="text-3xl font-semibold tracking-[-0.03em] text-amber-100">$1,800 + $299/mo</div>
+            <div className="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">6 month initial commitment</div>
           </div>
         </div>
 
         <p className="relative mt-6 max-w-2xl text-base leading-8 text-slate-300">
-          A focused six-month starting relationship for businesses that want Spark to build the website foundation, host and support it, and identify practical automation or dashboard opportunities as the business grows.
+          A focused six-month starting relationship for businesses that want Spark to build a custom professional website, host and support it, add one initial business automation, and guide practical technology improvements as the business grows.
         </p>
 
         <div className="relative mt-5 border border-amber-200/24 bg-amber-200/[0.075] p-4">
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-100">Six-month initial commitment</div>
-          <div className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">$1,794</div>
+          <div className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">$3,594 first six months</div>
           <p className="mt-2 text-xs leading-6 text-slate-300">
-            Onboarding starts with business goals, website priorities, support expectations, and the first automation opportunity. Larger custom apps, premium integrations, advertising, and third-party services are scoped separately.
+            This total reflects the $1,800 setup plus six months at $299/month. Larger custom apps, premium integrations, advertising, and third-party services are scoped separately.
           </p>
         </div>
 
@@ -1794,7 +1794,7 @@ function PartnershipProgramPanel() {
             packageName="Spark Partnership Program"
             packageId="spark-partnership"
             className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
-            aria-label="Request access to the Spark Core Partnership Program"
+            aria-label="Request access to the Spark Partnership Program"
           >
             Apply for Partnership
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
@@ -3001,199 +3001,122 @@ function AboutSparkPage() {
 
 const websitePricingPackages = [
   {
-    id: 'launch-website',
-    name: 'Launch Website',
-    price: '$425',
-    priceNote: 'one-time',
-    recurring: 'Hosting, monitoring, and support — $25/month',
+    id: 'starter-website',
+    name: 'Starter Website',
+    price: '$495',
+    priceNote: 'setup',
+    recurring: '$20/month managed hosting required',
     badge: 'Affordable start',
-    description: 'A professional starting point for new and small businesses that need a credible online presence.',
-    bestFit: 'New businesses that need a credible starter site without a larger system build.',
-    supportModel: 'One-time build with low monthly hosting, monitoring, and support.',
+    description: 'A professional one-page website built to get your business online and ready to grow.',
+    bestFit: 'Small businesses that need an affordable, professional online presence without a larger website build.',
+    supportModel: 'Focused one-page brochure website with Spark-managed hosting.',
     included: [
-      'Up to 3 pages',
-      'Custom branded design',
-      'Fully mobile responsive',
-      'Contact or inquiry form',
+      'One professionally designed landing or brochure page',
+      'Single scrolling page',
+      'Mobile-responsive design',
+      'Business overview and essential information',
+      'Contact links',
       'Social media links',
-      'Basic on-page SEO',
-      'Google-friendly sitemap',
-      'Deployment and domain connection',
-      'Two revision rounds',
+      'Clear calls to action',
+      'Upgrade-ready foundation',
+      'Spark-managed hosting',
     ],
+    disclosure:
+      'This package is a focused website starting point. Custom applications, advanced integrations, and ongoing technology partnership work are scoped separately.',
     cta: 'Start My Website',
   },
   {
     id: 'spark-partnership',
     name: 'Spark Partnership Program',
-    price: '$299/month',
-    priceNote: 'six-month initial partnership',
-    recurring: 'Six-month initial commitment: $1,794',
-    badge: 'Best Value',
+    price: '$1,800 setup + $299/month',
+    priceNote: 'six-month initial commitment',
+    recurring: 'First six months total: $3,594',
+    badge: 'Recommended',
     description:
-      'For businesses that want Spark Command Systems to build, operate, support, and continually improve their digital presence and business systems.',
-    bestFit: 'Businesses that want an ongoing website and systems partner instead of a one-time handoff.',
-    supportModel: 'Six-month initial partnership with website build, hosting, updates, support, and starter automation.',
+      'Your website, hosting, support, consulting, and technology improvements managed through one ongoing partnership.',
+    bestFit: 'Businesses that want Spark as an ongoing website and technology partner.',
+    supportModel: '$1,800 setup plus $299/month for a six-month initial partnership.',
     featured: true,
     included: [
-      'Custom website up to 5 pages',
-      'Fully mobile responsive',
-      'Custom branded design',
-      'Contact, lead, or intake form',
-      'Website build fee included',
-      'Hosting and domain connection',
-      'Website monitoring and maintenance',
-      'Reasonable content and photo updates',
-      'Basic search-engine setup',
-      'Analytics integration',
-      'Spark client portal access',
-      'Monthly project and service updates',
-      'One starter business automation',
-      'Priority support',
-      'Expansion options for dashboards, CRM tools, AI automations, booking, payments, and operations systems',
+      'Up to five website pages',
+      'Custom professional website',
+      'Mobile-responsive design',
+      'Hosting and ongoing upkeep',
+      'Basic SEO support',
+      'Troubleshooting and technical support',
+      'Technology consulting',
+      'One initial business automation',
+      'Continued improvements and technology guidance',
+      'Six-month initial commitment',
     ],
     disclosure:
-      'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.',
+      'Premium integrations, advertising, domain registration fees, large custom applications, and work outside the approved scope are priced separately.',
     cta: 'Apply for Partnership',
   },
   {
-    id: 'professional-website',
-    name: 'Professional Website',
-    price: '$795',
+    id: 'ownership-website',
+    name: 'Ownership Website',
+    price: '$3,600',
     priceNote: 'one-time',
-    recurring: 'Hosting and support — $50/month',
-    badge: 'Professional build',
-    description: 'A stronger custom website for businesses that need more pages, stronger presentation, and better lead capture.',
-    bestFit: 'Businesses that need a stronger public presence and clearer lead capture.',
-    supportModel: 'One-time build with monthly hosting and support.',
+    recurring: 'No mandatory monthly Spark payment after launch and handoff',
+    badge: 'Full ownership',
+    description: 'A professionally built website with complete account, code, and website ownership after handoff.',
+    bestFit: 'Qualifying brochure or lead-generation websites where the client wants ownership of the finished site.',
+    supportModel: 'One-time website purchase with account and code handoff after completion.',
     included: [
-      'Up to 5 pages',
-      'Fully mobile responsive',
-      'Custom interactive design',
-      'Content-management capability when appropriate',
-      'Contact or lead-capture form',
-      'Social media integration',
+      'Up to five pages',
+      'Qualifying brochure or lead-generation website',
+      'Mobile-responsive design',
       'Basic on-page SEO',
-      'Analytics integration',
-      'Sitemap and favicon',
-      'Three revision rounds',
-      'Complete design and deployment',
+      'Lead-generation or contact form where appropriate',
+      'Client owns the domain',
+      'Client owns the connected accounts',
+      'Client owns the completed code',
+      'Client owns the finished website',
+      'Account and code handoff after completion',
     ],
-    cta: 'Choose Professional',
+    disclosure:
+      'Client remains responsible for annual domain renewal. This offer assumes the website stays within applicable free hosting or service limits. Future edits, support, new features, vendor upgrades, paid services, migrations, and third-party charges are priced separately.',
+    cta: 'Discuss Ownership',
   },
   {
-    id: 'elite-website',
-    name: 'Elite Website',
-    price: '$995',
-    priceNote: 'one-time',
-    recurring: 'Hosting and support — $75/month',
-    badge: 'Premium site',
-    description: 'A premium website package for businesses that need deeper content, stronger forms, and richer customer pathways.',
-    bestFit: 'Businesses that need deeper content, stronger forms, and richer customer paths.',
-    supportModel: 'One-time build with higher-touch monthly hosting and support.',
-    included: [
-      'Up to 10 pages',
-      'Fully mobile responsive',
-      'Premium custom design',
-      'Content-management system when appropriate',
-      'Advanced forms',
-      'Newsletter or email signup',
-      'Site search when appropriate',
-      'Analytics and basic SEO',
-      'Booking or payment integration option',
-      'Three revision rounds',
-      'Complete design and deployment',
-    ],
-    cta: 'Choose Elite',
-  },
-  {
-    id: 'growth-website',
-    name: 'Growth Website',
-    price: '$1,595',
-    priceNote: 'one-time',
-    recurring: 'Managed hosting and priority support — starting at $100/month',
-    badge: 'Growth ready',
-    description: 'A high-end website for businesses ready to connect content, conversion, booking, ordering, and lead capture.',
-    bestFit: 'Businesses ready to connect content, conversion, booking, ordering, and lead capture.',
-    supportModel: 'One-time build with managed hosting and priority support.',
-    included: [
-      'Up to 15 pages',
-      'High-end interactive design',
-      'Fully mobile responsive',
-      'Content-management system',
-      'Appointment, booking, or ordering integration',
-      'Payment integration',
-      'Custom forms and lead capture',
-      'Downloadable resources',
-      'Analytics and search-engine setup',
-      'Three revision rounds',
-    ],
-    cta: 'Build My Growth Site',
-  },
-  {
-    id: 'business-website',
-    name: 'Business Website',
-    price: '$2,995',
-    priceNote: 'one-time',
-    recurring: 'Managed support — starting at $150/month',
-    badge: 'Business systems',
-    description: 'An advanced website package for businesses with more services, locations, workflows, integrations, and staff handoff needs.',
-    bestFit: 'Businesses with multiple services, locations, workflows, integrations, or team handoffs.',
-    supportModel: 'Proposal-based build with managed support after launch.',
-    included: [
-      'Up to 25 pages',
-      'Advanced custom website',
-      'Fully mobile responsive',
-      'Content-management system',
-      'Booking, payment, or ordering workflows',
-      'Advanced forms',
-      'Multiple service or location pages',
-      'Analytics and conversion tracking',
-      'Business-system integrations',
-      'Staff training and handoff',
-      'Three revision rounds',
-    ],
-    cta: 'Request a Proposal',
-  },
-  {
-    id: 'custom-platform',
-    name: 'Custom Platform',
-    price: 'Starting at $4,595',
+    id: 'custom-applications',
+    name: 'Custom Applications',
+    price: 'Starting at $4,995',
     priceNote: 'custom proposal',
-    recurring: 'Hosting, platform support, and third-party services priced separately.',
-    badge: 'Custom platform',
-    description: 'For businesses that need more than a traditional website.',
-    bestFit: 'Businesses that need a portal, dashboard, CRM-style workflow, or custom operational app.',
-    supportModel: 'Custom proposal with platform hosting and support priced around the final scope.',
+    recurring: 'Hosting, support, and third-party services priced separately',
+    badge: 'Custom software',
+    description: 'Custom software quoted separately for businesses that need more than a standard website.',
+    bestFit: 'Businesses that need portals, dashboards, AI systems, databases, custom workflows, or operational software.',
+    supportModel: 'Custom proposal with scope, timeline, hosting, and support priced around the final application.',
     included: [
-      'Custom web application or operations portal',
-      'Client or employee login',
-      'CRM or dashboard functionality',
-      'Workflow automations',
-      'Database integration',
-      'Role-based access',
-      'Booking, payment, and business integrations',
-      'Fully mobile-responsive application',
+      'Custom web applications',
+      'Advanced portals or dashboards',
+      'AI systems where appropriate',
+      'Database-backed tools',
+      'Workflow automations and integrations',
+      'Role-based access when needed',
       'Custom scope, timeline, and proposal',
     ],
-    cta: 'Discuss My Platform',
+    disclosure:
+      'Custom applications are separate from the Starter Website, Partnership Program, and Ownership Website unless explicitly included in a written proposal.',
+    cta: 'Request Custom Quote',
   },
 ]
-
 function WebsitesPage() {
 
   const monthlySupportCards = [
-    ['Managed Hosting', 'Spark keeps your website hosted, connected, and supported under the plan matched to your package.'],
-    ['Monitoring & Maintenance', 'Website monitoring, maintenance, forms, and basic support are separated from one-time build pricing.'],
-    ['Content Support', 'Partnership clients receive reasonable content and photo updates as part of the ongoing relationship.'],
-    ['Expansion Path', 'Larger clients can expand into CRM tools, dashboards, automations, booking, payments, and platform work.'],
+    ['Starter Hosting', 'Starter Website clients receive Spark-managed hosting for the approved one-page brochure site at $20/month.'],
+    ['Partnership Upkeep', 'Partnership clients receive hosting, upkeep, troubleshooting, technical support, consulting, and continued improvement guidance.'],
+    ['Ownership Handoff', 'Ownership Website clients receive account and code handoff after completion with no mandatory monthly Spark payment.'],
+    ['Custom Scope', 'Custom applications are quoted separately with hosting, support, and third-party services priced around the final build.'],
   ]
 
   const packageFitCards = [
-    ['Price-conscious launch', 'Launch Website keeps the build simple and credible while still including mobile responsiveness, branded design, and basic SEO.'],
-    ['Best recurring value', 'Spark Partnership Program combines the website build, hosting, support, updates, starter automation, and Spark client portal access.'],
-    ['Larger site build', 'Professional, Elite, Growth, and Business Website packages scale page count, integrations, forms, tracking, and operational needs.'],
-    ['Beyond a website', 'Custom Platform work is scoped for applications, portals, dashboards, CRM functionality, automations, databases, and role-based access.'],
+    ['Lowest-cost start', 'Starter Website is a one-page, Spark-hosted starting point for a business that needs to get online professionally.'],
+    ['Recommended partnership', 'Spark Partnership Program combines a custom website, hosting, support, consulting, one initial automation, and continued technology guidance.'],
+    ['Full client ownership', 'Ownership Website is a one-time purchase for qualifying brochure or lead-generation sites with account, code, and website handoff.'],
+    ['Custom software', 'Custom Applications are quoted separately for portals, dashboards, AI systems, databases, and operational software.'],
   ]
 
   const buildTypeOptions = [
@@ -3255,12 +3178,13 @@ function WebsitesPage() {
   ]
 
   const faqs = [
-    ['What is the Spark Partnership Program?', 'It is a six-month initial partnership for businesses that want Spark Command Systems to build, operate, support, and improve their website and business systems for $299/month.'],
-    ['What is the six-month Partnership commitment?', 'The six-month initial commitment is $1,794. It gives Spark enough runway to build the website foundation, support the business, and begin meaningful system improvements.'],
-    ['Are hosting and support included in one-time website builds?', 'One-time builds are priced separately from recurring hosting and support. Each package lists the ongoing plan so build costs and monthly support stay clear.'],
+    ['What is the Spark Partnership Program?', 'It is a six-month initial partnership for businesses that want Spark Command Systems to build, host, support, consult on, and improve their website and business technology for $1,800 setup plus $299/month.'],
+    ['What is the six-month Partnership commitment?', 'The first six months total $3,594: the $1,800 setup fee plus six months at $299/month. The setup and monthly price remain the primary terms.'],
+    ['What does the Starter Website include?', 'The Starter Website is a $495 setup plus $20/month managed hosting for one professionally designed scrolling brochure page with essential business information, contact links, social links, calls to action, and an upgrade-ready foundation.'],
+    ['What does the Ownership Website include?', 'The Ownership Website is a $3,600 one-time build for qualifying brochure or lead-generation websites up to five pages, with account, code, and finished website ownership handed off after completion.'],
     ['Are domains and third-party tools included?', 'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.'],
-    ['Do all packages work on mobile?', 'Yes. Every website package and custom platform scope includes fully mobile-responsive design or application behavior.'],
-    ['Can Spark build tools beyond a website?', 'Yes. Custom Platform work can include portals, login areas, dashboards, CRM functionality, workflow automations, databases, booking, payment, and business integrations.'],
+    ['Do all packages work on mobile?', 'Yes. Every website package and custom application scope includes mobile-responsive design or application behavior.'],
+    ['Can Spark build tools beyond a website?', 'Yes. Custom Applications can include portals, login areas, dashboards, AI systems, workflow automations, databases, booking, payment, and business integrations. Custom application pricing starts at $4,995.'],
     ['How is final pricing confirmed?', 'Final pricing depends on project scope, required integrations, content readiness, and third-party services. Every project begins with a written scope and approval.'],
   ]
 
@@ -3355,10 +3279,10 @@ function WebsitesPage() {
                 Professional websites and business systems built around the way you work.
               </h1>
               <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300 sm:text-xl sm:leading-9">
-                Choose a one-time website build or partner with Spark Command Systems for ongoing development, hosting, support, and automation.
+                Choose a focused one-page starter site, an ongoing Spark Partnership, an ownership handoff website, or a custom application quoted around your business needs.
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
-                Launch affordably, grow into stronger digital systems, or request a custom platform when the business needs more than a traditional website.
+                Starter and Ownership websites are distinct paths: one is a tightly scoped Spark-hosted starting point, the other is a larger qualifying website with client ownership after handoff.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <button
@@ -3378,7 +3302,7 @@ function WebsitesPage() {
                 </IntakeLink>
               </div>
               <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
-                {['One-time builds', 'Recurring support', 'Custom platforms'].map((point) => (
+                {['Starter site', 'Partnership', 'Ownership handoff'].map((point) => (
                   <div key={point} className="bg-[#02070d]/76 p-4 text-sm font-semibold text-slate-200">
                     {point}
                   </div>
@@ -3393,9 +3317,10 @@ function WebsitesPage() {
                 <div className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">Website Foundation</div>
                 <div className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
                   {[
-                    ['Launch', '$425 one-time + $25/mo'],
-                    ['Best Value', '$299/mo Partnership'],
-                    ['Platforms', 'Starting at $4,595'],
+                    ['Starter', '$495 + $20/mo hosting'],
+                    ['Recommended', '$1,800 + $299/mo'],
+                    ['Ownership', '$3,600 one-time'],
+                    ['Custom Apps', 'Starting at $4,995'],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-5">
                       <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
@@ -3411,9 +3336,9 @@ function WebsitesPage() {
         <section id="pricing-packages" className="relative scroll-mt-24 px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <SectionIntro eyebrow="Pricing Packages" title="Professional websites and business systems built around the way you work." align="center">
-              Choose a one-time website build or partner with Spark Command Systems for ongoing development, hosting, support, and automation.
+              Compare the approved paths for launching, partnering, owning, or building custom software with Spark Command Systems.
             </SectionIntro>
-            <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
               {websitePricingPackages.map((plan) => {
                 const isSelected = selectedPlan === plan.name
                 const isFeatured = Boolean(plan.featured)
@@ -3537,22 +3462,36 @@ function WebsitesPage() {
 
         <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16]/88 p-5 shadow-[0_28px_110px_rgba(0,0,0,0.42)] sm:p-7">
-            <SectionIntro eyebrow="One-Time vs Partnership" title="Choose a website project or an ongoing systems relationship." />
-            <div className="mt-8 grid gap-4 lg:grid-cols-2">
+            <SectionIntro eyebrow="Buying Paths" title="Choose the path that matches how you want the website managed." />
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {[
                 {
-                  title: 'One-time website package',
-                  price: 'Upfront build price plus the listed monthly hosting and support plan.',
-                  bestFor: 'Businesses that need a defined website build with a clear scope.',
-                  includes: ['Approved website scope', 'Mobile-responsive design', 'Listed revision rounds', 'Deployment and domain connection support', 'Ongoing hosting/support at the package rate'],
-                  note: 'Final scope, revision rounds, timeline, and payment schedule are confirmed in your written project proposal.',
+                  title: 'Starter Website',
+                  price: '$495 setup + $20/month managed hosting.',
+                  bestFor: 'Businesses that need a professional one-page online presence.',
+                  includes: ['Single scrolling brochure page', 'Essential business information', 'Contact and social links', 'Clear calls to action'],
+                  note: 'Built as an upgrade-ready starting point, not a custom app or ongoing technology partnership.',
                 },
                 {
                   title: 'Spark Partnership Program',
-                  price: '$299/month with a six-month initial commitment.',
-                  bestFor: 'Businesses that want Spark as an ongoing website and systems partner.',
-                  includes: ['Website build fee included for up to 5 pages', 'Managed hosting, monitoring, maintenance, and support', 'Reasonable content and photo updates', 'Monthly project and service updates', 'One starter business automation and expansion planning'],
-                  note: 'Premium integrations, advertising, domain registration fees, large custom apps, and work outside the approved scope are priced separately.',
+                  price: '$1,800 setup + $299/month with a six-month initial commitment.',
+                  bestFor: 'Businesses that want Spark as an ongoing website and technology partner.',
+                  includes: ['Up to five website pages', 'Hosting and ongoing upkeep', 'Troubleshooting and technical support', 'One initial business automation'],
+                  note: 'First six months total $3,594. Premium integrations, advertising, domains, and custom apps are separate unless scoped in writing.',
+                },
+                {
+                  title: 'Ownership Website',
+                  price: '$3,600 one-time.',
+                  bestFor: 'Qualifying brochure or lead-generation websites where the client wants ownership after launch.',
+                  includes: ['Up to five pages', 'Basic on-page SEO', 'Client owns connected accounts', 'Client owns completed code and finished website'],
+                  note: 'No mandatory monthly Spark payment after launch and handoff. Future edits, paid services, migrations, and third-party charges are separate.',
+                },
+                {
+                  title: 'Custom Applications',
+                  price: 'Starting at $4,995.',
+                  bestFor: 'Businesses that need custom software beyond a standard website.',
+                  includes: ['Portals or dashboards', 'AI systems where appropriate', 'Database-backed tools', 'Workflow automations and integrations'],
+                  note: 'Quoted separately with hosting, support, and third-party services priced around the final scope.',
                 },
               ].map((option) => (
                 <div key={option.title} className="border border-white/10 bg-black/24 p-5">
@@ -3817,7 +3756,7 @@ function WebsitesPage() {
               Ready to choose your Spark website or platform path?
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
-              Choose a one-time website build, apply for the Spark Partnership Program, or request a custom platform proposal.
+              Choose a Starter Website, apply for the Spark Partnership Program, discuss an Ownership Website, or request a Custom Applications proposal.
             </p>
             <button
               type="button"

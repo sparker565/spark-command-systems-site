@@ -8,7 +8,7 @@ Production website for Spark Command Systems LLC.
 - Vite
 - React Router
 - Tailwind CSS
-- Vercel static hosting
+- Cloudflare hosting
 
 ## Commands
 
@@ -22,7 +22,7 @@ There is no configured automated test suite or TypeScript check in this reposito
 
 ## Deployment Notes
 
-The site is a Vite single-page app deployed on Vercel. Static files in `public/` should be served directly, including:
+The site is a Vite single-page app deployed through Cloudflare. Do not migrate it to Vercel or restore outdated Vercel deployment assumptions. Static files in `public/` should be served directly, including:
 
 - `/robots.txt`
 - `/sitemap.xml`
@@ -30,6 +30,10 @@ The site is a Vite single-page app deployed on Vercel. Static files in `public/`
 - public image and video assets
 
 The app still uses client-side route metadata. This improves browser and social metadata after JavaScript runs, but it is not the same as server-rendered or statically prerendered SEO.
+
+## Pricing Source
+
+`src/pricing.js` is the customer-facing pricing source of truth for SEO descriptions, homepage Partnership terms, website package cards, pricing FAQs, post-agreement options, and intake handoff identifiers.
 
 ## Lead Forms
 

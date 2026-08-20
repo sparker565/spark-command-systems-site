@@ -21,6 +21,18 @@ import {
   X,
 } from 'lucide-react'
 import CinematicScrollIntro from './components/CinematicScrollIntro.jsx'
+import {
+  monthlySupportCards,
+  operatingSignals,
+  packageFitCards,
+  partnershipIncludes,
+  partnershipPanel,
+  pricingTerms,
+  websitePricingFaqs,
+  websitePricingHighlights,
+  websitePricingMetaDescription,
+  websitePricingPackages,
+} from './pricing.js'
 
 const corporateLogo = '/assets/spark-command-systems-logo.png'
 const logoFull = '/assets/spark-command-systems-logo.png'
@@ -64,13 +76,11 @@ const routeMeta = {
   },
   '/website': {
     title: 'Website Builds and Pricing | Spark Command Systems',
-    description:
-      'Compare Spark Command Systems pricing for one-page starter websites, the $1,800 setup + $299/month Partnership Program, ownership websites, and custom applications.',
+    description: websitePricingMetaDescription,
   },
   '/websites': {
     title: 'Website Builds and Pricing | Spark Command Systems',
-    description:
-      'Compare Spark Command Systems pricing for one-page starter websites, the $1,800 setup + $299/month Partnership Program, ownership websites, and custom applications.',
+    description: websitePricingMetaDescription,
     canonicalPath: '/website',
   },
   '/integration': {
@@ -113,7 +123,7 @@ const routeMeta = {
   '/terms': {
     title: 'Terms | Spark Command Systems',
     description:
-      'Starter website terms for Spark Command Systems, including informational use, project scope, pricing, external links, and written agreements.',
+      'Website service terms for Spark Command Systems, including informational use, project scope, pricing, external links, and written agreements.',
   },
   [clientLoginPath]: {
     title: 'Client Login | Spark Command Systems',
@@ -126,19 +136,6 @@ const routeMeta = {
     robots: 'noindex, nofollow',
   },
 }
-
-const operatingSignals = [
-  ['$1,800 + $299/mo', 'Partnership program'],
-  ['6 months', 'Initial term'],
-  ['Core access', 'Request through intake'],
-]
-
-const partnershipIncludes = [
-  'Custom professional website up to five pages',
-  'Hosting, upkeep, troubleshooting, and technical support',
-  'One initial business automation',
-  'Technology consulting and continued improvement guidance',
-]
 
 const platformMetrics = [
   ['Website systems', 'Build'],
@@ -524,24 +521,14 @@ function serviceSchema(pathname = '/') {
       {
         '@type': 'FAQPage',
         '@id': `${siteUrl}/website#faq`,
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'What is the Spark Partnership Program?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'The Spark Partnership Program is a six-month initial partnership for businesses that want Spark Command Systems to build, host, support, consult on, and improve their website and business technology for $1,800 setup plus $299/month.',
-            },
+        mainEntity: websitePricingFaqs.map(([name, text]) => ({
+          '@type': 'Question',
+          name,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text,
           },
-          {
-            '@type': 'Question',
-            name: 'Are domains and third-party tools included?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.',
-            },
-          },
-        ],
+        })),
       },
       {
         '@type': 'BreadcrumbList',
@@ -1567,27 +1554,27 @@ function PartnershipProgramPanel() {
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="inline-flex border border-cyan-200/20 bg-cyan-200/[0.06] px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-100">
-              Spark Partnership Program
+              {partnershipPanel.name}
             </div>
             <h2 className="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-              Your website, hosting, support, consulting, and technology improvements managed through one ongoing partnership.
+              {partnershipPanel.headline}
             </h2>
           </div>
           <div className="shrink-0 border border-amber-200/25 bg-amber-200/[0.08] px-5 py-4 text-left shadow-[0_0_40px_rgba(245,158,11,0.12)] sm:text-right">
-            <div className="text-3xl font-semibold tracking-[-0.03em] text-amber-100">$1,800 + $299/mo</div>
-            <div className="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">6 month initial commitment</div>
+            <div className="text-3xl font-semibold tracking-[-0.03em] text-amber-100">{partnershipPanel.price}</div>
+            <div className="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">{partnershipPanel.priceNote}</div>
           </div>
         </div>
 
         <p className="relative mt-6 max-w-2xl text-base leading-8 text-slate-300">
-          A focused six-month starting relationship for businesses that want Spark to build a custom professional website, host and support it, add one initial business automation, and guide practical technology improvements as the business grows.
+          {partnershipPanel.description}
         </p>
 
         <div className="relative mt-5 border border-amber-200/24 bg-amber-200/[0.075] p-4">
-          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-100">Six-month initial commitment</div>
-          <div className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">$3,594 first six months</div>
+          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-100">{partnershipPanel.paymentTitle}</div>
+          <div className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{partnershipPanel.price}</div>
           <p className="mt-2 text-xs leading-6 text-slate-300">
-            This total reflects the $1,800 setup plus six months at $299/month. Larger custom apps, premium integrations, advertising, and third-party services are scoped separately.
+            {partnershipPanel.paymentDetail}
           </p>
         </div>
 
@@ -1602,10 +1589,10 @@ function PartnershipProgramPanel() {
 
         <div className="relative mt-8 flex flex-col gap-3 sm:flex-row">
           <IntakeLink
-            packageName="Spark Partnership Program"
-            packageId="spark-partnership"
+            packageName={pricingTerms.partnership.name}
+            packageId="spark_website_partnership"
             className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_42px_rgba(245,158,11,0.28)] transition hover:bg-amber-200"
-            aria-label="Request access to the Spark Partnership Program"
+            aria-label="Request access to the Spark Website Partnership"
           >
             Apply for Partnership
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
@@ -1619,7 +1606,7 @@ function PartnershipProgramPanel() {
         </div>
 
         <p className="relative mt-5 text-xs leading-6 text-slate-500">
-          Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.
+          {partnershipPanel.disclosure}
         </p>
       </div>
     </div>
@@ -1796,10 +1783,10 @@ function LandingPage({ page = 'home' }) {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
                 <IntakeLink
-                  packageName="Spark Partnership Program"
-                  packageId="spark-partnership"
+                  packageName={pricingTerms.partnership.name}
+                  packageId="spark_website_partnership"
                   className="group inline-flex min-h-12 items-center justify-center gap-2 bg-amber-300 px-7 py-4 text-base font-bold text-black shadow-[0_0_40px_rgba(245,158,11,0.24)] transition hover:bg-amber-200"
-                  aria-label="Open Spark intake for the Spark Partnership Program"
+                  aria-label="Open Spark intake for the Spark Website Partnership"
                 >
                   Apply for Partnership
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
@@ -2812,126 +2799,7 @@ function AboutSparkPage() {
   )
 }
 
-const websitePricingPackages = [
-  {
-    id: 'starter-website',
-    name: 'Starter Website',
-    price: '$495',
-    priceNote: 'setup',
-    recurring: '$20/month managed hosting required',
-    badge: 'Affordable start',
-    description: 'A professional one-page website built to get your business online and ready to grow.',
-    bestFit: 'Small businesses that need an affordable, professional online presence without a larger website build.',
-    supportModel: 'Focused one-page brochure website with Spark-managed hosting.',
-    included: [
-      'One professionally designed landing or brochure page',
-      'Single scrolling page',
-      'Mobile-responsive design',
-      'Business overview and essential information',
-      'Contact links',
-      'Social media links',
-      'Clear calls to action',
-      'Upgrade-ready foundation',
-      'Spark-managed hosting',
-    ],
-    disclosure:
-      'This package is a focused website starting point. Custom applications, advanced integrations, and ongoing technology partnership work are scoped separately.',
-    cta: 'Start My Website',
-  },
-  {
-    id: 'spark-partnership',
-    name: 'Spark Partnership Program',
-    price: '$1,800 setup + $299/month',
-    priceNote: 'six-month initial commitment',
-    recurring: 'First six months total: $3,594',
-    badge: 'Recommended',
-    description:
-      'Your website, hosting, support, consulting, and technology improvements managed through one ongoing partnership.',
-    bestFit: 'Businesses that want Spark as an ongoing website and technology partner.',
-    supportModel: '$1,800 setup plus $299/month for a six-month initial partnership.',
-    featured: true,
-    included: [
-      'Up to five website pages',
-      'Custom professional website',
-      'Mobile-responsive design',
-      'Hosting and ongoing upkeep',
-      'Basic SEO support',
-      'Troubleshooting and technical support',
-      'Technology consulting',
-      'One initial business automation',
-      'Continued improvements and technology guidance',
-      'Six-month initial commitment',
-    ],
-    disclosure:
-      'Premium integrations, advertising, domain registration fees, large custom applications, and work outside the approved scope are priced separately.',
-    cta: 'Apply for Partnership',
-  },
-  {
-    id: 'ownership-website',
-    name: 'Ownership Website',
-    price: '$3,600',
-    priceNote: 'one-time',
-    recurring: 'No mandatory monthly Spark payment after launch and handoff',
-    badge: 'Full ownership',
-    description: 'A professionally built website with complete account, code, and website ownership after handoff.',
-    bestFit: 'Qualifying brochure or lead-generation websites where the client wants ownership of the finished site.',
-    supportModel: 'One-time website purchase with account and code handoff after completion.',
-    included: [
-      'Up to five pages',
-      'Qualifying brochure or lead-generation website',
-      'Mobile-responsive design',
-      'Basic on-page SEO',
-      'Lead-generation or contact form where appropriate',
-      'Client owns the domain',
-      'Client owns the connected accounts',
-      'Client owns the completed code',
-      'Client owns the finished website',
-      'Account and code handoff after completion',
-    ],
-    disclosure:
-      'Client remains responsible for annual domain renewal. This offer assumes the website stays within applicable free hosting or service limits. Future edits, support, new features, vendor upgrades, paid services, migrations, and third-party charges are priced separately.',
-    cta: 'Discuss Ownership',
-  },
-  {
-    id: 'custom-applications',
-    name: 'Custom Applications',
-    price: 'Starting at $4,995',
-    priceNote: 'custom proposal',
-    recurring: 'Hosting, support, and third-party services priced separately',
-    badge: 'Custom software',
-    description: 'Custom software quoted separately for businesses that need more than a standard website.',
-    bestFit: 'Businesses that need portals, dashboards, AI systems, databases, custom workflows, or operational software.',
-    supportModel: 'Custom proposal with scope, timeline, hosting, and support priced around the final application.',
-    included: [
-      'Custom web applications',
-      'Advanced portals or dashboards',
-      'AI systems where appropriate',
-      'Database-backed tools',
-      'Workflow automations and integrations',
-      'Role-based access when needed',
-      'Custom scope, timeline, and proposal',
-    ],
-    disclosure:
-      'Custom applications are separate from the Starter Website, Partnership Program, and Ownership Website unless explicitly included in a written proposal.',
-    cta: 'Request Custom Quote',
-  },
-]
 function WebsitesPage() {
-
-  const monthlySupportCards = [
-    ['Starter Hosting', 'Starter Website clients receive Spark-managed hosting for the approved one-page brochure site at $20/month.'],
-    ['Partnership Upkeep', 'Partnership clients receive hosting, upkeep, troubleshooting, technical support, consulting, and continued improvement guidance.'],
-    ['Ownership Handoff', 'Ownership Website clients receive account and code handoff after completion with no mandatory monthly Spark payment.'],
-    ['Custom Scope', 'Custom applications are quoted separately with hosting, support, and third-party services priced around the final build.'],
-  ]
-
-  const packageFitCards = [
-    ['Lowest-cost start', 'Starter Website is a one-page, Spark-hosted starting point for a business that needs to get online professionally.'],
-    ['Recommended partnership', 'Spark Partnership Program combines a custom website, hosting, support, consulting, one initial automation, and continued technology guidance.'],
-    ['Full client ownership', 'Ownership Website is a one-time purchase for qualifying brochure or lead-generation sites with account, code, and website handoff.'],
-    ['Custom software', 'Custom Applications are quoted separately for portals, dashboards, AI systems, databases, and operational software.'],
-  ]
-
   const buildTypeOptions = [
     'New Website',
     'Website Upgrade',
@@ -2990,16 +2858,7 @@ function WebsitesPage() {
     'Launch, support, and expand',
   ]
 
-  const faqs = [
-    ['What is the Spark Partnership Program?', 'It is a six-month initial partnership for businesses that want Spark Command Systems to build, host, support, consult on, and improve their website and business technology for $1,800 setup plus $299/month.'],
-    ['What is the six-month Partnership commitment?', 'The first six months total $3,594: the $1,800 setup fee plus six months at $299/month. The setup and monthly price remain the primary terms.'],
-    ['What does the Starter Website include?', 'The Starter Website is a $495 setup plus $20/month managed hosting for one professionally designed scrolling brochure page with essential business information, contact links, social links, calls to action, and an upgrade-ready foundation.'],
-    ['What does the Ownership Website include?', 'The Ownership Website is a $3,600 one-time build for qualifying brochure or lead-generation websites up to five pages, with account, code, and finished website ownership handed off after completion.'],
-    ['Are domains and third-party tools included?', 'Third-party subscriptions, advertising spend, premium integrations, and domain registration fees are separate unless included in a written proposal.'],
-    ['Do all packages work on mobile?', 'Yes. Every website package and custom application scope includes mobile-responsive design or application behavior.'],
-    ['Can Spark build tools beyond a website?', 'Yes. Custom Applications can include portals, login areas, dashboards, AI systems, workflow automations, databases, booking, payment, and business integrations. Custom application pricing starts at $4,995.'],
-    ['How is final pricing confirmed?', 'Final pricing depends on project scope, required integrations, content readiness, and third-party services. Every project begins with a written scope and approval.'],
-  ]
+  const faqs = websitePricingFaqs
 
   const updateWebsiteField = (field, value) => {
     setWebsiteFormData((current) => ({ ...current, [field]: value }))
@@ -3092,10 +2951,10 @@ function WebsitesPage() {
                 Professional websites and business systems built around the way you work.
               </h1>
               <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300 sm:text-xl sm:leading-9">
-                Choose a focused one-page starter site, an ongoing Spark Partnership, an ownership handoff website, or a custom application quoted around your business needs.
+                Choose Website Essentials, a higher-touch Spark Website Partnership, or Custom Systems & Applications scoped around your business needs.
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
-                Starter and Ownership websites are distinct paths: one is a tightly scoped Spark-hosted starting point, the other is a larger qualifying website with client ownership after handoff.
+                Every path starts with clear published terms or a written custom scope. A one-hour consultation is free when you need help choosing.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <button
@@ -3107,15 +2966,15 @@ function WebsitesPage() {
                   <ArrowRight className="h-4 w-4" />
                 </button>
                 <IntakeLink
-                  packageName="Spark Partnership Program"
-                  packageId="spark-partnership"
+                  packageName={pricingTerms.partnership.name}
+                  packageId="spark_website_partnership"
                   className="inline-flex min-h-12 items-center justify-center border border-cyan-200/20 bg-cyan-200/[0.06] px-7 py-4 text-base font-semibold text-cyan-50 transition hover:border-cyan-100/35 hover:bg-cyan-200/[0.11]"
                 >
                   Apply for Partnership
                 </IntakeLink>
               </div>
               <div className="mt-8 grid max-w-2xl gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
-                {['Starter site', 'Partnership', 'Ownership handoff'].map((point) => (
+                {['Website Essentials', 'Website Partnership', 'Custom Systems'].map((point) => (
                   <div key={point} className="bg-[#02070d]/76 p-4 text-sm font-semibold text-slate-200">
                     {point}
                   </div>
@@ -3129,12 +2988,7 @@ function WebsitesPage() {
               <div className="relative">
                 <div className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">Website Foundation</div>
                 <div className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
-                  {[
-                    ['Starter', '$495 + $20/mo hosting'],
-                    ['Recommended', '$1,800 + $299/mo'],
-                    ['Ownership', '$3,600 one-time'],
-                    ['Custom Apps', 'Starting at $4,995'],
-                  ].map(([label, value]) => (
+                  {websitePricingHighlights.map(([label, value]) => (
                     <div key={label} className="bg-gradient-to-br from-[#09121f] to-[#04080f] p-5">
                       <div className="text-xs uppercase tracking-[0.22em] text-slate-500">{label}</div>
                       <div className="mt-2 text-base font-semibold text-white">{value}</div>
@@ -3149,9 +3003,9 @@ function WebsitesPage() {
         <section id="pricing-packages" className="relative scroll-mt-24 px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <SectionIntro eyebrow="Pricing Packages" title="Professional websites and business systems built around the way you work." align="center">
-              Compare the approved paths for launching, partnering, owning, or building custom software with Spark Command Systems.
+              Compare the three approved service paths, then request a one-hour free consultation when you are ready.
             </SectionIntro>
-            <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
               {websitePricingPackages.map((plan) => {
                 const isSelected = selectedPlan === plan.name
                 const isFeatured = Boolean(plan.featured)
@@ -3182,7 +3036,7 @@ function WebsitesPage() {
                     <h2 className="relative mt-5 text-2xl font-semibold text-white">{plan.name}</h2>
                     {plan.featured ? (
                       <p className="relative mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-amber-100">
-                        Six-month initial partnership
+                        12-month initial agreement
                       </p>
                     ) : null}
                     <div className="mt-5">
@@ -3237,14 +3091,14 @@ function WebsitesPage() {
               })}
             </div>
             <p className="mx-auto mt-8 max-w-4xl border border-cyan-200/18 bg-cyan-200/[0.045] p-4 text-center text-sm leading-7 text-slate-300">
-              Final pricing depends on project scope, required integrations, content readiness, and third-party services. Every project begins with a written scope and approval.
+              Website Essentials and the Spark Website Partnership follow the published terms shown above. Custom Systems & Applications require consultation, discovery, and a written proposal. Third-party services and work outside an approved scope may be separate.
             </p>
           </div>
         </section>
 
         <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl overflow-hidden border border-white/10 bg-[#060d16]/86 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.34)] sm:p-7">
-            <SectionIntro eyebrow="Monthly Support" title="What your monthly plan covers" />
+            <SectionIntro eyebrow="Hosting & After Year One" title="Understand the ongoing options before you begin." />
             <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {monthlySupportCards.map(([title, text]) => (
                 <FadeIn key={title} className="border border-white/10 bg-white/[0.035] p-5">
@@ -3275,51 +3129,22 @@ function WebsitesPage() {
 
         <section className="relative px-3 py-12 sm:px-6 sm:py-16 lg:px-8">
           <div className="mx-auto max-w-7xl overflow-hidden border border-amber-200/20 bg-[#060d16]/88 p-5 shadow-[0_28px_110px_rgba(0,0,0,0.42)] sm:p-7">
-            <SectionIntro eyebrow="Buying Paths" title="Choose the path that matches how you want the website managed." />
-            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {[
-                {
-                  title: 'Starter Website',
-                  price: '$495 setup + $20/month managed hosting.',
-                  bestFor: 'Businesses that need a professional one-page online presence.',
-                  includes: ['Single scrolling brochure page', 'Essential business information', 'Contact and social links', 'Clear calls to action'],
-                  note: 'Built as an upgrade-ready starting point, not a custom app or ongoing technology partnership.',
-                },
-                {
-                  title: 'Spark Partnership Program',
-                  price: '$1,800 setup + $299/month with a six-month initial commitment.',
-                  bestFor: 'Businesses that want Spark as an ongoing website and technology partner.',
-                  includes: ['Up to five website pages', 'Hosting and ongoing upkeep', 'Troubleshooting and technical support', 'One initial business automation'],
-                  note: 'First six months total $3,594. Premium integrations, advertising, domains, and custom apps are separate unless scoped in writing.',
-                },
-                {
-                  title: 'Ownership Website',
-                  price: '$3,600 one-time.',
-                  bestFor: 'Qualifying brochure or lead-generation websites where the client wants ownership after launch.',
-                  includes: ['Up to five pages', 'Basic on-page SEO', 'Client owns connected accounts', 'Client owns completed code and finished website'],
-                  note: 'No mandatory monthly Spark payment after launch and handoff. Future edits, paid services, migrations, and third-party charges are separate.',
-                },
-                {
-                  title: 'Custom Applications',
-                  price: 'Starting at $4,995.',
-                  bestFor: 'Businesses that need custom software beyond a standard website.',
-                  includes: ['Portals or dashboards', 'AI systems where appropriate', 'Database-backed tools', 'Workflow automations and integrations'],
-                  note: 'Quoted separately with hosting, support, and third-party services priced around the final scope.',
-                },
-              ].map((option) => (
-                <div key={option.title} className="border border-white/10 bg-black/24 p-5">
-                  <h2 className="text-2xl font-semibold text-white">{option.title}</h2>
+            <SectionIntro eyebrow="Buying Paths" title="Choose the path that matches the scope and support you need." />
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {websitePricingPackages.map((option) => (
+                <div key={option.name} className="border border-white/10 bg-black/24 p-5">
+                  <h2 className="text-2xl font-semibold text-white">{option.name}</h2>
                   <p className="mt-4 text-sm font-semibold leading-7 text-amber-100">{option.price}</p>
-                  <p className="mt-3 text-sm leading-7 text-slate-300">{option.bestFor}</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-300">{option.bestFit}</p>
                   <div className="mt-5 grid gap-2">
-                    {option.includes.map((item) => (
+                    {option.included.slice(0, 4).map((item) => (
                       <div key={item} className="flex items-start gap-2 text-sm leading-6 text-slate-300">
                         <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-100" />
                         <span>{item}</span>
                       </div>
                     ))}
                   </div>
-                  <p className="mt-5 border border-white/10 bg-white/[0.035] p-4 text-xs leading-6 text-slate-400">{option.note}</p>
+                  <p className="mt-5 border border-white/10 bg-white/[0.035] p-4 text-xs leading-6 text-slate-400">{option.buyingPathNote}</p>
                 </div>
               ))}
             </div>
@@ -3569,7 +3394,7 @@ function WebsitesPage() {
               Ready to choose your Spark website or platform path?
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
-              Choose a Starter Website, apply for the Spark Partnership Program, discuss an Ownership Website, or request a Custom Applications proposal.
+              Choose Website Essentials, apply for the Spark Website Partnership, or request a consultation for Custom Systems & Applications.
             </p>
             <button
               type="button"
@@ -3699,10 +3524,10 @@ function PrivacyPage() {
               Form submissions on the main website are processed through Formspree. The separate intake application may use its own form handling and hosting configuration. Email communication may be used to respond to your request and coordinate next steps.
             </p>
             <p>
-              The website is hosted on Vercel. Analytics may be added in the future to understand website usage, but no analytics provider was found in the current main-site repository during this phase. Data retention depends on operational, email, project, and business record needs unless a specific written agreement says otherwise.
+              The website is hosted through Cloudflare. Analytics may be added in the future to understand website usage, but no analytics provider was found in the current main-site repository during this phase. Data retention depends on operational, email, project, and business record needs unless a specific written agreement says otherwise.
             </p>
             <p>
-              For privacy questions, contact Spark Command Systems through the contact form or the email address shown in form error messages. This starter policy should receive legal review as the business grows.
+              For privacy questions, contact Spark Command Systems through the contact form or the email address shown in form error messages. This policy should receive legal review as the business grows.
             </p>
           </div>
         </section>
@@ -3725,7 +3550,7 @@ function TermsPage() {
           <p className="mt-5 text-sm leading-7 text-slate-400">Effective date: August 4, 2026</p>
           <div className="mt-8 space-y-7 text-sm leading-7 text-slate-300">
             <p>
-              This website provides general information about Spark Command Systems LLC services, including websites, managed support, automations, dashboards, custom applications, and operational systems consulting.
+              This website provides general information about Spark Command Systems LLC services, including Website Essentials, the Spark Website Partnership, managed support, automations, dashboards, Custom Systems & Applications, and operational systems consulting.
             </p>
             <p>
               Submitting an inquiry does not create a contract, project approval, final quote, or payment obligation. Spark Command Systems may decline inquiries or recommend a different scope when a request is not a fit.
@@ -3734,10 +3559,10 @@ function TermsPage() {
               Project scope, timeline, payment schedule, revision expectations, intellectual-property ownership, hosting responsibilities, third-party service costs, and ongoing support terms are confirmed in a written proposal or signed agreement.
             </p>
             <p>
-              Published prices are starting points for the listed service paths and may depend on scope, content readiness, integrations, third-party services, and written project requirements. External links, including app and intake links, are provided for convenience.
+              Published standard-package pricing follows the stated package scope and billing terms. Custom Systems & Applications pricing is a starting point and depends on discovery, scope, integrations, third-party services, and written project requirements. External links, including app and intake links, are provided for convenience.
             </p>
             <p>
-              Website content is informational and should not be treated as legal, financial, security, or professional advice. These starter terms should receive legal review as the business grows.
+              Website content is informational and should not be treated as legal, financial, security, or professional advice. These terms should receive legal review as the business grows.
             </p>
           </div>
         </section>

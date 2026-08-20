@@ -10,7 +10,7 @@ SparkCommands.com sends qualified visitors to `https://start.sparkcommands.com` 
 - Current implementation: Vite/React SPA
 - Receiving app: `https://start.sparkcommands.com`
 
-The intake repository is not present in this workspace, so this phase implements the SparkCommands.com sending side and documents the receiver-side requirements.
+The receiving Spark Intake repository validates these identifiers against its own independently deployable pricing configuration.
 
 ## Query Parameters
 
@@ -33,17 +33,16 @@ Package IDs must stay aligned with the active `websitePricingPackages` values:
 
 | Package | `package_id` |
 |---|---|
-| Starter Website | `starter-website` |
-| Spark Partnership Program | `spark-partnership` |
-| Ownership Website | `ownership-website` |
-| Custom Applications | `custom-applications` |
+| Website Essentials | `website_essentials` |
+| Spark Website Partnership | `spark_website_partnership` |
+| Custom Systems & Applications | `custom_systems_applications` |
 
 ## Example URLs
 
 ```text
 https://start.sparkcommands.com/?source=sparkcommands.com
-https://start.sparkcommands.com/?source=sparkcommands.com&package=Spark+Partnership+Program&package_id=spark-partnership
-https://start.sparkcommands.com/?source=sparkcommands.com&package=Starter+Website&package_id=starter-website&utm_source=instagram&utm_medium=social&utm_campaign=august-launch
+https://start.sparkcommands.com/?source=sparkcommands.com&package=Spark+Website+Partnership&package_id=spark_website_partnership
+https://start.sparkcommands.com/?source=sparkcommands.com&package=Website+Essentials&package_id=website_essentials&utm_source=instagram&utm_medium=social&utm_campaign=august-launch
 ```
 
 ## Fallback Behavior
@@ -75,7 +74,7 @@ The intake app should:
 ## Test Cases
 
 1. Generic Start Intake link sends `source=sparkcommands.com`.
-2. Partnership CTA sends `package=Spark Partnership Program` and `package_id=spark-partnership`.
+2. Partnership CTA sends `package=Spark Website Partnership` and `package_id=spark_website_partnership`.
 3. Each pricing card sends its own package ID unchanged.
 4. Existing `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, and `campaign` values are preserved.
 5. URL values are encoded safely.
